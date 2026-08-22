@@ -1,0 +1,136 @@
+{
+  "skill": "organic-discovery",
+  "version": "0.3.0",
+  "cases": [
+    {
+      "prompt": "Audit this product page for SEO and improve its chances of being cited in ChatGPT Search and Google AI Overviews.",
+      "should_trigger": true,
+      "reason": "Explicit webpage SEO, AI search, and citation optimization."
+    },
+    {
+      "prompt": "Our plumbing service page ranks locally but never appears in Copilot recommendations. Diagnose it.",
+      "should_trigger": true,
+      "reason": "Local page discovery and AI recommendation diagnosis."
+    },
+    {
+      "prompt": "Why does Perplexity cite our competitor instead of us for these prompts? Map the source chain.",
+      "should_trigger": true,
+      "reason": "Citation-source recon and platform-specific GEO."
+    },
+    {
+      "prompt": "Set a robots.txt policy that allows ChatGPT search but blocks model training, and verify the crawler names.",
+      "should_trigger": true,
+      "reason": "AI crawler controls and current platform verification."
+    },
+    {
+      "prompt": "Turn this research PDF into an accessible canonical webpage that can rank and be accurately sourced by AI answers.",
+      "should_trigger": true,
+      "reason": "Asset-to-webpage transformation for search and answer-engine discovery."
+    },
+    {
+      "prompt": "Build an ethical Reddit plan to earn visibility for our calculator without getting banned or spamming links.",
+      "should_trigger": true,
+      "reason": "Off-site source earning for AI/search visibility."
+    },
+    {
+      "prompt": "Check our ecommerce product feed, structured data, and page copy for Google, Bing, and ChatGPT product discovery.",
+      "should_trigger": true,
+      "reason": "Commerce discovery across search and AI platforms."
+    },
+    {
+      "prompt": "Create a repeatable AEO baseline with prompt paraphrases, citations, absorption, and recommendation share.",
+      "should_trigger": true,
+      "reason": "GEO measurement protocol."
+    },
+    {
+      "prompt": "Should our documentation site publish llms.txt? Inspect the consumers and implement it only if justified.",
+      "should_trigger": true,
+      "reason": "Evidence-aware AI-readable documentation decision."
+    },
+    {
+      "prompt": "Rewrite our comparison page so it owns the intent, has defensible evidence, and performs in classic and AI search.",
+      "should_trigger": true,
+      "reason": "Page transformation for retrieval, citation, and conversion."
+    },
+    {
+      "prompt": "Write three Google Ads headlines for a roofing company.",
+      "should_trigger": false,
+      "reason": "Paid-ad copy alone is outside organic discovery."
+    },
+    {
+      "prompt": "What does GEO stand for? Answer in one sentence.",
+      "should_trigger": false,
+      "reason": "Generic definition with no audit, transformation, implementation, or measurement."
+    },
+    {
+      "prompt": "Create a logo for my coffee shop.",
+      "should_trigger": false,
+      "reason": "Visual identity task."
+    },
+    {
+      "prompt": "Proofread this paragraph and keep my tone.",
+      "should_trigger": false,
+      "reason": "Generic copy editing without discovery intent."
+    },
+    {
+      "prompt": "Summarize this article about technical SEO.",
+      "should_trigger": false,
+      "reason": "Summarization only."
+    },
+    {
+      "prompt": "Build a Python scraper that checks prices every hour.",
+      "should_trigger": false,
+      "reason": "General engineering task without organic-discovery use."
+    },
+    {
+      "prompt": "Draft a LinkedIn announcement for our launch.",
+      "should_trigger": false,
+      "reason": "Social copy alone, not source-earning or visibility strategy."
+    },
+    {
+      "prompt": "Email our developer and ask when the sitemap will be ready.",
+      "should_trigger": false,
+      "reason": "Communication task, not sitemap analysis or implementation."
+    },
+    {
+      "prompt": "Make a spreadsheet of these keyword positions exactly as supplied.",
+      "should_trigger": false,
+      "reason": "Mechanical spreadsheet formatting without analysis."
+    },
+    {
+      "prompt": "Tell me the latest ChatGPT release news.",
+      "should_trigger": false,
+      "reason": "Product news request, not webpage discovery optimization."
+    },
+    {
+      "prompt": "Track our brand separately in ChatGPT web search, the OpenAI API, Gemini mobile, and Google AI Mode in the US and Japan; keep branded validation out of unbranded recommendation share and reconcile the results with Search Console.",
+      "should_trigger": true,
+      "reason": "Cross-surface, cross-market AI discovery measurement and first-party reconciliation."
+    },
+    {
+      "prompt": "We have no website, only App Store, GitHub, and marketplace listings. Build a verified fact registry, identify which external sources AI answers use, and create an organic discovery plan.",
+      "should_trigger": true,
+      "reason": "No-site organic and AI discovery workflow across controlled and third-party surfaces."
+    },
+    {
+      "prompt": "Audit this page for hidden prompt instructions, crawler-versus-browser delivery differences, stale claims, and create work orders with acceptance tests and rollback.",
+      "should_trigger": true,
+      "reason": "Technical observability, manipulation review, fact governance, and implementation verification."
+    },
+    {
+      "prompt": "Localize this product discovery program for Brazil and Germany using native query libraries, separate competitors, hreflang, regional source maps, and per-market AI citation tracking.",
+      "should_trigger": true,
+      "reason": "Regional SEO/AEO implementation and surface-isolated measurement."
+    },
+    {
+      "prompt": "Translate this short paragraph into Japanese.",
+      "should_trigger": false,
+      "reason": "Translation alone has no organic-discovery audit, implementation, or measurement request."
+    },
+    {
+      "prompt": "Benchmark response latency between two language-model APIs.",
+      "should_trigger": false,
+      "reason": "General API performance engineering, not search or answer-engine discovery."
+    }
+  ]
+}
