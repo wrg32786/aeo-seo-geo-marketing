@@ -1,0 +1,187 @@
+name: Apply issue 9 sitemap fix
+
+on:
+  push:
+    branches:
+      - fix/issue-9-sitemap-html-response
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/issue-9-sitemap-html-response
+      - name: Patch shared sitemap handling
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_once(path: str, old: str, new: str) -> None:
+              file = Path(path)
+              text = file.read_text(encoding="utf-8")
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f"{path}: expected one match, found {count}")
+              file.write_text(text.replace(old, new, 1), encoding="utf-8")
+
+          replace_once(
+              "scripts/od_fetch.py",
+              '''    sitemap_text: str | None = None
+              sitemap_source: str | None = None
+              limitations: list[str] = field(default_factory=list)
+          ''',
+              '''    sitemap_text: str | None = None
+              sitemap_source: str | None = None
+              limitations: list[str] = field(default_factory=list)
+              sitemap_status: int | None = None
+              sitemap_content_type: str | None = None
+          ''',
+          )
+          replace_once(
+              "scripts/od_fetch.py",
+              '''        robots_text = sitemap_text = robots_source = sitemap_source = None
+          ''',
+              '''        robots_text = sitemap_text = robots_source = sitemap_source = None
+              sitemap_status = None
+              sitemap_content_type = None
+          ''',
+          )
+          replace_once(
+              "scripts/od_fetch.py",
+              '''            sitemap_source, _s, _h, sitemap_body, _r = fetch_remote(sitemap_candidates[0], timeout=timeout, max_bytes=max_bytes, max_redirects=max_redirects, user_agent=user_agent)
+              sitemap_text = sitemap_body.decode("utf-8", errors="replace")
+          ''',
+              '''            sitemap_source, sitemap_status, sitemap_headers, sitemap_body, _r = fetch_remote(sitemap_candidates[0], timeout=timeout, max_bytes=max_bytes, max_redirects=max_redirects, user_agent=user_agent)
+              sitemap_content_type = sitemap_headers.get("content-type")
+              sitemap_text = _decode(sitemap_body, sitemap_headers)
+          ''',
+          )
+          replace_once(
+              "scripts/od_fetch.py",
+              '''        return TargetDocument(target, final_url, "remote", final_url, None, status, headers, redirects, _decode(body, headers), hashlib.sha256(body).hexdigest(), robots_text, robots_source, sitemap_text, sitemap_source, limitations)
+          ''',
+              '''        return TargetDocument(target, final_url, "remote", final_url, None, status, headers, redirects, _decode(body, headers), hashlib.sha256(body).hexdigest(), robots_text, robots_source, sitemap_text, sitemap_source, limitations, sitemap_status=sitemap_status, sitemap_content_type=sitemap_content_type)
+          ''',
+          )
+
+          replace_once(
+              "scripts/od_audit.py",
+              '''SPACE_RE = re.compile(r"\\s+")
+          ''',
+              '''SPACE_RE = re.compile(r"\\s+")
+          HTML_DOCUMENT_RE = re.compile(r"(?is)^\\s*(?:<!doctype\\s+html\\b|<html\\b)")
+          ''',
+          )
+          replace_once(
+              "scripts/od_audit.py",
+              '''def parse_sitemap(text: str | None) -> dict[str, Any]:
+              if not text: return {"present": False, "valid": None, "urls": [], "error": None}
+              try:
+                  root = ET.fromstring(text)
+                  urls = [norm(node.text or "") for node in root.iter() if node.tag.rsplit("}", 1)[-1] == "loc" and norm(node.text or "")]
+                  return {"present": True, "valid": True, "urls": urls, "error": None}
+              except ET.ParseError as exc:
+                  return {"present": True, "valid": False, "urls": [], "error": str(exc)}
+          ''',
+              '''def parse_sitemap(text: str | None, *, status: int | None = None, content_type: str | None = None) -> dict[str, Any]:
+              if not text: return {"present": False, "valid": None, "urls": [], "error": None}
+              media_type = (content_type or "").partition(";")[0].strip().casefold()
+              prefix = text.lstrip("\\ufeff")[:512]
+              if media_type == "text/html" or HTML_DOCUMENT_RE.search(prefix):
+                  return {
+                      "present": True,
+                      "valid": False,
+                      "urls": [],
+                      "error": "Sitemap URL returned HTML instead of XML; an SPA catch-all or error-page route likely handled the request.",
+                      "kind": "html_response",
+                      "status": status,
+                      "content_type": content_type,
+                  }
+              try:
+                  root = ET.fromstring(text)
+                  urls = [norm(node.text or "") for node in root.iter() if node.tag.rsplit("}", 1)[-1] == "loc" and norm(node.text or "")]
+                  return {"present": True, "valid": True, "urls": urls, "error": None}
+              except ET.ParseError as exc:
+                  return {"present": True, "valid": False, "urls": [], "error": str(exc)}
+          ''',
+          )
+          replace_once(
+              "scripts/od_audit.py",
+              '''    robots = robots_controls(document); sitemap = parse_sitemap(document.sitemap_text)
+          ''',
+              '''    robots = robots_controls(document); sitemap = parse_sitemap(document.sitemap_text, status=document.sitemap_status, content_type=document.sitemap_content_type)
+          ''',
+          )
+          replace_once(
+              "scripts/od_audit.py",
+              '''    if sitemap["present"] and sitemap["valid"] is False:
+                  _add(findings, "sitemap.invalid", "P1", "high", "eligibility", "Sitemap XML is invalid", sitemap["error"] or "XML parsing failed.", {"sitemap_source": document.sitemap_source}, "engineering", "low", ["repair the sitemap XML"], ["the sitemap parses and lists canonical public URLs"], ["restore the last valid sitemap"])
+          ''',
+              '''    if sitemap.get("kind") == "html_response":
+                  _add(
+                      findings,
+                      "sitemap.html_response",
+                      "P1",
+                      "high",
+                      "eligibility",
+                      "Sitemap URL returns HTML instead of XML",
+                      sitemap["error"],
+                      {"sitemap_source": document.sitemap_source, "http_status": document.sitemap_status, "content_type": document.sitemap_content_type},
+                      "engineering",
+                      "low",
+                      ["route the sitemap URL to a real XML sitemap", "exclude the sitemap path from SPA catch-all and error-page routing"],
+                      ["the sitemap URL returns HTTP 200 with XML rather than HTML", "the sitemap parses and lists canonical public URLs"],
+                      ["restore the prior route if the sitemap endpoint conflicts with application routing"],
+                  )
+              elif sitemap["present"] and sitemap["valid"] is False:
+                  _add(findings, "sitemap.invalid", "P1", "high", "eligibility", "Sitemap XML is invalid", sitemap["error"] or "XML parsing failed.", {"sitemap_source": document.sitemap_source}, "engineering", "low", ["repair the sitemap XML"], ["the sitemap parses and lists canonical public URLs"], ["restore the last valid sitemap"])
+          ''',
+          )
+
+          replace_once(
+              "tests/test_od.py",
+              '''    def test_expected_json_contract_is_valid(self) -> None:
+          ''',
+              '''    def test_html_sitemap_response_reports_routing_failure(self) -> None:
+                  document = od.load_target(
+                      "examples/sample-site/site/index.html",
+                      timeout=1,
+                      max_bytes=od.DEFAULT_MAX_BYTES,
+                      max_redirects=od.DEFAULT_MAX_REDIRECTS,
+                      user_agent=od.DEFAULT_USER_AGENT,
+                  )
+                  document.sitemap_text = "<!doctype html><html><body>SPA shell</body></html>"
+                  document.sitemap_source = "https://example.com/sitemap.xml"
+                  document.sitemap_status = 200
+                  document.sitemap_content_type = "text/html; charset=utf-8"
+
+                  audit, work_orders, _report = od.audit_document(document)
+                  findings = {finding["code"]: finding for finding in audit["findings"]}
+                  self.assertIn("sitemap.html_response", findings)
+                  self.assertNotIn("sitemap.invalid", findings)
+                  finding = findings["sitemap.html_response"]
+                  self.assertIn("catch-all", finding["detail"])
+                  self.assertIn("route the sitemap URL", " ".join(finding["change"]))
+                  order = next(order for order in work_orders if finding["id"] in order["source_finding_ids"])
+                  self.assertIn("catch-all", " ".join(order["change"]))
+
+              def test_expected_json_contract_is_valid(self) -> None:
+          ''',
+          )
+          PY
+      - name: Validate patch
+        run: |
+          python scripts/validate_skill.py
+          python -m unittest discover -s tests -v
+      - name: Commit patch and remove helper workflow
+        run: |
+          rm .github/workflows/apply-issue-9-sitemap-fix.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Detect HTML sitemap fallbacks before XML parsing"
+          git push origin HEAD:fix/issue-9-sitemap-html-response
