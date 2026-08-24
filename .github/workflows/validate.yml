@@ -1,4 +1,4 @@
-name: Validate skill
+name: Validate Organic Discovery
 
 on:
   push:
@@ -30,5 +30,16 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Validate Agent Skill package
+      - name: Validate package and committed example
         run: python scripts/validate_skill.py
+
+      - name: Run focused unit tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Run offline auditor example
+        run: |
+          rm -rf /tmp/organic-discovery-example
+          python scripts/od.py audit examples/sample-site/site/index.html --output /tmp/organic-discovery-example
+          cmp /tmp/organic-discovery-example/audit.json examples/sample-site/expected/audit.json
+          cmp /tmp/organic-discovery-example/work-orders.json examples/sample-site/expected/work-orders.json
+          cmp /tmp/organic-discovery-example/report.md examples/sample-site/expected/report.md

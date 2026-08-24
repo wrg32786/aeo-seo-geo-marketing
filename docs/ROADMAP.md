@@ -1,56 +1,62 @@
 # Organic Discovery Roadmap
 
-This roadmap separates **shipped capability** from **planned capability**. A phase is complete only when its runnable artifacts, tests, examples, and documentation exist in the repository.
+This roadmap separates **shipped capability** from **planned capability**. A phase is complete only when its runnable artifacts, tests, examples, and documentation exist on the default branch.
 
-## Current state — v0.3.1
+## Current state — v0.4.0
 
-Organic Discovery currently ships as:
+Organic Discovery currently ships:
 
 - an installable Agent Skill;
 - an evidence model and eight-stage discovery framework;
 - platform, vertical, regional, source-earning, measurement, and execution references;
-- fact/claim governance and work-order contracts;
+- Business Truth and work-order contracts;
 - an AI-shelf and wedge operating method;
-- a public repository self-audit;
-- trigger evals and package validation.
+- `scripts/od.py`, a standard-library-first deterministic auditor for one URL or local HTML file;
+- private-network-safe bounded HTTP fetching;
+- deterministic `audit.json`, `work-orders.json`, and `report.md` outputs;
+- an offline failure fixture, expected artifacts, tests, and Python 3.11/3.13 CI.
 
-It does **not yet ship** a bundled site crawler, `od.py` audit CLI, search-console connector, AI-answer scheduler, CMS connector, dashboard, or autonomous publisher.
+It does **not yet ship** search-console or analytics connectors, scheduled AI-answer tracking, CMS execution, a dashboard, a database, autonomous publishing, or community-post automation.
 
 ## Build rule
 
-Each phase must leave one runnable proof behind. Documentation may describe the North Star, but README examples and release notes must not advertise a planned command as implemented.
+Every phase leaves one runnable proof. README commands and release notes must never advertise planned software as implemented.
 
 ---
 
 ## v0.4 — Deterministic audit foundation
 
+**Status: shipped**
+
 ### Goal
 
-Turn the methodology into one dependency-light, repeatable webpage audit.
+Turn the methodology into one dependency-free, repeatable webpage audit.
 
-### Required interface
+### Interface
 
 ```bash
 python scripts/od.py audit https://example.com --output output/
 python scripts/od.py audit ./page.html --output output/
 ```
 
-### Required checks
+### Shipped checks
 
-- HTTP status, safe redirects, timeouts, and response limits;
-- `robots.txt` evaluation by crawler purpose;
-- meta and header indexing/preview controls;
-- canonical URL and routing conflicts;
-- initial HTML availability and JavaScript-only risk;
-- title, description, H1, headings, language, links, images, and accessibility basics;
-- sitemap discovery;
-- JSON-LD extraction and parse errors;
+- HTTP status, safe redirects, timeout, response-size, and content-type bounds;
+- DNS resolution and pinned public-IP connections that reject private, loopback, link-local, reserved, and non-global targets;
+- redirect revalidation;
+- `robots.txt` evaluation by conventional search, AI search, training, and other model-use purpose;
+- meta and HTTP indexing/preview directives;
+- canonical presence, conflicts, and mismatch;
+- initial HTML and JavaScript-only risk;
+- title, description, H1, heading hierarchy, language, viewport, links, images, and accessibility basics;
+- sitemap discovery and XML parsing;
+- JSON-LD extraction, `@graph` traversal, and parse errors;
 - visible-content and structured-data disagreement;
-- entity, offer, author, date, and claim gaps;
-- hidden instructions, invisible text, and prompt-injection patterns;
-- known versus inferred versus unknown stage status.
+- offer, author, date, and material-claim provenance gaps;
+- hidden instructions, invisible content, comments, and prompt-injection patterns;
+- separate eight-stage statuses with unobservable stages preserved as `unknown`.
 
-### Required outputs
+### Outputs
 
 ```text
 output/
@@ -59,7 +65,7 @@ output/
 └── report.md
 ```
 
-### Required proof
+### Proof
 
 ```text
 examples/sample-site/
@@ -70,27 +76,30 @@ examples/sample-site/
 └── README.md
 ```
 
-The sample must contain intentional canonical, crawler, schema, sourcing, rendering, and hidden-instruction failures.
+The sample contains intentional canonical, crawler, schema, sourcing, rendering, sitemap, accessibility, and hidden-instruction failures. `tests/test_od.py` compares generated output byte-for-byte with the committed expected artifacts.
 
-### Release gates
+### Release gates passed
 
-- Standard library first; no dependency for a check the standard library can correctly perform.
-- One small test module covering non-trivial logic.
-- CI runs package validation, unit tests, and the offline example.
-- Safe URL handling prevents private-network and redirect abuse.
-- Unknown stages remain unknown.
-- No opaque readiness score.
-- Review-first install instructions exist.
+- Standard library only for the auditor.
+- URL and local-file targets.
+- No opaque GEO score.
+- Unknown downstream stages remain unknown.
+- Remote fetches are bounded and reject private-network destinations before every hop.
+- One focused unit-test module covers non-trivial parsing, output, work-order, and URL-safety logic.
+- CI runs package validation, tests, and the offline example on Python 3.11 and 3.13.
+- README commands are promoted only with the executable interface and CI contract present.
+- Skill, README, changelog, citation metadata, evals, auditor, and expected output versions agree.
 
 ### Explicitly out of scope
 
-- dashboard;
-- database;
+- dashboard or database;
 - scheduled prompt tracking;
-- autonomous publishing;
+- analytics or search-console connectors;
+- CMS or repository publishing;
 - social/community posting;
-- full-site rendering browser;
-- paid data-provider integrations.
+- browser rendering farm;
+- paid data providers;
+- hosted SaaS.
 
 ---
 
@@ -98,19 +107,19 @@ The sample must contain intentional canonical, crawler, schema, sourcing, render
 
 ### Goal
 
-Let an LLM turn business facts plus exact-surface observations into a defensible demand and wedge plan.
+Turn verified business facts and exact-surface observations into a defensible demand and wedge plan.
 
 ### Deliverables
 
-- canonical fact-registry schema and validator;
-- product/service existence, availability, evidence, and publish-status gates;
-- prompt-portfolio generator contract;
+- fact-registry schema and validator;
+- product/service existence, availability, evidence, limitation, and publish-status gates;
+- prompt-portfolio contract;
 - raw observation importer;
-- AI-shelf classifications: `locked`, `contested`, `fragmented`, `open`, `unsafe`;
-- brand concentration, volatility, source-overlap, recommendation-order, and fidelity calculations;
-- wedge opportunity records with legitimate-fit and risk gates;
-- one worked shelf-mapping example with preserved raw observations;
-- no hard-coded promise that a shelf moves in a fixed number of days.
+- shelf classifications: `locked`, `contested`, `fragmented`, `open`, `unsafe`, `unknown`;
+- concentration, volatility, source-overlap, order, absorption, and fidelity calculations;
+- wedge records with legitimate-fit and risk rejection gates;
+- one worked shelf example with raw observations;
+- no fixed promise that a shelf moves within a certain number of days.
 
 ### Interface target
 
@@ -122,11 +131,11 @@ python scripts/od.py wedge plan shelf-map.json --facts fact-registry.csv
 
 ### Release gates
 
-- Branded validation is excluded from unbranded recommendation share.
-- Exact surfaces are never pooled silently.
-- Missing data remains null/unknown.
-- Seller-controlled and independent sources are distinguishable.
-- Unsafe or unsupported opportunities are rejected, not merely scored lower.
+- Branded validation excluded from unbranded recommendation share.
+- Exact surfaces never pooled silently.
+- Missing data stays null/unknown.
+- Seller-controlled and independent evidence remain distinguishable.
+- Unsupported or unsafe opportunities are rejected rather than merely scored lower.
 
 ---
 
@@ -134,38 +143,38 @@ python scripts/od.py wedge plan shelf-map.json --facts fact-registry.csv
 
 ### Goal
 
-Let the LLM implement approved technical and content work through auditable branches and pull requests.
+Implement approved technical and content work through auditable branches and pull requests.
 
-### Initial supported environment
+### Initial environments
 
 - GitHub-backed static sites;
-- Next.js and similar repository-based web applications;
-- generic HTML/Markdown content where the edit path is explicit.
+- Next.js and similar repository applications;
+- explicit HTML and Markdown edit paths.
 
 ### Deliverables
 
 - repository intake and framework detection;
-- baseline manifest;
-- small, dependency-ordered work plan;
-- branch creation and file edits;
-- content updates and new owned assets when justified;
-- internal-link, metadata, canonical, schema, and sitemap changes;
-- fact-registry enforcement before publication-ready copy;
+- baseline and patch manifests;
+- dependency-ordered plan;
+- branch creation and small file edits;
+- source-backed content updates and new owned assets when justified;
+- internal-link, metadata, canonical, schema, sitemap, and accessibility changes;
+- fact-registry enforcement;
 - deterministic acceptance checks;
-- pull-request summary containing evidence, risk, observation, and rollback;
+- pull-request summary with evidence, risk, delayed observation, and rollback;
 - before/after extraction and regression report.
 
-### Default operating mode
+### Default mode
 
-`supervised execute`: create the branch and PR; do not merge or deploy without the controlling repository’s approval policy.
+`supervised execute`: create a branch and pull request; do not merge or deploy without the controlling repository’s policy.
 
 ### Release gates
 
-- Never overwrite unrelated work.
-- Never publish a material claim without provenance.
-- Never delete or redirect traffic-bearing pages without explicit approval.
-- Every non-trivial change has a runnable check.
-- Every PR identifies delayed outcomes still pending observation.
+- Preserve unrelated work.
+- No material claim without provenance.
+- No deletion or redirect of traffic-bearing pages without approval.
+- Every non-trivial change leaves one runnable check.
+- Every pull request identifies delayed outcomes.
 
 ---
 
@@ -178,26 +187,26 @@ Create the strongest truthful owned answer and prepare legitimate corroboration 
 ### Deliverables
 
 - intent-cluster and cannibalization planner;
-- existing-page refresh, consolidation, and new-page decision rules;
-- briefs for comparison pages, case studies, original research, tools, guides, documentation, local pages, and commerce assets;
+- refresh, consolidation, and new-page decision rules;
+- briefs for comparisons, case studies, research, tools, guides, documentation, local pages, and commerce assets;
 - source-chain opportunity mapper;
-- Reddit/forum/community rule and relevance record;
+- Reddit/forum/community rule and relevance records;
 - editorial, partner, directory, review, GitHub, video, and community draft contracts;
-- affiliation/disclosure field;
+- affiliation and disclosure fields;
 - human approval queue;
 - post-publication URL and result ledger.
 
 ### Hard boundary
 
-The repository will not ship fake accounts, automated mass posting, vote coordination, fake reviews, undisclosed endorsements, identity impersonation, or repeated link-drop automation.
+No fake accounts, mass posting, vote coordination, fake reviews, undisclosed endorsements, impersonation, or recycled link campaigns.
 
 ### Release gates
 
 - Public third-party content remains draft-and-approve.
-- The contribution answers the community’s question without requiring the link.
-- A link is included only when the destination adds material evidence or utility.
-- Community rules and affiliation are recorded.
-- Removal, referral, citation, and conversion outcomes are measured separately.
+- The contribution answers the question without requiring a link.
+- Links appear only when the destination adds material evidence or utility.
+- Rules and affiliation are recorded.
+- Removal, referral, citation, and conversion are measured separately.
 
 ---
 
@@ -205,7 +214,7 @@ The repository will not ship fake accounts, automated mass posting, vote coordin
 
 ### Goal
 
-Connect implementation to actual outcomes without rebuilding every upstream data platform.
+Connect implementation to actual outcomes without rebuilding every upstream platform.
 
 ### Initial adapters
 
@@ -213,28 +222,28 @@ Connect implementation to actual outcomes without rebuilding every upstream data
 - Bing Webmaster and AI Performance exports;
 - GA4 or generic analytics exports;
 - server-log referrals and crawler events;
-- Elmo-compatible exports/API data;
+- Elmo-compatible data;
 - GeoLook-compatible observations;
 - `geo-aeo-tracker`-style observations;
-- generic JSONL raw answer records.
+- generic JSONL answer records.
 
 ### Deliverables
 
 - import contracts and validation;
 - exact-surface normalization without destructive pooling;
 - baseline/treatment comparison;
-- search, retrieval, citation, absorption, fidelity, referral, and conversion reports;
+- search, retrieval, citation, absorption, fidelity, referral, conversion, and revenue reports;
 - experiment ledger with confounders and stop rules;
-- keep, iterate, stop, or rollback recommendation;
+- keep, iterate, expand, stop, or rollback recommendation;
 - site-specific learning record.
 
 ### Release gates
 
 - Every rate exposes numerator and denominator.
-- Referral traffic is a lower bound, not complete attribution.
-- API observations are not reported as consumer-surface observations.
+- Referral traffic remains a lower bound.
+- API observations are not presented as consumer-surface results.
 - Vendor scores remain labeled vendor scores.
-- Changes cannot be credited without a preserved baseline and observation window.
+- No credit without a preserved baseline and observation window.
 
 ---
 
@@ -242,7 +251,7 @@ Connect implementation to actual outcomes without rebuilding every upstream data
 
 ### Goal
 
-Extend controlled execution beyond GitHub while retaining drafts, approvals, tests, and rollback.
+Extend controlled execution beyond GitHub while retaining drafts, approvals, checks, and rollback.
 
 ### Adapter order
 
@@ -258,16 +267,15 @@ Extend controlled execution beyond GitHub while retaining drafts, approvals, tes
 - preview validation;
 - approval state and publisher identity;
 - rollback/revision support;
-- policy-defined low-risk autonomous classes;
-- budget, rate, and change-volume limits.
+- allowlisted low-risk owned-site automation;
+- rate limits, budgets, stop rules, and audit logs.
 
 ### Release gates
 
-- Draft is the default.
-- Credentials never enter repository artifacts.
-- Every adapter has a non-destructive dry run.
-- Autonomy is granted per change class, not globally.
-- Public third-party posting remains outside autonomous scope.
+- Default remains draft or supervised execution.
+- The adapter cannot grant itself broader permissions.
+- Material claims and third-party actions remain approval-gated.
+- Rollback is tested per adapter.
 
 ---
 
@@ -275,53 +283,35 @@ Extend controlled execution beyond GitHub while retaining drafts, approvals, tes
 
 ### Goal
 
-Run the complete loop safely and repeatedly for a real website.
-
-### Definition
-
-A v1.0 operator can:
-
-1. ingest the business and controlled surfaces;
-2. maintain the fact registry;
-3. audit the live site and source ecosystem;
-4. map traditional demand and the AI shelf;
-5. identify a legitimate high-value wedge;
-6. create a prioritized experiment plan;
-7. implement approved owned-site changes;
-8. prepare approved earned-source contributions;
-9. validate and publish through policy gates;
-10. ingest outcome data;
-11. keep, iterate, or roll back;
-12. retain site-specific learning for the next run.
-
-The full gates are in [`DEFINITION-OF-DONE.md`](DEFINITION-OF-DONE.md).
-
----
-
-## Workstreams that should remain integrations
-
-Do not rebuild mature upstream infrastructure unless an integration proves impossible:
-
-- full multi-engine scraping farms;
-- long-term prompt scheduling dashboards;
-- general-purpose analytics warehouses;
-- backlink indexes;
-- broad keyword databases;
-- headless browser farms;
-- account and billing systems.
-
-Organic Discovery should be the **truth, diagnosis, planning, implementation, and learning layer** between those data sources and the website.
-
-## Priority order
+Complete the bounded closed loop:
 
 ```text
-v0.4 deterministic auditor
-→ v0.5 truth + shelf mapper
-→ v0.6 GitHub implementation
-→ v0.7 content + earned-source queue
-→ v0.8 measurement imports
-→ v0.9 CMS + bounded autonomy
-→ v1.0 continuous loop
+observe → diagnose → select → implement → validate → measure → learn → repeat
 ```
 
-Do not skip the runnable proof at the end of each phase.
+### Required proof
+
+A real site must demonstrate:
+
+- verified Business Truth;
+- preserved technical and outcome baseline;
+- traditional demand and exact-surface AI shelf mapping;
+- one legitimate wedge;
+- approved owned-site implementation;
+- reviewable earned-source drafts;
+- technical acceptance;
+- post-change search, AI, traffic, and conversion data;
+- keep/iterate/stop/rollback decision;
+- reusable site memory;
+- a second run that preserves the first experiment and does not overstate causation.
+
+A polished report without that loop is not v1.0.
+
+## Non-goals across every phase
+
+- guaranteed rankings, citations, traffic, or timelines;
+- proprietary ranking-oracle scores;
+- fake consensus or authority laundering;
+- automatic public community posting;
+- one page per prompt variation;
+- rebuilding every tracker, crawler farm, analytics warehouse, or CMS.

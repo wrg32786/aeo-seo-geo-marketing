@@ -2,44 +2,99 @@
 
 [![Validate skill](https://github.com/wrg32786/aeo-seo-geo-marketing/actions/workflows/validate.yml/badge.svg)](https://github.com/wrg32786/aeo-seo-geo-marketing/actions/workflows/validate.yml)
 [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-open%20standard-111827)](https://agentskills.io/)
-[![Version](https://img.shields.io/badge/version-0.3.1-2563eb)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.4.0-2563eb)](CHANGELOG.md)
 [![License: MIT](https://img.shields.io/badge/license-MIT-16a34a)](LICENSE)
 
 > Give an LLM a website, verified business facts, controlled editing access, and outcome data. Organic Discovery helps it find under-defended demand, improve owned assets, prepare legitimate supporting content, measure the result, and learn what works.
 
-**Organic Discovery** is an open-source Agent Skill and product blueprint for operating qualified organic growth across:
+**Organic Discovery** is an open-source Agent Skill plus a dependency-free deterministic auditor for conventional search engine optimization (**SEO**), answer engine optimization (**AEO**), generative engine optimization (**GEO**), AI search visibility, factual fidelity, and qualified organic growth.
 
-- conventional search engine optimization (**SEO**);
-- answer engine optimization (**AEO**);
-- generative engine optimization (**GEO**);
-- Google Search, Google AI Overviews and AI Mode;
-- ChatGPT Search, Claude, Perplexity, Bing/Copilot, and other retrieval-driven systems;
-- local, product, marketplace, documentation, editorial, review, community, and other source ecosystems.
+It follows the full chain from **business truth → crawler access → retrieval → citation → actual source use → factual fidelity → recommendation → qualified traffic and conversion** across Google Search, Google AI Overviews and AI Mode, ChatGPT Search, Claude, Perplexity, Bing/Copilot, and other retrieval-driven systems.
 
-It follows the full chain from **business truth → crawler access → retrieval → citation → actual source use → factual fidelity → recommendation → qualified traffic and conversion**.
-
-[Install](#install) · [Use it](#use-it) · [Product vision](docs/PRODUCT-VISION.md) · [Roadmap](docs/ROADMAP.md) · [Definition of done](docs/DEFINITION-OF-DONE.md) · [Evidence](references/source-register.md) · [Self-audit](docs/SELF-AUDIT.md)
+[Audit a page](#deterministic-auditor) · [Install the skill](#install-the-agent-skill) · [Use it with an LLM](#use-it-with-an-llm) · [Product vision](docs/PRODUCT-VISION.md) · [Roadmap](docs/ROADMAP.md) · [Definition of done](docs/DEFINITION-OF-DONE.md) · [Evidence](references/source-register.md) · [Self-audit](docs/SELF-AUDIT.md)
 
 ## Current state
 
-Version `0.3.1` ships:
+Version `0.4.0` ships:
 
-- an installable Agent Skill for LLM-led research, audits, planning, owned-site implementation, source-earning drafts, validation, and measurement;
-- an eight-stage discovery model;
-- fact and claim governance;
-- exact-surface AI observation rules;
-- an AI-shelf and long-tail wedge method;
-- work-order, experiment, publication-gate, and learning contracts;
-- platform, vertical, regional, source-earning, and measurement modules;
-- trigger evals, package validation, and a public self-audit.
+- the installable Organic Discovery Agent Skill;
+- `scripts/od.py`, a standard-library-first auditor for one remote URL or local HTML file;
+- bounded HTTP fetching with private-network rejection, pinned public IP connections, timeout, response-size, and redirect limits;
+- deterministic analysis of crawler controls, index directives, canonicalization, initial HTML, metadata, headings, links, images, sitemaps, JSON-LD, visible/schema agreement, claim provenance, and hidden prompt-like instructions;
+- eight-stage output that preserves unobservable downstream stages as `unknown`;
+- exact work orders with owner, change, acceptance, observation, and rollback;
+- an intentionally broken offline fixture with committed expected outputs;
+- one focused unit-test module and Python 3.11/3.13 CI;
+- Business Truth, AI-shelf, source-earning, measurement, publication-gate, and learning doctrine for LLM-led operation.
 
-It does **not yet ship** a bundled site crawler, `scripts/od.py` audit CLI, analytics connector, AI-answer scheduler, CMS connector, dashboard, or autonomous publisher. Those are staged, testable milestones in the [roadmap](docs/ROADMAP.md), beginning with a deterministic auditor in `v0.4`.
+The repository does **not yet ship** an analytics connector, AI-answer scheduler, CMS connector, dashboard, database, autonomous publisher, or automatic Reddit/community poster. Those remain staged release milestones in [`docs/ROADMAP.md`](docs/ROADMAP.md).
 
-This distinction is deliberate: planned software is never advertised as shipped software.
+## Deterministic auditor
+
+Audit a public page:
+
+```bash
+python scripts/od.py audit https://example.com --output output/
+```
+
+Audit a local HTML file and its sibling `robots.txt` and `sitemap.xml`:
+
+```bash
+python scripts/od.py audit ./page.html --output output/
+```
+
+Optionally preserve the target questions that motivated the audit:
+
+```bash
+python scripts/od.py audit https://example.com/product \
+  --query "best product for a narrow use case" \
+  --query "product without ingredient x" \
+  --output output/
+```
+
+The command writes:
+
+```text
+output/
+├── audit.json
+├── work-orders.json
+└── report.md
+```
+
+### What it checks
+
+- HTTP status, content type, bounded redirects, timeouts, and response limits;
+- public-IP-only remote fetching with every redirect revalidated;
+- `robots.txt` by crawler purpose: conventional search, AI search, training, and other model use;
+- meta and HTTP index/preview controls;
+- canonical presence, conflicts, and target mismatch;
+- initial HTML and likely client-side-only core content;
+- title, description, language, viewport, H1s, heading hierarchy, links, images, and accessibility basics;
+- sibling or standard-location sitemap discovery and XML parsing;
+- JSON-LD parsing, `@graph` traversal, and important visible/schema disagreement;
+- material claim provenance gaps;
+- offer and editorial provenance gaps;
+- hidden text, comments, and inline prompt-injection patterns;
+- activation, eligibility, retrieval, context allocation, source selection, absorption, fidelity, and behavior without collapsing them into one score.
+
+### What it does not claim
+
+The auditor never treats technical eligibility as proof of indexing, retrieval, citation, recommendation, traffic, or conversion. It has no opaque GEO score. Retrieval, context allocation, source selection, absorption, and behavior remain `unknown` until exact-surface or first-party evidence exists.
+
+### Offline proof
+
+```bash
+python scripts/od.py audit examples/sample-site/site/index.html \
+  --output /tmp/organic-discovery-example
+python -m unittest discover -s tests -v
+python scripts/validate_skill.py
+```
+
+The sample intentionally contains canonical, crawler, rendering, schema, sourcing, sitemap, accessibility, and hidden-instruction failures. The generated artifacts are compared byte-for-byte with [`examples/sample-site/expected/`](examples/sample-site/expected/).
 
 ## North Star
 
-Organic Discovery is becoming a **closed-loop Organic Growth Operator**:
+Organic Discovery is becoming a closed-loop **Organic Growth Operator**:
 
 ```text
 UNDERSTAND THE BUSINESS
@@ -67,16 +122,12 @@ The detailed product contract is in [`docs/PRODUCT-VISION.md`](docs/PRODUCT-VISI
 
 ## The AI shelf
 
-AI answer systems compress a category into a small recommendation set. Incumbents can dominate that **AI shelf**, while new entrants struggle to appear for broad prompts.
-
-Organic Discovery looks for a better entry point: a commercially useful, under-defended question where the business has a genuine fit and can publish the clearest, best-supported answer.
-
-Shelf states:
+AI answer systems compress categories into small recommendation sets. Organic Discovery maps those shelves as:
 
 - **Locked** — one incumbent dominates consistently.
 - **Contested** — a recurring small set rotates.
 - **Fragmented** — engines and runs disagree.
-- **Open** — no stable answer exists for the specific constraint.
+- **Open** — no stable recommendation exists for the specific constraint.
 - **Unsafe** — recommendations repeatedly violate constraints or launder unsupported claims.
 
 The operating strategy is:
@@ -103,54 +154,17 @@ The method and evidence boundaries—including the Morrowen field observation—
 |---|---|
 | Collapses the problem into one score | Separates activation, eligibility, retrieval, context allocation, source selection, absorption, fidelity, and behavior |
 | Treats crawler access as citation success | Distinguishes access, indexing, retrieval, citation, recommendation, referral, and conversion |
-| Pools APIs and consumer products | Isolates web, app, API, Search, assistant, model, locale, account, device, and session state |
 | Starts by generating content | Builds Business Truth and fixes the earliest dependency first |
-| Produces generic recommendations | Produces exact work orders with owner, risk, acceptance, observation, and rollback |
 | Chases broad “best X” prompts first | Maps incumbent concentration and finds truthful open-shelf wedges |
-| Treats every authority site as link inventory | Pursues only sources that serve the exact audience and source chain |
+| Produces generic recommendations | Produces exact work orders with acceptance, observation, and rollback |
+| Pools APIs and consumer products | Isolates web, app, API, Search, assistant, model, locale, account, device, and session state |
 | Automates public posting | Drafts third-party contributions for human approval by default |
 | Measures mentions alone | Measures search, retrieval, citation, absorption, fidelity, qualified traffic, conversion, and revenue separately |
 | Requires speculative AI files | Makes `llms.txt`, AI manifests, and fixed formatting conditional experiments |
 
-## What the skill can do today
+## Install the Agent Skill
 
-When the host LLM has the necessary tools and permissions, the skill can guide it to:
-
-- understand the business, offer, audience, market, and conversion goal;
-- create a canonical fact and claim registry;
-- audit a live page, site, repository, or listing ecosystem;
-- verify current crawler and platform controls;
-- diagnose technical SEO, content, entity, evidence, and conversion problems;
-- map traditional queries, conversational prompts, competitors, citations, and recurring sources;
-- classify an AI shelf and select a defensible wedge;
-- create or improve pages, code, internal links, metadata, schema, feeds, and supporting content;
-- work on a GitHub branch or CMS draft when connected;
-- prepare ethical Reddit, forum, directory, review, editorial, partner, GitHub, and video contributions;
-- enforce publication and approval gates;
-- validate owned-site changes;
-- design and interpret exact-surface experiments;
-- recommend keep, iterate, expand, stop, or rollback.
-
-The repository itself currently supplies the operating intelligence and contracts. The deterministic tooling that makes more of this repeatable without relying on host behavior is the next build phase.
-
-## Operator modes
-
-| Mode | Behavior |
-|---|---|
-| Audit | Read-only research and diagnosis |
-| Plan | Prioritized work orders and experiment design |
-| Draft | Code, content, and community drafts without publication |
-| Supervised execute | Owned-site branch/PR or CMS draft with approval |
-| Approved owned-site autonomy | Only pre-approved low-risk change classes with checks and rollback |
-| Continuous operator | Scheduled loops under explicit budgets, gates, and stop rules |
-
-The default is **supervised execute**.
-
-Public third-party posting is human-approved by default. The project will not create fake people, fake customers, fake reviews, coordinated votes, undisclosed endorsements, or mass link campaigns.
-
-## Install
-
-The repository root is the skill directory: it contains `SKILL.md`, `references/`, `docs/`, `scripts/`, and host metadata.
+The repository root is the skill directory.
 
 ### ChatGPT and Codex
 
@@ -160,41 +174,29 @@ Ask the built-in `$skill-installer` to install:
 https://github.com/wrg32786/aeo-seo-geo-marketing
 ```
 
-Manual personal install:
+Review-first manual install:
 
 ```bash
 git clone https://github.com/wrg32786/aeo-seo-geo-marketing.git
+cd aeo-seo-geo-marketing
+python scripts/validate_skill.py
 mkdir -p ~/.agents/skills
-ln -s "$PWD/aeo-seo-geo-marketing" ~/.agents/skills/organic-discovery
-```
-
-Repository-local install:
-
-```text
-<repo>/.agents/skills/organic-discovery/
+ln -s "$PWD" ~/.agents/skills/organic-discovery
 ```
 
 ### Claude Code
 
 ```bash
 git clone https://github.com/wrg32786/aeo-seo-geo-marketing.git
+cd aeo-seo-geo-marketing
+python scripts/validate_skill.py
 mkdir -p ~/.claude/skills
-ln -s "$PWD/aeo-seo-geo-marketing" ~/.claude/skills/organic-discovery
+ln -s "$PWD" ~/.claude/skills/organic-discovery
 ```
 
-Repository-local install:
+Repository-local installations can place this folder at `.agents/skills/organic-discovery/` or `.claude/skills/organic-discovery/`.
 
-```text
-<repo>/.claude/skills/organic-discovery/
-```
-
-Claude can invoke it automatically from the description or explicitly as:
-
-```text
-/organic-discovery
-```
-
-## Use it
+## Use it with an LLM
 
 ### Closed-loop site operation
 
@@ -203,12 +205,11 @@ Use Organic Discovery on this website.
 
 Goal: increase qualified organic traffic and leads.
 
-Understand the business and create the verified fact registry. Audit the codebase,
-live site, conventional search demand, AI-answer demand, competitors, and recurring
-sources. Map the AI shelf, identify the best legitimate wedge, and produce a small
-P0/P1 plan. Implement approved owned-site changes on a branch, create reviewable
-supporting content and earned-source drafts, run validation, and open a pull request
-with baseline, evidence, risks, acceptance checks, measurement, and rollback.
+Run the deterministic auditor first. Build the verified fact registry. Research
+conventional search demand, AI-answer demand, competitors, recurring sources, and
+the AI shelf. Select the best legitimate wedge. Implement approved owned-site
+changes on a branch, prepare reviewable supporting content and earned-source drafts,
+validate the revision, and report baseline, evidence, risks, measurement, and rollback.
 ```
 
 ### AI-shelf mapping
@@ -220,14 +221,6 @@ surface separate, identify locked and open prompt families, reject any wedge we
 cannot support truthfully, and create the owned-asset and corroboration plan.
 ```
 
-### Existing-page improvement
-
-```text
-Why does Perplexity cite our competitor instead of our comparison page? Trace the
-source chain, verify our claims, fix the earliest blocker, implement the smallest
-safe change, and define the 28-day experiment.
-```
-
 ### Ethical community support
 
 ```text
@@ -237,7 +230,7 @@ link only when it adds necessary evidence, and leave every public post pending h
 approval.
 ```
 
-## What it produces
+## What the skill produces
 
 - discovery brief and permission model;
 - canonical fact/claim registry;
@@ -287,40 +280,26 @@ See [`references/output-contracts.md`](references/output-contracts.md).
 ├── README.md
 ├── AGENTS.md
 ├── CITATION.cff
-├── CHANGELOG.md
-├── CONTRIBUTING.md
-├── SECURITY.md
-├── agents/
-│   └── openai.yaml
 ├── docs/
-│   ├── PRODUCT-VISION.md
-│   ├── ROADMAP.md
-│   ├── DEFINITION-OF-DONE.md
-│   └── SELF-AUDIT.md
 ├── references/
-│   ├── ai-shelf-and-growth-loop.md
-│   ├── evidence-and-tactics.md
-│   ├── execution-and-evidence.md
-│   ├── measurement-protocol.md
-│   ├── output-contracts.md
-│   ├── platform-adapters.md
-│   ├── regional-and-surface-adapters.md
-│   ├── source-earning.md
-│   ├── source-register.md
-│   ├── tracking-and-opportunity-recon.md
-│   └── vertical-adapters.md
+├── agents/
 ├── evals/
-│   └── trigger-evals.json
-└── scripts/
-    └── validate_skill.py
+├── examples/sample-site/
+│   ├── site/
+│   └── expected/
+├── scripts/
+│   ├── od.py
+│   ├── od_audit.py
+│   ├── od_fetch.py
+│   └── validate_skill.py
+└── tests/
+    └── test_od.py
 ```
 
 ## Roadmap
 
-The shortest path from intelligence to product is:
-
 ```text
-v0.4 deterministic auditor
+v0.4 deterministic auditor — shipped
 → v0.5 Business Truth + AI shelf mapper
 → v0.6 GitHub implementation operator
 → v0.7 content + earned-source queue
@@ -329,21 +308,19 @@ v0.4 deterministic auditor
 → v1.0 continuous loop
 ```
 
-The project intentionally integrates with trackers, analytics systems, and data providers rather than rebuilding every dashboard, scheduler, crawler farm, and keyword index.
+Organic Discovery integrates with trackers, analytics systems, and data providers rather than rebuilding every dashboard, scheduler, crawler farm, and keyword index.
 
 ## Validate
 
-No third-party Python dependencies are required for the current package validator:
-
 ```bash
 python scripts/validate_skill.py
+python -m unittest discover -s tests -v
+python scripts/od.py audit examples/sample-site/site/index.html --output /tmp/od-example
 ```
 
-The validator checks frontmatter, versions, required modules, current-versus-planned capability language, local links, trigger evals, host metadata, citation metadata, CI, and common packaging errors.
+The validation workflow runs all three checks on Python 3.11 and 3.13.
 
 ## Evidence posture
-
-This project treats SEO/AEO/GEO as an evidence, execution, and learning problem—not a bag of ranking hacks.
 
 - Current official platform controls outrank vendor claims and community advice.
 - Fixed-context GEO research can justify bounded experiments, not organic-ranking guarantees.

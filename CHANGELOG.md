@@ -2,6 +2,20 @@
 
 All notable changes to Organic Discovery are documented here.
 
+## 0.4.0 — 2026-08-24
+
+- Shipped `scripts/od.py`, the first executable Organic Discovery product surface.
+- Added URL and local-file auditing with deterministic `audit.json`, `work-orders.json`, and `report.md` outputs.
+- Added standard-library-only bounded HTTP fetching with public-IP validation, pinned connections, redirect revalidation, timeout limits, and response-size limits.
+- Added crawler-purpose analysis for conventional search, AI search, training, and other model use.
+- Added checks for status, content type, index directives, canonicalization, initial HTML, JavaScript-only risk, metadata, headings, links, images, accessibility basics, sitemaps, JSON-LD, visible/schema agreement, claim provenance, offer/editorial gaps, hidden content, and prompt-injection patterns.
+- Preserved activation, retrieval, context allocation, source selection, absorption, and behavior as `unknown` when a page fetch cannot establish them.
+- Added exact work orders with owner, risk, change, acceptance, delayed observation, and rollback.
+- Added `examples/sample-site/`, an intentionally broken offline site with committed expected artifacts.
+- Added one focused unit-test module and expanded CI to run package validation, tests, and the offline example on Python 3.11 and 3.13.
+- Updated README, SKILL.md, roadmap, definition of done, agent instructions, citation metadata, trigger evals, and validation to version 0.4.0.
+- Kept dashboards, databases, analytics connectors, AI-answer schedulers, CMS publishing, hosted SaaS, and automatic community posting out of scope.
+
 ## 0.3.1 — 2026-08-24
 
 - Reframed the North Star from a page auditor into an LLM-operated Organic Growth Operator.
@@ -17,7 +31,6 @@ All notable changes to Organic Discovery are documented here.
 - Added an implementation roadmap beginning with a dependency-light deterministic auditor in v0.4, followed by truth/shelf mapping, GitHub execution, source earning, measurement adapters, CMS adapters, and bounded autonomy.
 - Added validation rules that prevent planned commands and software from being presented as shipped capability.
 - Updated README, Agent Skill metadata, host metadata, trigger evals, citation metadata, and agent instructions.
-- Explicitly retained the current capability boundary: v0.3.1 does not yet ship the planned `scripts/od.py` auditor, connectors, scheduler, dashboard, CMS adapter, or autonomous publisher.
 
 ## 0.3.0 — 2026-08-22
 
