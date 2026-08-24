@@ -1,0 +1,452 @@
+[
+  {
+    "id": "OD-001",
+    "priority": "P0",
+    "stage": "fidelity",
+    "root_cause": "Hidden/comment/script content appears to instruct an AI or crawler how to rank, cite, or respond.",
+    "recommendation_evidence": "deterministic",
+    "observation_grade": "local_or_live_fetch",
+    "risk": "high",
+    "assets": [
+      "examples/sample-site/site/index.html"
+    ],
+    "owner": "security",
+    "change": [
+      "remove the hidden instruction and review its origin"
+    ],
+    "acceptance": [
+      "the pattern is absent from source and rendered output"
+    ],
+    "observation": {
+      "metric": "fidelity_and_delayed_discovery",
+      "window": "immediate technical check; 28d delayed outcome where applicable"
+    },
+    "rollback": [
+      "restore a clean known-good revision"
+    ],
+    "status": "planned",
+    "source_finding_ids": [
+      "F-001"
+    ]
+  },
+  {
+    "id": "OD-002",
+    "priority": "P0",
+    "stage": "eligibility",
+    "root_cause": "The local index fixture declares https://example.test/not-this-page.",
+    "recommendation_evidence": "deterministic",
+    "observation_grade": "local_or_live_fetch",
+    "risk": "medium",
+    "assets": [
+      "examples/sample-site/site/index.html"
+    ],
+    "owner": "engineering",
+    "change": [
+      "set the canonical to the deployed URL represented by this file"
+    ],
+    "acceptance": [
+      "the canonical resolves to the intended deployed page"
+    ],
+    "observation": {
+      "metric": "technical_acceptance",
+      "window": "immediate technical check; 28d delayed outcome where applicable"
+    },
+    "rollback": [
+      "restore the previous canonical if the deployment mapping differs"
+    ],
+    "status": "planned",
+    "source_finding_ids": [
+      "F-002"
+    ]
+  },
+  {
+    "id": "OD-003",
+    "priority": "P1",
+    "stage": "eligibility",
+    "root_cause": "Only 28 visible words were present in initial HTML while client scripts/framework roots were detected.",
+    "recommendation_evidence": "deterministic",
+    "observation_grade": "local_or_live_fetch",
+    "risk": "medium",
+    "assets": [
+      "examples/sample-site/site/index.html"
+    ],
+    "owner": "engineering",
+    "change": [
+      "render the primary answer, offer facts, and links in initial HTML"
+    ],
+    "acceptance": [
+      "initial HTML contains the same core facts available after rendering"
+    ],
+    "observation": {
+      "metric": "technical_acceptance",
+      "window": "immediate technical check; 28d delayed outcome where applicable"
+    },
+    "rollback": [
+      "revert to the prior rendering path if hydration or functionality regresses"
+    ],
+    "status": "planned",
+    "source_finding_ids": [
+      "F-003"
+    ]
+  },
+  {
+    "id": "OD-004",
+    "priority": "P1",
+    "stage": "eligibility",
+    "root_cause": "OAI-SearchBot, Claude-SearchBot cannot fetch the target path.",
+    "recommendation_evidence": "deterministic",
+    "observation_grade": "local_or_live_fetch",
+    "risk": "medium",
+    "assets": [
+      "examples/sample-site/site/index.html"
+    ],
+    "owner": "engineering",
+    "change": [
+      "allow only the search-answer crawlers the owner intentionally supports"
+    ],
+    "acceptance": [
+      "approved AI search crawlers can fetch the path while training policy remains unchanged"
+    ],
+    "observation": {
+      "metric": "technical_acceptance",
+      "window": "immediate technical check; 28d delayed outcome where applicable"
+    },
+    "rollback": [
+      "restore the prior per-crawler rules"
+    ],
+    "status": "planned",
+    "source_finding_ids": [
+      "F-004"
+    ]
+  },
+  {
+    "id": "OD-005",
+    "priority": "P1",
+    "stage": "fidelity",
+    "root_cause": "Numeric, superlative, certification, or performance claims appear without visible sourcing.",
+    "recommendation_evidence": "deterministic",
+    "observation_grade": "local_or_live_fetch",
+    "risk": "high",
+    "assets": [
+      "examples/sample-site/site/index.html"
+    ],
+    "owner": "content",
+    "change": [
+      "verify each material claim and add visible source/method/limitations or remove it"
+    ],
+    "acceptance": [
+      "every material claim has an approved source and visible qualification"
+    ],
+    "observation": {
+      "metric": "fidelity_and_delayed_discovery",
+      "window": "immediate technical check; 28d delayed outcome where applicable"
+    },
+    "rollback": [
+      "remove the unsupported claim if verification fails"
+    ],
+    "status": "planned",
+    "source_finding_ids": [
+      "F-005"
+    ]
+  },
+  {
+    "id": "OD-006",
+    "priority": "P1",
+    "stage": "fidelity",
+    "root_cause": "Important schema values are absent from visible initial content.",
+    "recommendation_evidence": "deterministic",
+    "observation_grade": "local_or_live_fetch",
+    "risk": "high",
+    "assets": [
+      "examples/sample-site/site/index.html"
+    ],
+    "owner": "content",
+    "change": [
+      "remove unsupported values or render the verified facts visibly"
+    ],
+    "acceptance": [
+      "visible copy and structured data agree for every material value"
+    ],
+    "observation": {
+      "metric": "fidelity_and_delayed_discovery",
+      "window": "immediate technical check; 28d delayed outcome where applicable"
+    },
+    "rollback": [
+      "remove the changed markup if facts cannot be maintained"
+    ],
+    "status": "planned",
+    "source_finding_ids": [
+      "F-006"
+    ]
+  },
+  {
+    "id": "OD-007",
+    "priority": "P2",
+    "stage": "eligibility",
+    "root_cause": "Found 2 H1 elements.",
+    "recommendation_evidence": "deterministic",
+    "observation_grade": "local_or_live_fetch",
+    "risk": "low",
+    "assets": [
+      "examples/sample-site/site/index.html"
+    ],
+    "owner": "content",
+    "change": [
+      "retain one page-level H1 and demote subordinate headings"
+    ],
+    "acceptance": [
+      "one descriptive H1 remains"
+    ],
+    "observation": {
+      "metric": "technical_acceptance",
+      "window": "immediate technical check; 28d delayed outcome where applicable"
+    },
+    "rollback": [
+      "restore previous heading levels if accessibility testing finds a regression"
+    ],
+    "status": "planned",
+    "source_finding_ids": [
+      "F-007"
+    ]
+  },
+  {
+    "id": "OD-008",
+    "priority": "P2",
+    "stage": "eligibility",
+    "root_cause": "Found 1 images without alt text.",
+    "recommendation_evidence": "deterministic",
+    "observation_grade": "local_or_live_fetch",
+    "risk": "low",
+    "assets": [
+      "examples/sample-site/site/index.html"
+    ],
+    "owner": "content",
+    "change": [
+      "add useful alt text or an explicit empty alt for decorative images"
+    ],
+    "acceptance": [
+      "each image has an intentional alt value"
+    ],
+    "observation": {
+      "metric": "technical_acceptance",
+      "window": "immediate technical check; 28d delayed outcome where applicable"
+    },
+    "rollback": [
+      "restore prior markup if assistive-technology testing regresses"
+    ],
+    "status": "planned",
+    "source_finding_ids": [
+      "F-008"
+    ]
+  },
+  {
+    "id": "OD-009",
+    "priority": "P2",
+    "stage": "eligibility",
+    "root_cause": "Found 1 non-empty links with no text or aria-label.",
+    "recommendation_evidence": "deterministic",
+    "observation_grade": "local_or_live_fetch",
+    "risk": "low",
+    "assets": [
+      "examples/sample-site/site/index.html"
+    ],
+    "owner": "engineering",
+    "change": [
+      "add descriptive link text or an accessible name"
+    ],
+    "acceptance": [
+      "every actionable link has an accessible name"
+    ],
+    "observation": {
+      "metric": "technical_acceptance",
+      "window": "immediate technical check; 28d delayed outcome where applicable"
+    },
+    "rollback": [
+      "restore the prior component if navigation behavior regresses"
+    ],
+    "status": "planned",
+    "source_finding_ids": [
+      "F-009"
+    ]
+  },
+  {
+    "id": "OD-010",
+    "priority": "P2",
+    "stage": "eligibility",
+    "root_cause": "No meta description was found.",
+    "recommendation_evidence": "deterministic",
+    "observation_grade": "local_or_live_fetch",
+    "risk": "low",
+    "assets": [
+      "examples/sample-site/site/index.html"
+    ],
+    "owner": "content",
+    "change": [
+      "add a truthful summary for search snippets"
+    ],
+    "acceptance": [
+      "one visible-content-aligned description is present"
+    ],
+    "observation": {
+      "metric": "technical_acceptance",
+      "window": "immediate technical check; 28d delayed outcome where applicable"
+    },
+    "rollback": [
+      "remove it if the template duplicates or misstates the page"
+    ],
+    "status": "planned",
+    "source_finding_ids": [
+      "F-010"
+    ]
+  },
+  {
+    "id": "OD-011",
+    "priority": "P2",
+    "stage": "eligibility",
+    "root_cause": "The html element has no lang value.",
+    "recommendation_evidence": "deterministic",
+    "observation_grade": "local_or_live_fetch",
+    "risk": "low",
+    "assets": [
+      "examples/sample-site/site/index.html"
+    ],
+    "owner": "engineering",
+    "change": [
+      "set the correct BCP 47 language tag"
+    ],
+    "acceptance": [
+      "the html element declares the page language"
+    ],
+    "observation": {
+      "metric": "technical_acceptance",
+      "window": "immediate technical check; 28d delayed outcome where applicable"
+    },
+    "rollback": [
+      "restore the prior language routing if locale detection regresses"
+    ],
+    "status": "planned",
+    "source_finding_ids": [
+      "F-011"
+    ]
+  },
+  {
+    "id": "OD-012",
+    "priority": "P2",
+    "stage": "eligibility",
+    "root_cause": "The sibling sitemap does not contain the represented index URL.",
+    "recommendation_evidence": "deterministic",
+    "observation_grade": "local_or_live_fetch",
+    "risk": "low",
+    "assets": [
+      "examples/sample-site/site/index.html"
+    ],
+    "owner": "engineering",
+    "change": [
+      "add the canonical deployed URL to the sitemap"
+    ],
+    "acceptance": [
+      "the canonical target appears exactly once"
+    ],
+    "observation": {
+      "metric": "technical_acceptance",
+      "window": "immediate technical check; 28d delayed outcome where applicable"
+    },
+    "rollback": [
+      "remove the entry if the page should not be indexed"
+    ],
+    "status": "planned",
+    "source_finding_ids": [
+      "F-012"
+    ]
+  },
+  {
+    "id": "OD-013",
+    "priority": "P2",
+    "stage": "fidelity",
+    "root_cause": "The page presents an offer but no visible price or explicit availability path was detected.",
+    "recommendation_evidence": "deterministic",
+    "observation_grade": "local_or_live_fetch",
+    "risk": "medium",
+    "assets": [
+      "examples/sample-site/site/index.html"
+    ],
+    "owner": "content",
+    "change": [
+      "show current price/availability or clearly explain how to obtain it"
+    ],
+    "acceptance": [
+      "the offer exposes accurate current commercial terms"
+    ],
+    "observation": {
+      "metric": "fidelity_and_delayed_discovery",
+      "window": "immediate technical check; 28d delayed outcome where applicable"
+    },
+    "rollback": [
+      "restore the prior copy if terms cannot be maintained"
+    ],
+    "status": "planned",
+    "source_finding_ids": [
+      "F-013"
+    ]
+  },
+  {
+    "id": "OD-014",
+    "priority": "P3",
+    "stage": "eligibility",
+    "root_cause": "No viewport meta element was found.",
+    "recommendation_evidence": "deterministic",
+    "observation_grade": "local_or_live_fetch",
+    "risk": "low",
+    "assets": [
+      "examples/sample-site/site/index.html"
+    ],
+    "owner": "engineering",
+    "change": [
+      "add a standard responsive viewport declaration"
+    ],
+    "acceptance": [
+      "mobile layout remains usable and viewport metadata is present"
+    ],
+    "observation": {
+      "metric": "technical_acceptance",
+      "window": "immediate technical check; 28d delayed outcome where applicable"
+    },
+    "rollback": [
+      "remove the change if it breaks intentional embedded behavior"
+    ],
+    "status": "planned",
+    "source_finding_ids": [
+      "F-014"
+    ]
+  },
+  {
+    "id": "OD-015",
+    "priority": "P3",
+    "stage": "eligibility",
+    "root_cause": "The heading outline jumps by more than one level.",
+    "recommendation_evidence": "deterministic",
+    "observation_grade": "local_or_live_fetch",
+    "risk": "low",
+    "assets": [
+      "examples/sample-site/site/index.html"
+    ],
+    "owner": "content",
+    "change": [
+      "make heading levels reflect document hierarchy"
+    ],
+    "acceptance": [
+      "the heading outline has no unexplained jumps"
+    ],
+    "observation": {
+      "metric": "technical_acceptance",
+      "window": "immediate technical check; 28d delayed outcome where applicable"
+    },
+    "rollback": [
+      "restore previous levels if component semantics require another hierarchy"
+    ],
+    "status": "planned",
+    "source_finding_ids": [
+      "F-015"
+    ]
+  }
+]
