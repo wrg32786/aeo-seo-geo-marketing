@@ -350,16 +350,12 @@ def validate_metadata(errors: list[str]) -> None:
             errors.append(f"CITATION.cff is missing: {term}")
 
 
-def load_json(path: Path, label: str, errors: list[str]) -> dict[str, Any] | None:
+def load_json(path: Path, label: str, errors: list[str]) -> Any | None:
     try:
-        value = json.loads(path.read_text(encoding="utf-8"))
+        return json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         errors.append(f"invalid {label}: {exc}")
         return None
-    if not isinstance(value, dict):
-        errors.append(f"{label} must be a JSON object")
-        return None
-    return value
 
 
 def validate_audit_fixture(errors: list[str]) -> None:
