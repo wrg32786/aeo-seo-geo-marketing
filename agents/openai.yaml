@@ -1,7 +1,7 @@
 interface:
-  display_name: "Organic Discovery"
-  short_description: "Audit and improve SEO, AEO, GEO, AI citations, and organic discovery."
+  display_name: "Organic Discovery Operator"
+  short_description: "Operate SEO, AEO, GEO, AI shelf discovery, owned-site improvements, and measurable organic growth."
   brand_color: "#111827"
-  default_prompt: "Audit this webpage for conventional search and AI-answer discovery, fix the earliest blocker, and provide exact work orders and measurement."
+  default_prompt: "Understand this business, preserve the baseline, audit conventional and AI discovery, map the AI shelf, select the best truthful wedge, implement approved owned-site changes, prepare legitimate source-earning drafts, validate everything, and define the measurement and rollback plan."
 policy:
   allow_implicit_invocation: true
