@@ -95,7 +95,7 @@ class OrganicDiscoveryAuditorTests(unittest.TestCase):
         audit = json.loads((ROOT / "examples/sample-site/expected/audit.json").read_text(encoding="utf-8"))
         orders = json.loads((ROOT / "examples/sample-site/expected/work-orders.json").read_text(encoding="utf-8"))
         self.assertEqual(audit["schema_version"], od.SCHEMA_VERSION)
-        self.assertEqual(audit["tool"]["version"], od.VERSION)
+        self.assertEqual(audit["tool"]["version"], od.AUDITOR_VERSION)
         self.assertEqual(len(orders), audit["summary"]["finding_count"])
 
 
