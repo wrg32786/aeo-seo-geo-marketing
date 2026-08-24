@@ -234,8 +234,8 @@ def load_target(target: str, *, timeout: float = DEFAULT_TIMEOUT, max_bytes: int
         body.decode("utf-8", errors="replace"),
         hashlib.sha256(body).hexdigest(),
         _read_file(robots, max_bytes).decode("utf-8", errors="replace") if robots.is_file() else None,
-        str(robots) if robots.is_file() else None,
+        str(robots.relative_to(Path.cwd())) if robots.is_file() and robots.is_relative_to(Path.cwd()) else str(robots) if robots.is_file() else None,
         _read_file(sitemap, max_bytes).decode("utf-8", errors="replace") if sitemap.is_file() else None,
-        str(sitemap) if sitemap.is_file() else None,
+        str(sitemap.relative_to(Path.cwd())) if sitemap.is_file() and sitemap.is_relative_to(Path.cwd()) else str(sitemap) if sitemap.is_file() else None,
         [],
     )
