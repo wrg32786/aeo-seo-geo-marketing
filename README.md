@@ -1,4 +1,4 @@
-# Organic Discovery — LLM-Operated SEO, AEO & GEO Growth Engine
+# Organic Discovery - LLM-Operated SEO, AEO & GEO Growth Engine
 
 [![Validate skill](https://github.com/wrg32786/aeo-seo-geo-marketing/actions/workflows/validate.yml/badge.svg)](https://github.com/wrg32786/aeo-seo-geo-marketing/actions/workflows/validate.yml)
 [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-open%20standard-111827)](https://agentskills.io/)
