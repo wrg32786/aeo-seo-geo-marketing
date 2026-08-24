@@ -1,0 +1,44 @@
+name: Publish validated v0.5.0
+
+on:
+  push:
+    branches:
+      - fix/v0.5-release-validation
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/v0.5-release-validation
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate release contents
+        run: |
+          python scripts/validate_skill.py
+          python -m unittest discover -s tests -v
+      - name: Publish release at the green main commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! gh release view v0.5.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create v0.5.0 \
+              --repo "$GITHUB_REPOSITORY" \
+              --target b4ed0fafad6fc513e066a28e5537130915cacf21 \
+              --title "Organic Discovery v0.5.0 — Business Truth and AI Shelf Mapper" \
+              --notes-file .release/v0.5.0.md
+          fi
+      - name: Remove this one-shot workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm .github/workflows/publish-v050-validated.yml
+          git add -A
+          git commit -m "Remove one-shot validated v0.5.0 release workflow"
+          git push origin HEAD:fix/v0.5-release-validation
