@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 message: "If you use Organic Discovery, please cite the project using this metadata."
-title: "Organic Discovery: An Evidence-Grounded SEO, AEO, and GEO Agent Skill"
-version: "0.3.0"
-date-released: "2026-08-22"
+title: "Organic Discovery: An Evidence-Grounded SEO, AEO, and GEO Organic Growth Operator"
+version: "0.3.1"
+date-released: "2026-08-24"
 type: software
 authors:
   - name: "The AIgent"
@@ -10,13 +10,17 @@ repository-code: "https://github.com/wrg32786/aeo-seo-geo-marketing"
 url: "https://github.com/wrg32786/aeo-seo-geo-marketing"
 license: MIT
 abstract: >-
-  An open-source Agent Skill for conventional SEO, Answer Engine Optimization,
-  Generative Engine Optimization, AI search visibility, citation analysis,
-  factual fidelity, implementation work orders, and business-outcome measurement.
+  An open-source Agent Skill and product blueprint for LLM-operated organic growth
+  across conventional SEO, Answer Engine Optimization, Generative Engine
+  Optimization, AI shelf mapping, citation analysis, factual fidelity, owned-site
+  implementation, legitimate source earning, experiments, and business-outcome
+  measurement.
 keywords:
   - search engine optimization
   - answer engine optimization
   - generative engine optimization
+  - organic growth operator
+  - AI shelf
   - AI search optimization
   - AI SEO
   - LLM SEO

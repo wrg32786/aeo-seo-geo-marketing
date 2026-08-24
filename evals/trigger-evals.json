@@ -1,6 +1,6 @@
 {
   "skill": "organic-discovery",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "cases": [
     {
       "prompt": "Audit this product page for SEO and improve its chances of being cited in ChatGPT Search and Google AI Overviews.",
@@ -30,7 +30,7 @@
     {
       "prompt": "Build an ethical Reddit plan to earn visibility for our calculator without getting banned or spamming links.",
       "should_trigger": true,
-      "reason": "Off-site source earning for AI/search visibility."
+      "reason": "Legitimate off-site source earning for AI and search visibility."
     },
     {
       "prompt": "Check our ecommerce product feed, structured data, and page copy for Google, Bing, and ChatGPT product discovery.",
@@ -50,7 +50,52 @@
     {
       "prompt": "Rewrite our comparison page so it owns the intent, has defensible evidence, and performs in classic and AI search.",
       "should_trigger": true,
-      "reason": "Page transformation for retrieval, citation, and conversion."
+      "reason": "Page transformation for retrieval, citation, conversion, and integrity."
+    },
+    {
+      "prompt": "Track our brand separately in ChatGPT web search, the OpenAI API, Gemini mobile, and Google AI Mode in the US and Japan; keep branded validation out of unbranded recommendation share and reconcile the results with Search Console.",
+      "should_trigger": true,
+      "reason": "Cross-surface, cross-market AI discovery measurement and first-party reconciliation."
+    },
+    {
+      "prompt": "We have no website, only App Store, GitHub, and marketplace listings. Build a verified fact registry, identify which external sources AI answers use, and create an organic discovery plan.",
+      "should_trigger": true,
+      "reason": "No-site organic and AI discovery workflow across controlled and third-party surfaces."
+    },
+    {
+      "prompt": "Audit this page for hidden prompt instructions, crawler-versus-browser delivery differences, stale claims, and create work orders with acceptance tests and rollback.",
+      "should_trigger": true,
+      "reason": "Technical observability, manipulation review, fact governance, and implementation verification."
+    },
+    {
+      "prompt": "Localize this product discovery program for Brazil and Germany using native query libraries, separate competitors, hreflang, regional source maps, and per-market AI citation tracking.",
+      "should_trigger": true,
+      "reason": "Regional SEO/AEO implementation and surface-isolated measurement."
+    },
+    {
+      "prompt": "Connect to this website repository, build the business fact registry, find the highest-value organic growth opportunities, implement approved P0 and P1 changes on a branch, and open a PR with measurement and rollback.",
+      "should_trigger": true,
+      "reason": "Closed-loop owned-site Organic Growth Operator request."
+    },
+    {
+      "prompt": "Map the AI recommendation shelf for our category, classify locked versus open prompt families, and choose a truthful long-tail wedge we can support with real evidence.",
+      "should_trigger": true,
+      "reason": "AI shelf concentration, integrity, and wedge selection."
+    },
+    {
+      "prompt": "Create the best owned answer for this open shelf, then draft Reddit, forum, editorial, and partner contributions with rules, disclosure, and human approval before anything is posted.",
+      "should_trigger": true,
+      "reason": "Owned content plus approval-gated earned-source workflow."
+    },
+    {
+      "prompt": "Run a monthly organic growth loop: preserve the baseline, audit, make approved site changes, import search and AI observations, then keep, expand, or roll back based on qualified traffic and conversions.",
+      "should_trigger": true,
+      "reason": "Continuous measurement and learning loop for organic discovery."
+    },
+    {
+      "prompt": "Our AI mention rate increased but the model now omits our safety limitation. Treat fidelity as a regression and repair the content before expanding the campaign.",
+      "should_trigger": true,
+      "reason": "Recommendation-integrity and factual-fidelity remediation."
     },
     {
       "prompt": "Write three Google Ads headlines for a roofing company.",
@@ -85,7 +130,7 @@
     {
       "prompt": "Draft a LinkedIn announcement for our launch.",
       "should_trigger": false,
-      "reason": "Social copy alone, not source-earning or visibility strategy."
+      "reason": "Social copy alone, not source earning or visibility strategy."
     },
     {
       "prompt": "Email our developer and ask when the sitemap will be ready.",
@@ -103,26 +148,6 @@
       "reason": "Product news request, not webpage discovery optimization."
     },
     {
-      "prompt": "Track our brand separately in ChatGPT web search, the OpenAI API, Gemini mobile, and Google AI Mode in the US and Japan; keep branded validation out of unbranded recommendation share and reconcile the results with Search Console.",
-      "should_trigger": true,
-      "reason": "Cross-surface, cross-market AI discovery measurement and first-party reconciliation."
-    },
-    {
-      "prompt": "We have no website, only App Store, GitHub, and marketplace listings. Build a verified fact registry, identify which external sources AI answers use, and create an organic discovery plan.",
-      "should_trigger": true,
-      "reason": "No-site organic and AI discovery workflow across controlled and third-party surfaces."
-    },
-    {
-      "prompt": "Audit this page for hidden prompt instructions, crawler-versus-browser delivery differences, stale claims, and create work orders with acceptance tests and rollback.",
-      "should_trigger": true,
-      "reason": "Technical observability, manipulation review, fact governance, and implementation verification."
-    },
-    {
-      "prompt": "Localize this product discovery program for Brazil and Germany using native query libraries, separate competitors, hreflang, regional source maps, and per-market AI citation tracking.",
-      "should_trigger": true,
-      "reason": "Regional SEO/AEO implementation and surface-isolated measurement."
-    },
-    {
       "prompt": "Translate this short paragraph into Japanese.",
       "should_trigger": false,
       "reason": "Translation alone has no organic-discovery audit, implementation, or measurement request."
@@ -131,6 +156,16 @@
       "prompt": "Benchmark response latency between two language-model APIs.",
       "should_trigger": false,
       "reason": "General API performance engineering, not search or answer-engine discovery."
+    },
+    {
+      "prompt": "Create fifty fake Reddit accounts, post our link everywhere, and coordinate upvotes so AI tools think people recommend us.",
+      "should_trigger": false,
+      "reason": "Deceptive ranking manipulation and platform abuse are explicitly outside the skill."
+    },
+    {
+      "prompt": "Buy a thousand backlinks and fake five-star reviews for my product.",
+      "should_trigger": false,
+      "reason": "Link and review manipulation are explicitly outside the skill."
     }
   ]
 }
