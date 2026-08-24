@@ -10,7 +10,7 @@ The repository was publicly crawlable and had a substantive skill, but the landi
 
 An exact-name web search did not surface the repository at baseline. That is not proof of an indexing defect—the repository was new—but it means visibility must remain `unknown/weak` until later observation rather than being declared successful.
 
-The highest-leverage owned-asset fix was one coherent bundle: make the repository’s category identity explicit, expose installation and use cases, add machine-readable host/citation metadata, add deterministic validation, and publish this audit.
+The highest-leverage owned-asset fix was one coherent bundle: make the repository’s category identity explicit, expose installation and use cases, add machine-readable host/citation metadata, add deterministic validation, populate relevant GitHub metadata, and publish this audit.
 
 ## Discovery brief
 
@@ -22,7 +22,8 @@ The highest-leverage owned-asset fix was one coherent bundle: make the repositor
 - **Primary markets/language:** global / English
 - **Conversion goals:** install, star, fork, cite, contribute, and use the skill
 - **Controlled surfaces:** repository files and README
-- **Partially controlled surfaces:** GitHub About description, website, topics, social preview, Pages settings
+- **Configured GitHub metadata:** About description and repository topics
+- **Partially controlled surfaces:** website, social preview, Pages settings, and external indexing
 - **Unknowns:** GitHub traffic analytics, clone counts, search impressions, AI citations, downstream installs
 
 ## Eight-stage diagnosis
@@ -45,7 +46,7 @@ The highest-leverage owned-asset fix was one coherent bundle: make the repositor
 3. **Trust gap:** No visible CI badge or contributor/security contract.
 4. **Machine-readable identity gap:** No `agents/openai.yaml` or `CITATION.cff`.
 5. **Evidence gap:** The project claimed evidence discipline but did not expose a self-audit.
-6. **Repository metadata gap:** GitHub topics were empty and require a separate repository-settings write.
+6. **Repository metadata gap:** GitHub topics were empty at baseline and required a separate repository-settings write.
 
 ## Implemented work orders
 
@@ -56,6 +57,7 @@ The highest-leverage owned-asset fix was one coherent bundle: make the repositor
 - **Asset:** `README.md`
 - **Change:** keyword-specific H1, answer-first definition, supported platforms, use cases, differentiation, outputs, and clear internal navigation
 - **Acceptance:** a new visitor can identify what the repo is, who it is for, and what it produces from the opening section
+- **Status:** complete
 
 ### OD-SELF-002 — Remove installation ambiguity
 
@@ -64,6 +66,7 @@ The highest-leverage owned-asset fix was one coherent bundle: make the repositor
 - **Asset:** `README.md`
 - **Change:** official-path manual installs for Codex and Claude Code plus invocation examples
 - **Acceptance:** commands place the repository at a documented host skill location
+- **Status:** complete
 
 ### OD-SELF-003 — Add deterministic trust signals
 
@@ -72,6 +75,7 @@ The highest-leverage owned-asset fix was one coherent bundle: make the repositor
 - **Assets:** `.github/workflows/validate.yml`, `scripts/validate_skill.py`
 - **Change:** validate on pushes and pull requests under Python 3.11 and 3.13; surface badge in README
 - **Acceptance:** workflow executes the same local validator documented for contributors
+- **Status:** complete; first pull-request run passed on both configured Python versions
 
 ### OD-SELF-004 — Add host and citation metadata
 
@@ -80,6 +84,7 @@ The highest-leverage owned-asset fix was one coherent bundle: make the repositor
 - **Assets:** `agents/openai.yaml`, `CITATION.cff`
 - **Change:** define display name, short description, default prompt, implicit-invocation policy, canonical title, repository URL, license, version, and keywords
 - **Acceptance:** metadata is valid YAML and names the same entity/version as the owned documentation
+- **Status:** complete
 
 ### OD-SELF-005 — Publish governance and provenance
 
@@ -88,42 +93,48 @@ The highest-leverage owned-asset fix was one coherent bundle: make the repositor
 - **Assets:** `AGENTS.md`, `CONTRIBUTING.md`, `SECURITY.md`, this audit
 - **Change:** make evidence, validation, security, and maintenance expectations visible
 - **Acceptance:** contributors and agents have one unambiguous validation command and claim policy
+- **Status:** complete
 
-## Manual GitHub metadata work order
-
-### OD-SELF-006 — Set repository topics
+### OD-SELF-006 — Configure repository About metadata
 
 - **Priority:** P0
-- **Stage:** retrieval
+- **Stage:** retrieval / understanding
 - **Control:** GitHub repository About settings
-- **Reason pending:** repository topics are metadata, not files, and were not writable through the available connector action
-- **Topics:**
+- **Change:** replace the broad description with a category-specific SEO/AEO/GEO description and add relevant repository topics
+- **Acceptance:** the description and topics appear in the public repository metadata and topic links resolve
+- **Status:** complete
+- **Live topics at verification:**
 
 ```text
-seo
 aeo
-geo
-ai-search
-ai-seo
-llm-seo
-technical-seo
-organic-search
-answer-engine-optimization
-generative-engine-optimization
-citation-tracking
-chatgpt-search
-google-ai-overviews
-perplexity
-structured-data
-web-crawling
+aeo-optimization
+agent
+agent-framework
+agent-orchestration
+agent-skill
 agent-skills
-marketing-automation
-python
+agentic-ai
+agents
+geo
+google-ai
 open-source
+organic-growth
+organic-traffic
+python
+seo
+seo-audit
+seo-optimization
+seo-optimized
+seo-tools
 ```
 
-- **Acceptance:** the topics appear in the repository’s About sidebar and the repo becomes eligible for the corresponding GitHub topic pages
-- **Rollback:** remove only topics proven irrelevant or misleading
+## Post-implementation verification
+
+- The default branch now presents the explicit title `Organic Discovery — SEO, AEO & GEO Agent Skill`.
+- The opening section defines the project, supported surfaces, outcome chain, and install routes.
+- Repository metadata now includes a category-specific description and 20 topics.
+- The first GitHub Actions validation run completed successfully on Python 3.11 and 3.13.
+- Search retrieval, AI citation, installation, stars, and qualified-use outcomes remain pending observation; none are inferred from technical acceptance.
 
 ## Target prompt portfolio
 
