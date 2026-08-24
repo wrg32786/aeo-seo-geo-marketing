@@ -1,23 +1,37 @@
 # Output Contracts
 
-Use this reference before emitting audits, shelf maps, implementation plans, work orders, publication gates, experiment records, acceptance reports, or learning records. The purpose is deterministic handoff: another operator should be able to execute or verify the work without reconstructing intent.
+Use this reference before emitting audits, fact validation, shelf maps, wedge plans, work orders, publication gates, experiments, acceptance reports, or learning records.
+
+## Contract versions
+
+```text
+v0.4 audit artifact:          organic-discovery/audit/0.4
+v0.5 normalized fact:         organic-discovery/facts/1.0
+v0.5 normalized observation:  organic-discovery/observations/1.0
+v0.5 shelf map:               organic-discovery/shelf-map/1.0
+v0.5 wedge plan:              organic-discovery/wedge-plan/1.0
+```
+
+The project version and artifact schema version are separate. A project release may preserve an older artifact contract unchanged.
 
 ## General rules
 
-- Preserve `unknown`/`null`; do not coerce missing observations to `false` or zero.
-- Expose evidence class and confidence.
-- Expose numerators and denominators for every rate.
-- Keep exact platform/surface conditions in raw records.
+- Preserve `unknown` and `null`; never coerce missing evidence to `false` or zero.
+- Expose evidence and confidence.
+- Expose numerator and denominator for every rate.
+- Keep exact surface dimensions in every raw record and shelf group.
+- Keep seller-controlled and independent evidence distinguishable.
 - Keep planned, drafted, technically accepted, published, and outcome-validated states distinct.
-- A technical acceptance pass does not establish ranking, citation, traffic, or conversion success.
-- Every public material claim must trace to the fact registry.
+- A technical pass does not establish ranking, citation, traffic, or conversion success.
+- Every public material claim traces to the fact registry.
+- Hard-gate failures remain visible and cannot be overridden by a high weighted score.
 
 ## 1. Discovery brief
 
 ```markdown
 # Discovery Brief
 
-- Controlled asset(s):
+- Controlled assets:
 - Repository / CMS / listings:
 - Entity / offer:
 - Audience:
@@ -35,13 +49,32 @@ Use this reference before emitting audits, shelf maps, implementation plans, wor
 - Unknowns:
 ```
 
-## 2. Canonical fact registry
+## 2. Fact-registry input
 
-Recommended CSV:
+Canonical CSV header:
 
 ```csv
-claim_id,entity,claim_type,canonical_wording,value,unit,source_url,source_type,verified_at,evidence_grade,offer_exists,availability,publish_status,owner,refresh_trigger,limitations
-clm-001,Example,price,"Plans start at $29 per month",29,USD/month,https://example.com/pricing,first_party,2026-08-24,O,true,US,approved,finance,price_change,"Taxes may apply"
+claim_id,entity_id,entity,claim_type,canonical_wording,value,unit,source_url,source_type,verified_at,evidence_grade,offer_exists,availability,publish_status,owner,refresh_trigger,limitations,prompt_families,market,language,expires_at
+```
+
+Example:
+
+```csv
+clm-001,example-crm,Example CRM,price,"Plans start at $29 per month",29,USD/month,https://example.com/pricing,first_party,2026-08-24,O,true,US,approved,finance,price_change,"Taxes may apply",small-agency-crm,US,en,2026-12-31
+```
+
+Allowed `source_type` values:
+
+```text
+first_party
+seller_controlled
+independent_editorial
+independent_test
+government
+academic
+customer_authorized
+community
+unknown
 ```
 
 Allowed `publish_status` values:
@@ -54,23 +87,72 @@ expired
 prohibited
 ```
 
-A missing source, expired fact, unavailable offer, or prohibited status MUST block publication-ready copy that depends on it.
+A missing source, invalid date, nonexistent offer, unavailable offer, expired fact, prohibited fact, or unsupported sensitive claim blocks publication-ready copy that depends on it.
 
-## 3. Eight-stage diagnosis
+## 3. Fact-validation output
+
+```json
+{
+  "schema_version": "organic-discovery/facts/1.0",
+  "tool": {"name": "Organic Discovery", "version": "0.5.0"},
+  "source": "fact-registry.csv",
+  "summary": {
+    "record_count": 10,
+    "publishable_count": 7,
+    "blocked_count": 3,
+    "error_count": 0
+  },
+  "records": [],
+  "validation_errors": []
+}
+```
+
+Each normalized record includes:
+
+```json
+{
+  "claim_id": "clm-001",
+  "entity_id": "example-crm",
+  "entity": "Example CRM",
+  "claim_type": "price",
+  "canonical_wording": "Plans start at $29 per month",
+  "value": "29",
+  "unit": "USD/month",
+  "source_url": "https://example.com/pricing",
+  "source_type": "first_party",
+  "source_ownership": "seller_controlled",
+  "verified_at": "2026-08-24",
+  "evidence_grade": "O",
+  "offer_exists": true,
+  "availability": ["US"],
+  "publish_status": "approved",
+  "owner": "finance",
+  "refresh_trigger": "price_change",
+  "limitations": ["Taxes may apply"],
+  "prompt_families": ["small-agency-crm"],
+  "market": "US",
+  "language": "en",
+  "expires_at": "2026-12-31",
+  "publishable": true,
+  "blocking_reasons": []
+}
+```
+
+`publishable=true` means the deterministic record passed current gates. It does not replace legal, medical, safety, brand, or human review when required.
+
+## 4. Eight-stage diagnosis
 
 ```markdown
-## Stage Diagnosis
-
 | Stage | Status | Evidence | Confidence | Root issue / note |
 |---|---|---|---|---|
 | Activation | unknown | — | low | surface does not expose search invocation |
-| Eligibility | blocked | [O] | high | WAF challenge to search crawler |
-| Retrieval | unknown | — | low | cannot evaluate until access is fixed |
-| Context allocation | unknown | — | low | not observable |
+| Eligibility | blocked | [O] | high | crawler receives 403 |
+| Retrieval | unknown | — | low | not observed |
+| Context allocation | unknown | — | low | not exposed |
 | Source selection | weak | [A] | medium | competitor cited in 7/10 comparable runs |
 | Absorption | unknown | — | low | target not cited |
-| Fidelity | healthy | [A] | medium | branded validation facts accurate |
-| Behavior | weak | first-party | high | qualified organic sessions declining |
+| Fidelity | healthy | [A] | medium | facts accurate |
+| Behavior | weak | first-party | high | qualified sessions declining |
 ```
 
 Statuses:
@@ -83,7 +165,7 @@ healthy
 not_applicable
 ```
 
-## 4. Prompt portfolio
+## 5. Prompt portfolio
 
 ```csv
 prompt_id,prompt,family,intent,buying_stage,constraint,market,language,branded,parent_prompt_id,priority,notes
@@ -92,11 +174,32 @@ p002,"best crm for a three person agency",small-agency-crm,recommendation,buy,"t
 p003,"is Example CRM good for agencies",small-agency-crm,evaluation,evaluate,"agency",US,en,true,,medium,
 ```
 
-Branded validation rows MUST be excluded from unbranded recommendation-share denominators.
-
 Prompts are measurement units. They do not automatically justify separate pages.
 
-## 5. Raw observation record
+## 6. Raw observation input
+
+Required exact-surface dimensions:
+
+```text
+run_id
+timestamp
+platform
+surface
+mode
+model
+market
+language
+device
+account_state
+session_state
+prompt_id
+prompt_family
+prompt
+branded
+target_entity
+```
+
+Recommended JSONL record:
 
 ```json
 {
@@ -105,14 +208,17 @@ Prompts are measurement units. They do not automatically justify separate pages.
   "platform": "openai",
   "surface": "chatgpt-search",
   "mode": "web-search",
-  "model": null,
+  "model": "gpt-example",
   "market": "US",
   "language": "en",
   "device": "web-desktop",
   "account_state": "logged-out",
   "session_state": "clean",
   "prompt_id": "p002",
+  "prompt_family": "small-agency-crm",
   "prompt": "best crm for a three person agency",
+  "branded": false,
+  "target_entity": "Example CRM",
   "search_triggered": true,
   "search_queries": [],
   "answer": "...",
@@ -128,7 +234,8 @@ Prompts are measurement units. They do not automatically justify separate pages.
     {
       "entity": "Example CRM",
       "position": 2,
-      "constraint_satisfied": true
+      "constraint_satisfied": true,
+      "available": true
     }
   ],
   "target_url_retrieved": null,
@@ -139,46 +246,62 @@ Prompts are measurement units. They do not automatically justify separate pages.
 }
 ```
 
-Do not infer retrieval from citation absence when the surface does not expose retrieval.
+Do not infer retrieval from citation absence when retrieval is not exposed.
 
-## 6. AI shelf map
+## 7. Normalized observation
+
+The normalized observation retains the complete grouping key and normalized recommendation/citation arrays. Invalid required dimensions are validation errors. Optional missing metrics remain `null`.
+
+Machine contract: [`../schemas/observation.schema.json`](../schemas/observation.schema.json).
+
+## 8. AI shelf map
 
 ```json
 {
-  "shelf_map_id": "shelf-small-agency-crm-us-en-2026-08-24",
-  "prompt_family": "small-agency-crm",
-  "market": "US",
-  "language": "en",
-  "surfaces": ["chatgpt-search", "perplexity-web", "google-ai-mode"],
-  "eligible_runs": 60,
-  "shelf_state": "fragmented",
-  "confidence": "medium",
-  "leading_entities": [
-    {
-      "entity": "Rival A",
-      "mention_rate": 0.55,
-      "first_mentioned_share": 0.32,
-      "recommendation_share": 0.28
-    }
+  "schema_version": "organic-discovery/shelf-map/1.0",
+  "tool": {"name": "Organic Discovery", "version": "0.5.0"},
+  "grouping_dimensions": [
+    "platform",
+    "surface",
+    "mode",
+    "model",
+    "market",
+    "language",
+    "device",
+    "account_state",
+    "session_state",
+    "prompt_family",
+    "target_entity",
+    "branded"
   ],
-  "incumbent_concentration": {
-    "metric": "leading_entity_share",
-    "value": 0.28
-  },
-  "volatility": {
-    "metric": "set_change_rate",
-    "value": 0.47
-  },
-  "cross_surface_agreement": 0.38,
-  "constraint_satisfaction_rate": 0.72,
-  "source_mix": {
-    "seller_controlled": 19,
-    "independent_editorial": 31,
-    "community": 12,
-    "other": 8
-  },
-  "integrity_issues": [],
-  "unknowns": []
+  "groups": [
+    {
+      "group_id": "...",
+      "dimensions": {},
+      "run_count": 4,
+      "eligible_unbranded_runs": 4,
+      "shelf_state": "fragmented",
+      "classification": {
+        "reason": "Recommendation sets rotate and agreement is low.",
+        "thresholds": {}
+      },
+      "metrics": {
+        "recommendation_coverage": {"numerator": 4, "denominator": 4, "rate": 1.0},
+        "target_recommendation_share": {"numerator": 1, "denominator": 4, "rate": 0.25},
+        "target_first_mentioned_share": {"numerator": 0, "denominator": 4, "rate": 0.0},
+        "leading_entity_share": {"entity": "Rival A", "numerator": 2, "denominator": 4, "rate": 0.5},
+        "set_agreement": {"numerator": 1, "denominator": 6, "rate": 0.1667},
+        "set_volatility": {"numerator": 5, "denominator": 6, "rate": 0.8333},
+        "citation_domain_overlap": {"numerator": 1, "denominator": 6, "rate": 0.1667},
+        "constraint_satisfaction": {"numerator": 3, "denominator": 4, "rate": 0.75},
+        "fidelity": {"numerator": 4, "denominator": 4, "rate": 1.0}
+      },
+      "entities": [],
+      "source_mix": {},
+      "integrity_issues": [],
+      "unknowns": []
+    }
+  ]
 }
 ```
 
@@ -193,67 +316,97 @@ unsafe
 unknown
 ```
 
-The classification rationale MUST be emitted alongside the class.
+The classification rationale and thresholds MUST be emitted. A branded group is `unknown` for unbranded opportunity planning.
 
-## 7. Wedge opportunity record
+Machine contract: [`../schemas/shelf-map.schema.json`](../schemas/shelf-map.schema.json).
 
-```yaml
-wedge_id: wedge-small-agency-no-admin
-prompt_family: small-agency-crm
-user_constraint: minimal administration for a three-person agency
-business_value: high
-legitimate_offer_fit: strong
-fact_support: approved
-shelf_state: open
-shelf_evidence: A
-current_answer_gap: existing answers recommend enterprise tools without addressing setup burden
-controlled_asset: https://example.com/crm-for-small-agencies
-priority_factors:
-  qualified_demand: 4
-  legitimate_fit: 5
-  evidence_strength: 4
-  shelf_openness: 4
-  execution_probability: 5
-  cost: 2
-  risk: 2
-  maintenance: 2
-priority_rationale: "High-fit constraint with weak current answers; all claims are supportable."
-rejection_conditions:
-  - offer availability changes
-  - setup-time claim cannot be substantiated
-status: approved_for_planning
+## 9. Wedge candidate input
+
+```json
+{
+  "wedge_id": "wedge-small-agency-no-admin",
+  "prompt_family": "small-agency-crm",
+  "target_entity": "Example CRM",
+  "required_claim_ids": ["clm-001", "clm-002"],
+  "legitimate_offer_fit": true,
+  "user_constraint": "minimal administration",
+  "controlled_asset": "https://example.com/crm-for-small-agencies",
+  "priority_factors": {
+    "qualified_demand": 4,
+    "legitimate_fit": 5,
+    "evidence_strength": 4,
+    "shelf_openness": 4,
+    "execution_probability": 5,
+    "cost": 2,
+    "risk": 2,
+    "maintenance": 2
+  }
+}
 ```
 
-The factors are inspectable planning inputs—not an engine score.
+## 10. Wedge-plan output
 
-## 8. Technical blocker table
+```json
+{
+  "schema_version": "organic-discovery/wedge-plan/1.0",
+  "tool": {"name": "Organic Discovery", "version": "0.5.0"},
+  "summary": {"candidate_count": 5, "accepted_count": 2, "rejected_count": 3},
+  "accepted": [
+    {
+      "wedge_id": "wedge-small-agency-no-admin",
+      "status": "accepted_for_planning",
+      "hard_gates": [],
+      "planning_index": 3.0,
+      "planning_index_boundary": "Transparent planning aid; not an engine score or timing promise."
+    }
+  ],
+  "rejected": [
+    {
+      "wedge_id": "wedge-broad-category",
+      "status": "rejected",
+      "hard_gates": [
+        {"code": "shelf.locked", "detail": "The exact shelf is locked."}
+      ]
+    }
+  ]
+}
+```
+
+Hard gates include, as applicable:
+
+```text
+facts.missing
+facts.not_publishable
+offer.nonexistent
+offer.unavailable
+fit.false
+shelf.not_found
+shelf.branded_only
+shelf.insufficient_observations
+shelf.locked
+shelf.unsafe
+shelf.unknown
+```
+
+Rejected candidates cannot be restored by the planning index.
+
+Machine contract: [`../schemas/wedge-plan.schema.json`](../schemas/wedge-plan.schema.json).
+
+## 11. Technical blocker table
 
 ```markdown
-## Technical Blockers
-
 | Priority | Layer | Asset | Finding | Evidence | Exact fix | Acceptance |
 |---|---|---|---|---|---|---|
 | P0 | Access | `/pricing` | crawler receives 403 | [O] + fetch | adjust verified-bot WAF rule | 200 + matching extraction |
 ```
 
-Order by dependency:
+Order by:
 
 ```text
 access → routing → understanding → citability → corroboration → behavior
 ```
 
-## 9. Source-chain map
-
-```markdown
-## Source Chain
-
-| Prompt family | Surface | Recurring source | Source type | Competitor present | Target present | Legitimate inclusion path | Confidence |
-|---|---|---|---|---|---|---|---|
-```
-
-Do not add an inclusion path when the only route would be spam, deception, undisclosed promotion, identity manipulation, or policy circumvention.
-
-## 10. Truth and publication gate
+## 12. Truth and publication gate
 
 ```yaml
 gate_id: publish-wedge-small-agency
@@ -285,7 +438,7 @@ blocked_pending_approval
 rejected
 ```
 
-## 11. Work order
+## 13. Work order
 
 ```yaml
 id: OD-001
@@ -299,14 +452,14 @@ assets:
   - https://example.com/compare/rival
 owner: content
 change:
-  - add current pricing table from canonical sources
+  - add current pricing from approved facts
   - add verification date
   - disclose methodology and relationship
 acceptance:
   - every price matches the fact registry
   - comparison dimensions are symmetric
   - visible page and schema agree
-  - page build and extraction checks pass
+  - build and extraction checks pass
 observation:
   prompt_family: comparison
   metrics:
@@ -316,275 +469,75 @@ observation:
     - qualified_conversion_rate
   window: 28d
 rollback:
-  - revert the comparison section if facts cannot be maintained
+  - revert if facts cannot be maintained
 status: planned
 ```
 
-Required work-order states:
-
-```text
-planned
-drafted
-approval_required
-approved
-implemented
-technical_acceptance_passed
-published
-observing
-validated
-failed
-rolled_back
-```
-
-## 12. Owned-asset brief
+## 14. Implementation manifest
 
 ```markdown
-# Owned Asset Brief
-
-- Wedge:
-- User job:
-- Material constraint:
-- Search intent:
-- AI shelf state:
-- Why the offer legitimately fits:
-- Claims allowed:
-- Claims requiring approval:
-- Required limitations:
-- Independent evidence:
-- Original evidence / demonstration:
-- Existing asset to update or new asset justification:
-- Canonical destination:
-- Internal-link plan:
-- Conversion path:
-- Acceptance checks:
-- Observation plan:
-```
-
-## 13. Implementation manifest
-
-```markdown
-## Implementation Manifest
-
 | File / URL | Change | Why | Validation |
 |---|---|---|---|
-| `app/pricing/page.tsx` | render canonical price facts server-side | initial HTML was empty | extraction contains approved pricing |
-| `public/robots.txt` | remove accidental wildcard block | search crawler denied | parser + live request allow path |
+| `app/pricing/page.tsx` | render approved price facts server-side | initial HTML was empty | extraction contains pricing |
 ```
 
-Include only assets actually changed. Preserve the source revision and rollback revision.
+Include only assets actually changed.
 
-## 14. Earned-source contribution record
-
-```yaml
-contribution_id: src-reddit-example-001
-source: reddit
-community: r/example
-thread_url: https://www.reddit.com/r/example/comments/...
-prompt_family: small-agency-crm
-observed_source_role: community_language_and_referral
-rules_checked_at: 2026-08-24
-audience_need: user asked for low-admin tools for a three-person agency
-affiliation: employee of Example CRM
-draft: |
-  Full useful answer goes here.
-link:
-  included: true
-  url: https://example.com/crm-for-small-agencies
-  why_needed: contains the setup-time methodology and comparison table
-approval: pending
-published_url: null
-outcomes:
-  survived_moderation: null
-  engagement: null
-  referral_sessions: null
-  later_citations: null
-```
-
-Public third-party publication remains approval-gated by default.
-
-## 15. Acceptance report
-
-```markdown
-## Acceptance
-
-| Work order | Technical acceptance | Evidence | Delayed outcome | Next check |
-|---|---|---|---|---|
-| OD-001 | PASS | fetched page + tests | pending_observation | 2026-09-21 |
-```
-
-A work order may pass technical acceptance while retrieval, citation, traffic, and conversion remain pending.
-
-## 16. Experiment record
+## 15. Experiment record
 
 ```yaml
 experiment_id: EXP-004
-hypothesis: sourced symmetric comparison data improves qualified discovery for comparison prompts without harming search traffic
+hypothesis: sourced comparison data improves retrieval and qualified discovery without harming fidelity
 baseline_window: 2026-07-20/2026-08-19
 treatment_started: 2026-08-24
 treatment_assets:
   - https://example.com/compare/rival
-control:
-  - unchanged comparison prompt family for rival-2
 primary_metric: qualified_organic_sessions
 secondary_metrics:
   - citation_rate
   - absorption_rate
   - fidelity_rate
-  - organic_impressions
   - conversion_rate
 stop_rules:
   - factual maintenance failure
-  - material constraint-satisfaction regression
-  - sustained organic decline unexplained by broader site trend
-confounders:
-  - none_known
+  - material fidelity regression
+  - sustained unexplained organic decline
 result: pending
 ```
 
-## 17. Measurement report
+## 16. Final report
 
 ```markdown
-## Measurement
-
-| Metric | Numerator | Denominator | Rate | Surface / source | Window | Notes |
-|---|---:|---:|---:|---|---|---|
-| Citation | 8 | 40 | 20.0% | ChatGPT Search | 28d | 10 prompts × 4 runs |
-| Absorption | 5 | 8 cited | 62.5% | ChatGPT Search | 28d | substantive + partial |
-| Recommendation share | 6 | 20 | 30.0% | unbranded buy prompts | 28d | branded prompts excluded |
-| Fidelity | 7 | 8 appearances | 87.5% | ChatGPT Search | 28d | one limitation omitted |
-| Qualified organic sessions | 143 | — | — | analytics | 28d | target landing cluster |
-| Attributable AI sessions | 23 | — | — | analytics + logs | 28d | lower bound |
-| Conversions | 9 | 166 qualified sessions | 5.4% | analytics + CRM | 28d | deduplicated |
-```
-
-## 18. Learning record
-
-```yaml
-learning_id: learn-exp-004
-experiment_id: EXP-004
-site: example.com
-prompt_family: comparison
-surfaces:
-  - chatgpt-search
-  - google-ai-mode
-market: US
-result_summary: "Search clicks increased; citations improved only on ChatGPT Search; one answer omitted a limitation."
-technical_acceptance: pass
-business_outcome: positive
-fidelity_outcome: mixed
-decision: iterate
-do_again:
-  - sourced symmetric comparison table
-avoid:
-  - unsupported setup-time wording
-next_action:
-  - tighten limitation block before expanding to adjacent prompts
-bounded_to:
-  - this site
-  - US English
-  - comparison prompt family
-  - observed window
-```
-
-Allowed decisions:
-
-```text
-keep
-iterate
-expand
-stop
-rollback
-inconclusive
-```
-
-## 19. Operator run manifest
-
-```yaml
-run_id: od-run-2026-08-24-001
-mode: supervised_execute
-controlled_assets:
-  - https://example.com
-repository_revision_before: abc123
-repository_revision_after: def456
-facts_version: facts-2026-08-24
-baseline_artifacts:
-  - baseline/page.json
-  - baseline/observations.jsonl
-selected_wedge: wedge-small-agency-no-admin
-work_orders:
-  - OD-001
-  - OD-002
-publication_gates:
-  - publish-wedge-small-agency
-approvals:
-  owned_site_merge: pending
-  third_party_posts: pending
-technical_acceptance: pass
-outcome_status: pending_observation
-rollback_revision: abc123
-```
-
-## 20. Final report contract
-
-Unless the user requests another format:
-
-```markdown
-# Organic Discovery Operator Report — [entity / asset]
+# Organic Discovery Report — [entity]
 
 ## Executive diagnosis
-[earliest blocker, strongest wedge, confidence, business consequence]
-
-## Discovery brief and permissions
-[assets, mode, approvals, goals, unknowns]
-
 ## Business Truth
-[fact gaps, stale or prohibited claims]
-
 ## Stage diagnosis
-[eight-stage table]
-
-## Demand and AI shelf
-[prompt families, shelf state, concentration, sources, integrity]
-
-## Selected wedge
-[value, legitimate fit, evidence, rejection conditions]
-
-## P0/P1 work orders
-[dependency-ordered exact changes]
-
-## Implementation and acceptance
-[actual files/URLs changed, checks, approval state]
-
+## Exact shelf map
+## Accepted and rejected wedges
+## P0/P1 blockers
+## Owned-asset plan
 ## Earned-source queue
-[justified sources, drafts, disclosure, approval]
-
-## Experiment and measurement
-[baseline, denominators, cadence, stop rules, business outcomes]
-
-## Learning decision
-[keep, iterate, expand, stop, rollback, or inconclusive]
-
+## Measurement and stop rules
+## Unknowns and delayed outcomes
 ## Deliberately not done
-[unsupported, deceptive, premature, or unnecessary tactics]
 ```
 
-## 21. Do not emit fake certainty
+## 17. Do not emit fake certainty
 
 Avoid:
 
 - “GEO score 87 means this page will be cited.”
+- “This shelf will move in 21 days.”
+- “Branded mentions prove unbranded discovery.”
 - “Adding schema will raise citations by X%.”
 - “Reddit links make ChatGPT rank the page.”
-- “This page is optimized for every AI engine.”
-- “Crawler allowed means indexed or cited.”
-- “Our API test proves the consumer app result.”
-- “This open shelf will move in 21 days.”
-- “The model’s recommendation independently validates the seller claim.”
+- “API tests prove consumer-product results.”
+- “A high weighted score overrides an unavailable offer.”
 
 Prefer:
 
+- “The fact passes deterministic publication gates; regulated or brand approval may still be required.”
+- “This is one exact-surface shelf observed under the recorded conditions.”
+- “The wedge passed hard gates and is accepted for planning; no ranking or timing outcome is promised.”
 - “The page is technically eligible; retrieval and citation remain pending observation.”
-- “This tactic is [C] fixed-context evidence, so it is a bounded experiment.”
-- “Reddit recurs in this source chain; an authentic, disclosed contribution is an earned tactic for this prompt family.”
-- “The shelf appears fragmented across 60 comparable observations; confidence is medium.”
-- “The recommendation share increased, but fidelity declined, so the result is a regression pending correction.”
