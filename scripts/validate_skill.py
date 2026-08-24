@@ -11,27 +11,37 @@ SKILL = ROOT / "SKILL.md"
 README = ROOT / "README.md"
 CHANGELOG = ROOT / "CHANGELOG.md"
 EVALS = ROOT / "evals" / "trigger-evals.json"
+OPENAI_METADATA = ROOT / "agents" / "openai.yaml"
+CITATION = ROOT / "CITATION.cff"
+WORKFLOW = ROOT / ".github" / "workflows" / "validate.yml"
 
 REQUIRED_FILES = {
-    "SKILL.md",
-    "README.md",
+    ".github/workflows/validate.yml",
+    "AGENTS.md",
+    "CITATION.cff",
     "CHANGELOG.md",
+    "CONTRIBUTING.md",
     "LICENSE",
-    "references/evidence-and-tactics.md",
-    "references/platform-adapters.md",
-    "references/vertical-adapters.md",
-    "references/source-earning.md",
-    "references/measurement-protocol.md",
-    "references/tracking-and-opportunity-recon.md",
-    "references/execution-and-evidence.md",
-    "references/regional-and-surface-adapters.md",
-    "references/output-contracts.md",
-    "references/source-register.md",
+    "README.md",
+    "SECURITY.md",
+    "SKILL.md",
+    "agents/openai.yaml",
+    "docs/SELF-AUDIT.md",
     "evals/trigger-evals.json",
+    "references/evidence-and-tactics.md",
+    "references/execution-and-evidence.md",
+    "references/measurement-protocol.md",
+    "references/output-contracts.md",
+    "references/platform-adapters.md",
+    "references/regional-and-surface-adapters.md",
+    "references/source-earning.md",
+    "references/source-register.md",
+    "references/tracking-and-opportunity-recon.md",
+    "references/vertical-adapters.md",
     "scripts/validate_skill.py",
 }
 
-REQUIRED_TERMS = {
+REQUIRED_SKILL_TERMS = {
     "Activation",
     "Eligibility",
     "Retrieval",
@@ -45,7 +55,21 @@ REQUIRED_TERMS = {
     "rollback",
 }
 
-RELATIVE_REF_RE = re.compile(r"`((?:references|scripts|evals)/[^`]+)`")
+REQUIRED_README_TERMS = {
+    "SEO",
+    "AEO",
+    "GEO",
+    "Agent Skill",
+    "ChatGPT Search",
+    "Google AI Overviews",
+    "Claude",
+    "Perplexity",
+    "Bing/Copilot",
+    "Install",
+    "Self-audit",
+}
+
+RELATIVE_REF_RE = re.compile(r"`((?:references|scripts|evals|docs|agents)/[^`]+)`")
 LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 
 
@@ -65,14 +89,14 @@ def parse_frontmatter(text: str) -> tuple[dict[str, str], list[str]]:
         if raw.startswith("  "):
             if current_section == "metadata" and ":" in raw:
                 key, value = raw.strip().split(":", 1)
-                data[f"metadata.{key.strip()}"] = value.strip().strip('"\'')
+                data[f"metadata.{key.strip()}"] = value.strip().strip("\"'")
             continue
         if ":" not in raw:
             errors.append(f"invalid frontmatter line: {raw}")
             continue
         key, value = raw.split(":", 1)
         key = key.strip()
-        value = value.strip().strip('"\'')
+        value = value.strip().strip("\"'")
         data[key] = value
         current_section = key if not value else None
     return data, errors
@@ -95,6 +119,47 @@ def validate_local_links(errors: list[str]) -> None:
                 continue
             if not candidate.exists():
                 errors.append(f"broken local link: {md.relative_to(ROOT)} -> {target}")
+
+
+def require_terms(path: Path, terms: set[str], label: str, errors: list[str]) -> None:
+    if not path.is_file():
+        return
+    text = path.read_text(encoding="utf-8")
+    missing = sorted(term for term in terms if term not in text)
+    if missing:
+        errors.append(f"{label} is missing required terms: " + ", ".join(missing))
+
+
+def validate_openai_metadata(errors: list[str]) -> None:
+    if not OPENAI_METADATA.is_file():
+        return
+    text = OPENAI_METADATA.read_text(encoding="utf-8")
+    for term in ("display_name:", "short_description:", "default_prompt:", "allow_implicit_invocation:"):
+        if term not in text:
+            errors.append(f"agents/openai.yaml is missing {term}")
+    if "Organic Discovery" not in text:
+        errors.append("agents/openai.yaml must use the canonical display name")
+
+
+def validate_citation(skill_version: str, errors: list[str]) -> None:
+    if not CITATION.is_file():
+        return
+    text = CITATION.read_text(encoding="utf-8")
+    for term in ("cff-version: 1.2.0", "title:", "authors:", "repository-code:", "license: MIT"):
+        if term not in text:
+            errors.append(f"CITATION.cff is missing {term}")
+    if skill_version and f'version: "{skill_version}"' not in text:
+        errors.append("CITATION.cff version does not match SKILL.md")
+
+
+def validate_workflow(errors: list[str]) -> None:
+    if not WORKFLOW.is_file():
+        return
+    text = WORKFLOW.read_text(encoding="utf-8")
+    if "python scripts/validate_skill.py" not in text:
+        errors.append("validation workflow does not run scripts/validate_skill.py")
+    if "pull_request:" not in text:
+        errors.append("validation workflow must run on pull requests")
 
 
 def main() -> int:
@@ -134,9 +199,8 @@ def main() -> int:
     if len(lines) > 500:
         errors.append(f"SKILL.md exceeds 500 lines ({len(lines)})")
 
-    missing_terms = sorted(term for term in REQUIRED_TERMS if term not in skill_text)
-    if missing_terms:
-        errors.append("SKILL.md is missing required terms: " + ", ".join(missing_terms))
+    require_terms(SKILL, REQUIRED_SKILL_TERMS, "SKILL.md", errors)
+    require_terms(README, REQUIRED_README_TERMS, "README.md", errors)
 
     for rel in sorted(set(RELATIVE_REF_RE.findall(skill_text))):
         if not (ROOT / rel).is_file():
@@ -173,7 +237,9 @@ def main() -> int:
             if payload.get("skill") != name:
                 errors.append("eval skill name does not match SKILL.md")
             if skill_version and payload.get("version") != skill_version:
-                errors.append(f"eval version {payload.get('version')!r} does not match skill version {skill_version!r}")
+                errors.append(
+                    f"eval version {payload.get('version')!r} does not match skill version {skill_version!r}"
+                )
             cases = payload.get("cases", [])
             positives = sum(case.get("should_trigger") is True for case in cases)
             negatives = sum(case.get("should_trigger") is False for case in cases)
@@ -196,6 +262,15 @@ def main() -> int:
                     errors.append(f"eval case {index} has no reason")
         except (OSError, json.JSONDecodeError) as exc:
             errors.append(f"invalid eval JSON: {exc}")
+
+    validate_openai_metadata(errors)
+    validate_citation(skill_version, errors)
+    validate_workflow(errors)
+
+    if (ROOT / "AGENTS.md").is_file():
+        agents_text = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
+        if "python scripts/validate_skill.py" not in agents_text:
+            errors.append("AGENTS.md must declare the required validation command")
 
     for warning in warnings:
         print(f"WARNING: {warning}")
