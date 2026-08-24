@@ -1,0 +1,51 @@
+name: Clean v0.4.0 release residue once
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/cleanup-v0.4-post-release.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Keep the audited release tree and durable release marker only
+        env:
+          RELEASE_COMMIT: f48edb93eff0027007303eaca0af46ea7ae24f46
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          while IFS= read -r -d '' path; do
+            case "$path" in
+              .release/v0.4.0.md|.github/workflows/cleanup-v0.4-post-release.yml)
+                continue
+                ;;
+            esac
+
+            if git cat-file -e "$RELEASE_COMMIT:$path" 2>/dev/null; then
+              git checkout "$RELEASE_COMMIT" -- "$path"
+            else
+              git rm --ignore-unmatch -- "$path"
+            fi
+          done < <(git diff --name-only -z "$RELEASE_COMMIT"..HEAD)
+
+          git rm --ignore-unmatch .github/workflows/cleanup-v0.4-post-release.yml
+          git add .release/v0.4.0.md
+
+          if ! git diff --cached --quiet; then
+            git commit -m "Clean v0.4.0 release automation"
+            git push origin HEAD:main
+          fi
