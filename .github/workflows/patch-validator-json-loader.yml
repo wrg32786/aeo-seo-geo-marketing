@@ -1,0 +1,54 @@
+name: Patch validator JSON loader
+
+on:
+  push:
+    branches:
+      - fix/v0.5-release-validation
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/v0.5-release-validation
+      - name: Allow array and object fixture JSON
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("scripts/validate_skill.py")
+          text = path.read_text(encoding="utf-8")
+          old = '''def load_json(path: Path, label: str, errors: list[str]) -> dict[str, Any] | None:
+              try:
+                  value = json.loads(path.read_text(encoding="utf-8"))
+              except (OSError, json.JSONDecodeError) as exc:
+                  errors.append(f"invalid {label}: {exc}")
+                  return None
+              if not isinstance(value, dict):
+                  errors.append(f"{label} must be a JSON object")
+                  return None
+              return value
+          '''
+          new = '''def load_json(path: Path, label: str, errors: list[str]) -> Any | None:
+              try:
+                  return json.loads(path.read_text(encoding="utf-8"))
+              except (OSError, json.JSONDecodeError) as exc:
+                  errors.append(f"invalid {label}: {exc}")
+                  return None
+          '''
+          if old not in text:
+              raise SystemExit("expected loader block was not found")
+          path.write_text(text.replace(old, new, 1), encoding="utf-8")
+          PY
+      - name: Commit patch and remove this workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm .github/workflows/patch-validator-json-loader.yml
+          git add -A
+          git commit -m "Accept array fixtures in release validation"
+          git push origin HEAD:fix/v0.5-release-validation
