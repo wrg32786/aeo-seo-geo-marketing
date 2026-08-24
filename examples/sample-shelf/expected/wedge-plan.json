@@ -1,0 +1,405 @@
+{
+  "accepted": [
+    {
+      "candidate_id": "wedge-kindroot-sensitive-skin",
+      "candidate_source": "provided",
+      "controlled_asset": "https://kindroot.example/magnesium-vs-baking-soda",
+      "fact_support": {
+        "availability": "available",
+        "blocked_fact_ids": [
+          "kr-price-draft"
+        ],
+        "gate_failures": [],
+        "independent_fact_ids": [
+          "kr-independent-review"
+        ],
+        "limitations_present": true,
+        "offer_exists": true,
+        "publishable_fact_ids": [
+          "kr-availability",
+          "kr-exists",
+          "kr-independent-review",
+          "kr-magnesium",
+          "kr-sensitive-fit"
+        ],
+        "seller_controlled_fact_ids": [
+          "kr-availability",
+          "kr-exists",
+          "kr-magnesium",
+          "kr-sensitive-fit"
+        ],
+        "status": "pass"
+      },
+      "factors": {
+        "conversion_value": 0.8,
+        "execution_probability": 0.9,
+        "implementation_cost": 0.25,
+        "maintenance_cost": 0.25,
+        "qualified_demand": 0.7,
+        "risk": 0.2,
+        "source_attainability": 0.7
+      },
+      "gate_failures": [],
+      "notes": "Target the under-defended constraint, not the broad category.",
+      "prompt_family": "sensitive-skin-magnesium",
+      "rejected_surfaces": [
+        {
+          "dimensions": {
+            "account_state": "logged-out",
+            "branded": false,
+            "device": "web-desktop",
+            "language": "en",
+            "market": "US",
+            "mode": "grounded",
+            "model": "gemini-fixture",
+            "platform": "google",
+            "prompt_family": "sensitive-skin-magnesium",
+            "session_state": "clean",
+            "surface": "gemini-web",
+            "target_entity_id": "kindroot"
+          },
+          "group_id": "surface-3a76d0bb878d",
+          "missing_business_factors": [],
+          "planning_index": 0.523,
+          "rejection_reason": "locked shelf: broad displacement is not an approved v0.5 wedge",
+          "shelf_confidence": "low",
+          "shelf_openness": 0.0,
+          "shelf_state": "locked"
+        }
+      ],
+      "required_actions": [],
+      "required_fact_ids": [
+        "kr-availability",
+        "kr-exists",
+        "kr-independent-review",
+        "kr-magnesium",
+        "kr-sensitive-fit"
+      ],
+      "status": "approved_for_planning",
+      "surface_opportunities": [
+        {
+          "dimensions": {
+            "account_state": "logged-out",
+            "branded": false,
+            "device": "web-desktop",
+            "language": "en",
+            "market": "US",
+            "mode": "web-search",
+            "model": "gpt-fixture",
+            "platform": "openai",
+            "prompt_family": "sensitive-skin-magnesium",
+            "session_state": "clean",
+            "surface": "chatgpt-search",
+            "target_entity_id": "kindroot"
+          },
+          "group_id": "surface-f2900f34b318",
+          "missing_business_factors": [],
+          "planning_index": 0.6581,
+          "shelf_confidence": "low",
+          "shelf_openness": 1.0,
+          "shelf_state": "open"
+        }
+      ],
+      "target_entity_id": "kindroot",
+      "user_constraint": "magnesium-based and baking-soda-free"
+    },
+    {
+      "candidate_id": "wedge-kindroot-travel",
+      "candidate_source": "provided",
+      "controlled_asset": "https://kindroot.example/travel",
+      "fact_support": {
+        "availability": "available",
+        "blocked_fact_ids": [],
+        "gate_failures": [],
+        "independent_fact_ids": [],
+        "limitations_present": true,
+        "offer_exists": true,
+        "publishable_fact_ids": [
+          "kr-availability",
+          "kr-exists",
+          "kr-travel-fit"
+        ],
+        "seller_controlled_fact_ids": [
+          "kr-availability",
+          "kr-exists",
+          "kr-travel-fit"
+        ],
+        "status": "pass"
+      },
+      "factors": {
+        "conversion_value": 0.55,
+        "execution_probability": 0.85,
+        "implementation_cost": 0.2,
+        "maintenance_cost": 0.2,
+        "qualified_demand": 0.45,
+        "risk": 0.15,
+        "source_attainability": 0.55
+      },
+      "gate_failures": [],
+      "notes": "Fragmented shelf with legitimate product fit.",
+      "prompt_family": "travel-deodorant",
+      "rejected_surfaces": [],
+      "required_actions": [
+        "seek independent corroboration before representing seller claims as consensus"
+      ],
+      "required_fact_ids": [
+        "kr-availability",
+        "kr-exists",
+        "kr-travel-fit"
+      ],
+      "status": "approved_for_planning",
+      "surface_opportunities": [
+        {
+          "dimensions": {
+            "account_state": "logged-out",
+            "branded": false,
+            "device": "web-desktop",
+            "language": "en",
+            "market": "US",
+            "mode": "web-search",
+            "model": "gpt-fixture",
+            "platform": "openai",
+            "prompt_family": "travel-deodorant",
+            "session_state": "clean",
+            "surface": "chatgpt-search",
+            "target_entity_id": "kindroot"
+          },
+          "group_id": "surface-6072eb9b66d5",
+          "missing_business_factors": [],
+          "planning_index": 0.5352,
+          "shelf_confidence": "low",
+          "shelf_openness": 0.8,
+          "shelf_state": "fragmented"
+        }
+      ],
+      "target_entity_id": "kindroot",
+      "user_constraint": "carry-on-friendly format"
+    }
+  ],
+  "hard_gates": [
+    "offer existence and current availability",
+    "publishable prompt-family fact support",
+    "no prohibited required facts",
+    "matching unbranded exact-surface observations",
+    "surface state is not locked, unsafe, or unknown"
+  ],
+  "notes": [
+    "Planning indexes are transparent business-prioritization aids, not search-engine scores.",
+    "Unsafe or unsupported opportunities are rejected rather than merely ranked lower.",
+    "No accepted candidate carries a fixed time-to-shelf promise.",
+    "Exact-surface opportunity records remain separate."
+  ],
+  "rejected": [
+    {
+      "candidate_id": "wedge-ghost-product",
+      "candidate_source": "provided",
+      "controlled_asset": null,
+      "fact_support": {
+        "availability": "unknown",
+        "blocked_fact_ids": [
+          "ghost-exists"
+        ],
+        "gate_failures": [
+          "no publishable fact confirms that the offer exists",
+          "no publishable fact confirms current availability",
+          "no publishable fact establishes fit for this prompt family"
+        ],
+        "independent_fact_ids": [],
+        "limitations_present": false,
+        "offer_exists": false,
+        "publishable_fact_ids": [],
+        "seller_controlled_fact_ids": [],
+        "status": "blocked"
+      },
+      "factors": {
+        "conversion_value": 0.1,
+        "execution_probability": 0.1,
+        "implementation_cost": 0.8,
+        "maintenance_cost": 0.8,
+        "qualified_demand": 0.2,
+        "risk": 1.0,
+        "source_attainability": 0.1
+      },
+      "gate_failures": [
+        "no matching unbranded exact-surface groups",
+        "no publishable fact confirms current availability",
+        "no publishable fact confirms that the offer exists",
+        "no publishable fact establishes fit for this prompt family",
+        "required facts are not publishable: ghost-exists"
+      ],
+      "notes": "Must be rejected because the offer does not exist and no shelf observations exist.",
+      "prompt_family": "ghost-product",
+      "rejected_surfaces": [],
+      "required_fact_ids": [
+        "ghost-exists"
+      ],
+      "status": "rejected",
+      "surface_opportunities": [],
+      "target_entity_id": "ghostfresh",
+      "user_constraint": "placeholder product"
+    },
+    {
+      "candidate_id": "wedge-kindroot-broad",
+      "candidate_source": "provided",
+      "controlled_asset": "https://kindroot.example/",
+      "fact_support": {
+        "availability": "available",
+        "blocked_fact_ids": [],
+        "gate_failures": [],
+        "independent_fact_ids": [],
+        "limitations_present": true,
+        "offer_exists": true,
+        "publishable_fact_ids": [
+          "kr-availability",
+          "kr-broad-fit",
+          "kr-exists"
+        ],
+        "seller_controlled_fact_ids": [
+          "kr-availability",
+          "kr-broad-fit",
+          "kr-exists"
+        ],
+        "status": "pass"
+      },
+      "factors": {
+        "conversion_value": 0.9,
+        "execution_probability": 0.3,
+        "implementation_cost": 0.7,
+        "maintenance_cost": 0.6,
+        "qualified_demand": 1.0,
+        "risk": 0.6,
+        "source_attainability": 0.3
+      },
+      "gate_failures": [
+        "every matching surface group is locked, unsafe, unknown, or fact-blocked"
+      ],
+      "notes": "Expected to be rejected because the exact shelf is locked.",
+      "prompt_family": "best-natural-deodorant",
+      "rejected_surfaces": [
+        {
+          "dimensions": {
+            "account_state": "logged-out",
+            "branded": false,
+            "device": "web-desktop",
+            "language": "en",
+            "market": "US",
+            "mode": "web-search",
+            "model": "gpt-fixture",
+            "platform": "openai",
+            "prompt_family": "best-natural-deodorant",
+            "session_state": "clean",
+            "surface": "chatgpt-search",
+            "target_entity_id": "kindroot"
+          },
+          "group_id": "surface-e697282df0c7",
+          "missing_business_factors": [],
+          "planning_index": 0.3163,
+          "rejection_reason": "locked shelf: broad displacement is not an approved v0.5 wedge",
+          "shelf_confidence": "low",
+          "shelf_openness": 0.0,
+          "shelf_state": "locked"
+        }
+      ],
+      "required_fact_ids": [
+        "kr-availability",
+        "kr-broad-fit",
+        "kr-exists"
+      ],
+      "status": "rejected",
+      "surface_opportunities": [],
+      "target_entity_id": "kindroot",
+      "user_constraint": "best natural deodorant"
+    },
+    {
+      "candidate_id": "wedge-kindroot-eczema",
+      "candidate_source": "provided",
+      "controlled_asset": "https://kindroot.example/eczema",
+      "fact_support": {
+        "availability": "available",
+        "blocked_fact_ids": [
+          "kr-eczema-safe"
+        ],
+        "gate_failures": [
+          "no publishable fact establishes fit for this prompt family",
+          "one or more prompt-family facts are prohibited"
+        ],
+        "independent_fact_ids": [],
+        "limitations_present": true,
+        "offer_exists": true,
+        "publishable_fact_ids": [
+          "kr-availability",
+          "kr-exists"
+        ],
+        "seller_controlled_fact_ids": [
+          "kr-availability",
+          "kr-exists"
+        ],
+        "status": "blocked"
+      },
+      "factors": {
+        "conversion_value": 0.6,
+        "execution_probability": 0.4,
+        "implementation_cost": 0.4,
+        "maintenance_cost": 0.5,
+        "qualified_demand": 0.65,
+        "risk": 1.0,
+        "source_attainability": 0.25
+      },
+      "gate_failures": [
+        "every matching surface group is locked, unsafe, unknown, or fact-blocked",
+        "no publishable fact establishes fit for this prompt family",
+        "one or more prompt-family facts are prohibited",
+        "required facts are not publishable: kr-eczema-safe"
+      ],
+      "notes": "Must be rejected because the shelf is unsafe and the required claim is prohibited.",
+      "prompt_family": "eczema-safe-deodorant",
+      "rejected_surfaces": [
+        {
+          "dimensions": {
+            "account_state": "logged-out",
+            "branded": false,
+            "device": "web-desktop",
+            "language": "en",
+            "market": "US",
+            "mode": "web-search",
+            "model": "gpt-fixture",
+            "platform": "openai",
+            "prompt_family": "eczema-safe-deodorant",
+            "session_state": "clean",
+            "surface": "chatgpt-search",
+            "target_entity_id": "kindroot"
+          },
+          "group_id": "surface-7d21bf96ab92",
+          "missing_business_factors": [],
+          "planning_index": 0.25,
+          "rejection_reason": "surface fact gate is blocked",
+          "shelf_confidence": "low",
+          "shelf_openness": 0.0,
+          "shelf_state": "unsafe"
+        }
+      ],
+      "required_fact_ids": [
+        "kr-availability",
+        "kr-eczema-safe",
+        "kr-exists"
+      ],
+      "status": "rejected",
+      "surface_opportunities": [],
+      "target_entity_id": "kindroot",
+      "user_constraint": "guaranteed safe for everyone with eczema"
+    }
+  ],
+  "schema_version": "organic-discovery/wedge-plan/1.0",
+  "source": {
+    "candidates": "examples/sample-shelf/candidates.json",
+    "fact_registry_schema_version": "organic-discovery/facts/1.0",
+    "shelf_map_schema_version": "organic-discovery/shelf-map/1.0"
+  },
+  "summary": {
+    "accepted_count": 2,
+    "candidate_count": 5,
+    "opaque_geo_score": null,
+    "rejected_count": 3
+  },
+  "wedge_plan_schema": "schemas/wedge-plan.schema.json"
+}

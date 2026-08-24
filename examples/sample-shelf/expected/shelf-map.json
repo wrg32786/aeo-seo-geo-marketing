@@ -1,0 +1,1012 @@
+{
+  "branded_exclusion": {
+    "excluded_observation_count": 2,
+    "rule": "Branded validation observations are grouped separately and excluded from unbranded recommendation-share denominators."
+  },
+  "classification_thresholds": {
+    "fragmented_set_agreement": 0.5,
+    "locked_set_agreement": 0.6,
+    "locked_top_first_share": 0.7,
+    "locked_top_recommendation_rate": 0.75,
+    "minimum_runs": 4,
+    "open_recommendation_coverage": 0.8,
+    "open_set_agreement": 0.35,
+    "open_top_first_share": 0.4,
+    "unsafe_maximum_unavailable_rate": 0.2,
+    "unsafe_minimum_constraint_satisfaction": 0.75,
+    "unsafe_minimum_evaluable": 3,
+    "unsafe_minimum_fidelity": 0.75
+  },
+  "group_dimensions": [
+    "platform",
+    "surface",
+    "mode",
+    "model",
+    "market",
+    "language",
+    "device",
+    "account_state",
+    "session_state",
+    "prompt_family",
+    "target_entity_id",
+    "branded"
+  ],
+  "groups": [
+    {
+      "classification_confidence": "low",
+      "classification_reasons": [
+        "top first-mentioned share=1.00",
+        "top entity recommendation rate=1.00",
+        "set agreement=1.00"
+      ],
+      "dimensions": {
+        "account_state": "logged-out",
+        "branded": false,
+        "device": "web-desktop",
+        "language": "en",
+        "market": "US",
+        "mode": "grounded",
+        "model": "gemini-fixture",
+        "platform": "google",
+        "prompt_family": "sensitive-skin-magnesium",
+        "session_state": "clean",
+        "surface": "gemini-web",
+        "target_entity_id": "kindroot"
+      },
+      "eligible_for_unbranded_recommendation_share": true,
+      "fact_support": {
+        "availability": "available",
+        "blocked_fact_ids": [
+          "kr-price-draft"
+        ],
+        "gate_failures": [],
+        "independent_fact_ids": [
+          "kr-independent-review"
+        ],
+        "limitations_present": true,
+        "offer_exists": true,
+        "publishable_fact_ids": [
+          "kr-availability",
+          "kr-exists",
+          "kr-independent-review",
+          "kr-magnesium",
+          "kr-sensitive-fit"
+        ],
+        "seller_controlled_fact_ids": [
+          "kr-availability",
+          "kr-exists",
+          "kr-magnesium",
+          "kr-sensitive-fit"
+        ],
+        "status": "pass"
+      },
+      "group_id": "surface-3a76d0bb878d",
+      "integrity_issues": [],
+      "metrics": {
+        "citation_source_overlap": 1.0,
+        "constraint_satisfaction": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "entities": [
+          {
+            "entity_id": "magskin",
+            "first_mentioned_runs": 4,
+            "first_mentioned_share": 1.0,
+            "mean_position": 1.0,
+            "recommendation_rate": 1.0,
+            "recommendation_runs": 4
+          },
+          {
+            "entity_id": "native",
+            "first_mentioned_runs": 0,
+            "first_mentioned_share": 0.0,
+            "mean_position": 2.0,
+            "recommendation_rate": 1.0,
+            "recommendation_runs": 4
+          }
+        ],
+        "fidelity": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "incumbent_concentration": {
+          "first_mention_hhi": 1.0,
+          "top_entity_id": "magskin",
+          "top_entity_recommendation_rate": 1.0,
+          "top_first_mentioned_share": 1.0,
+          "unique_first_entities": 1,
+          "unique_recommended_entities": 2
+        },
+        "independent_source_share": 0.5,
+        "recommendation_availability": {
+          "available_numerator": 8,
+          "available_rate": 1.0,
+          "denominator": 8,
+          "unavailable_numerator": 0,
+          "unavailable_rate": 0.0
+        },
+        "recommendation_constraint_satisfaction": {
+          "denominator": 8,
+          "numerator": 4,
+          "rate": 0.5
+        },
+        "recommendation_coverage": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "recommendation_set_agreement": 1.0,
+        "runs": 4,
+        "search_activation": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "seller_controlled_source_share": 0.5,
+        "source_mix": {
+          "independent_editorial": 4,
+          "seller_controlled": 4
+        },
+        "target_citation": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "target_first_mentioned": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "target_recommendation": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "target_retrieval": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "volatility": 0.0
+      },
+      "observation_ids": [
+        "run-005",
+        "run-006",
+        "run-007",
+        "run-008"
+      ],
+      "runs": 4,
+      "shelf_state": "locked"
+    },
+    {
+      "classification_confidence": "low",
+      "classification_reasons": [
+        "4 distinct first-mentioned entities",
+        "set agreement=0.22"
+      ],
+      "dimensions": {
+        "account_state": "logged-out",
+        "branded": false,
+        "device": "web-desktop",
+        "language": "en",
+        "market": "US",
+        "mode": "web-search",
+        "model": "gpt-fixture",
+        "platform": "openai",
+        "prompt_family": "travel-deodorant",
+        "session_state": "clean",
+        "surface": "chatgpt-search",
+        "target_entity_id": "kindroot"
+      },
+      "eligible_for_unbranded_recommendation_share": true,
+      "fact_support": {
+        "availability": "available",
+        "blocked_fact_ids": [],
+        "gate_failures": [],
+        "independent_fact_ids": [],
+        "limitations_present": true,
+        "offer_exists": true,
+        "publishable_fact_ids": [
+          "kr-availability",
+          "kr-exists",
+          "kr-travel-fit"
+        ],
+        "seller_controlled_fact_ids": [
+          "kr-availability",
+          "kr-exists",
+          "kr-travel-fit"
+        ],
+        "status": "pass"
+      },
+      "group_id": "surface-6072eb9b66d5",
+      "integrity_issues": [],
+      "metrics": {
+        "citation_source_overlap": 1.0,
+        "constraint_satisfaction": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "entities": [
+          {
+            "entity_id": "kindroot",
+            "first_mentioned_runs": 1,
+            "first_mentioned_share": 0.25,
+            "mean_position": 1.5,
+            "recommendation_rate": 0.5,
+            "recommendation_runs": 2
+          },
+          {
+            "entity_id": "native",
+            "first_mentioned_runs": 1,
+            "first_mentioned_share": 0.25,
+            "mean_position": 1.5,
+            "recommendation_rate": 0.5,
+            "recommendation_runs": 2
+          },
+          {
+            "entity_id": "saltair",
+            "first_mentioned_runs": 1,
+            "first_mentioned_share": 0.25,
+            "mean_position": 1.5,
+            "recommendation_rate": 0.5,
+            "recommendation_runs": 2
+          },
+          {
+            "entity_id": "kopari",
+            "first_mentioned_runs": 1,
+            "first_mentioned_share": 0.25,
+            "mean_position": 1.0,
+            "recommendation_rate": 0.25,
+            "recommendation_runs": 1
+          },
+          {
+            "entity_id": "magskin",
+            "first_mentioned_runs": 0,
+            "first_mentioned_share": 0.0,
+            "mean_position": 2.0,
+            "recommendation_rate": 0.25,
+            "recommendation_runs": 1
+          }
+        ],
+        "fidelity": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "incumbent_concentration": {
+          "first_mention_hhi": 0.25,
+          "top_entity_id": "kindroot",
+          "top_entity_recommendation_rate": 0.5,
+          "top_first_mentioned_share": 0.25,
+          "unique_first_entities": 4,
+          "unique_recommended_entities": 5
+        },
+        "independent_source_share": 1.0,
+        "recommendation_availability": {
+          "available_numerator": 8,
+          "available_rate": 1.0,
+          "denominator": 8,
+          "unavailable_numerator": 0,
+          "unavailable_rate": 0.0
+        },
+        "recommendation_constraint_satisfaction": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "recommendation_coverage": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "recommendation_set_agreement": 0.2222,
+        "runs": 4,
+        "search_activation": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "seller_controlled_source_share": 0.0,
+        "source_mix": {
+          "independent_editorial": 4
+        },
+        "target_citation": {
+          "denominator": 4,
+          "numerator": 2,
+          "rate": 0.5
+        },
+        "target_first_mentioned": {
+          "denominator": 4,
+          "numerator": 1,
+          "rate": 0.25
+        },
+        "target_recommendation": {
+          "denominator": 4,
+          "numerator": 2,
+          "rate": 0.5
+        },
+        "target_retrieval": {
+          "denominator": 4,
+          "numerator": 2,
+          "rate": 0.5
+        },
+        "volatility": 0.7778
+      },
+      "observation_ids": [
+        "run-015",
+        "run-016",
+        "run-017",
+        "run-018"
+      ],
+      "runs": 4,
+      "shelf_state": "fragmented"
+    },
+    {
+      "classification_confidence": "low",
+      "classification_reasons": [
+        "fidelity rate 0.25 is below 0.75",
+        "constraint satisfaction 0.25 is below 0.75",
+        "unavailable recommendation rate 0.50 exceeds 0.20"
+      ],
+      "dimensions": {
+        "account_state": "logged-out",
+        "branded": false,
+        "device": "web-desktop",
+        "language": "en",
+        "market": "US",
+        "mode": "web-search",
+        "model": "gpt-fixture",
+        "platform": "openai",
+        "prompt_family": "eczema-safe-deodorant",
+        "session_state": "clean",
+        "surface": "chatgpt-search",
+        "target_entity_id": "kindroot"
+      },
+      "eligible_for_unbranded_recommendation_share": true,
+      "fact_support": {
+        "availability": "available",
+        "blocked_fact_ids": [
+          "kr-eczema-safe"
+        ],
+        "gate_failures": [
+          "no publishable fact establishes fit for this prompt family",
+          "one or more prompt-family facts are prohibited"
+        ],
+        "independent_fact_ids": [],
+        "limitations_present": true,
+        "offer_exists": true,
+        "publishable_fact_ids": [
+          "kr-availability",
+          "kr-exists"
+        ],
+        "seller_controlled_fact_ids": [
+          "kr-availability",
+          "kr-exists"
+        ],
+        "status": "blocked"
+      },
+      "group_id": "surface-7d21bf96ab92",
+      "integrity_issues": [
+        "constraint satisfaction 0.25 is below 0.75",
+        "fidelity rate 0.25 is below 0.75",
+        "no publishable fact establishes fit for this prompt family",
+        "one or more prompt-family facts are prohibited",
+        "unavailable recommendation rate 0.50 exceeds 0.20"
+      ],
+      "metrics": {
+        "citation_source_overlap": 1.0,
+        "constraint_satisfaction": {
+          "denominator": 4,
+          "numerator": 1,
+          "rate": 0.25
+        },
+        "entities": [
+          {
+            "entity_id": "rashbar",
+            "first_mentioned_runs": 4,
+            "first_mentioned_share": 1.0,
+            "mean_position": 1.0,
+            "recommendation_rate": 1.0,
+            "recommendation_runs": 4
+          },
+          {
+            "entity_id": "kindroot",
+            "first_mentioned_runs": 0,
+            "first_mentioned_share": 0.0,
+            "mean_position": 2.0,
+            "recommendation_rate": 1.0,
+            "recommendation_runs": 4
+          }
+        ],
+        "fidelity": {
+          "denominator": 4,
+          "numerator": 1,
+          "rate": 0.25
+        },
+        "incumbent_concentration": {
+          "first_mention_hhi": 1.0,
+          "top_entity_id": "rashbar",
+          "top_entity_recommendation_rate": 1.0,
+          "top_first_mentioned_share": 1.0,
+          "unique_first_entities": 1,
+          "unique_recommended_entities": 2
+        },
+        "independent_source_share": 0.0,
+        "recommendation_availability": {
+          "available_numerator": 4,
+          "available_rate": 0.5,
+          "denominator": 8,
+          "unavailable_numerator": 4,
+          "unavailable_rate": 0.5
+        },
+        "recommendation_constraint_satisfaction": {
+          "denominator": 8,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "recommendation_coverage": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "recommendation_set_agreement": 1.0,
+        "runs": 4,
+        "search_activation": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "seller_controlled_source_share": 1.0,
+        "source_mix": {
+          "seller_controlled": 8
+        },
+        "target_citation": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "target_first_mentioned": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "target_recommendation": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "target_retrieval": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "volatility": 0.0
+      },
+      "observation_ids": [
+        "run-019",
+        "run-020",
+        "run-021",
+        "run-022"
+      ],
+      "runs": 4,
+      "shelf_state": "unsafe"
+    },
+    {
+      "classification_confidence": "low",
+      "classification_reasons": [
+        "branded validation group; excluded from unbranded shelf classification"
+      ],
+      "dimensions": {
+        "account_state": "logged-out",
+        "branded": true,
+        "device": "web-desktop",
+        "language": "en",
+        "market": "US",
+        "mode": "web-search",
+        "model": "gpt-fixture",
+        "platform": "openai",
+        "prompt_family": "sensitive-skin-magnesium",
+        "session_state": "clean",
+        "surface": "chatgpt-search",
+        "target_entity_id": "kindroot"
+      },
+      "eligible_for_unbranded_recommendation_share": false,
+      "fact_support": {
+        "availability": "available",
+        "blocked_fact_ids": [
+          "kr-price-draft"
+        ],
+        "gate_failures": [],
+        "independent_fact_ids": [
+          "kr-independent-review"
+        ],
+        "limitations_present": true,
+        "offer_exists": true,
+        "publishable_fact_ids": [
+          "kr-availability",
+          "kr-exists",
+          "kr-independent-review",
+          "kr-magnesium",
+          "kr-sensitive-fit"
+        ],
+        "seller_controlled_fact_ids": [
+          "kr-availability",
+          "kr-exists",
+          "kr-magnesium",
+          "kr-sensitive-fit"
+        ],
+        "status": "pass"
+      },
+      "group_id": "surface-d1effe1aa90f",
+      "integrity_issues": [],
+      "metrics": {
+        "citation_source_overlap": 1.0,
+        "constraint_satisfaction": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "entities": [
+          {
+            "entity_id": "kindroot",
+            "first_mentioned_runs": 2,
+            "first_mentioned_share": 1.0,
+            "mean_position": 1.0,
+            "recommendation_rate": 1.0,
+            "recommendation_runs": 2
+          }
+        ],
+        "fidelity": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "incumbent_concentration": {
+          "first_mention_hhi": 1.0,
+          "top_entity_id": "kindroot",
+          "top_entity_recommendation_rate": 1.0,
+          "top_first_mentioned_share": 1.0,
+          "unique_first_entities": 1,
+          "unique_recommended_entities": 1
+        },
+        "independent_source_share": 0.0,
+        "recommendation_availability": {
+          "available_numerator": 2,
+          "available_rate": 1.0,
+          "denominator": 2,
+          "unavailable_numerator": 0,
+          "unavailable_rate": 0.0
+        },
+        "recommendation_constraint_satisfaction": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "recommendation_coverage": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "recommendation_set_agreement": 1.0,
+        "runs": 2,
+        "search_activation": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "seller_controlled_source_share": 1.0,
+        "source_mix": {
+          "seller_controlled": 2
+        },
+        "target_citation": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "target_first_mentioned": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "target_recommendation": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "target_retrieval": {
+          "denominator": 2,
+          "numerator": 2,
+          "rate": 1.0
+        },
+        "volatility": 0.0
+      },
+      "observation_ids": [
+        "run-009",
+        "run-010"
+      ],
+      "runs": 2,
+      "shelf_state": "unknown"
+    },
+    {
+      "classification_confidence": "low",
+      "classification_reasons": [
+        "top first-mentioned share=1.00",
+        "top entity recommendation rate=1.00",
+        "set agreement=1.00"
+      ],
+      "dimensions": {
+        "account_state": "logged-out",
+        "branded": false,
+        "device": "web-desktop",
+        "language": "en",
+        "market": "US",
+        "mode": "web-search",
+        "model": "gpt-fixture",
+        "platform": "openai",
+        "prompt_family": "best-natural-deodorant",
+        "session_state": "clean",
+        "surface": "chatgpt-search",
+        "target_entity_id": "kindroot"
+      },
+      "eligible_for_unbranded_recommendation_share": true,
+      "fact_support": {
+        "availability": "available",
+        "blocked_fact_ids": [],
+        "gate_failures": [],
+        "independent_fact_ids": [],
+        "limitations_present": true,
+        "offer_exists": true,
+        "publishable_fact_ids": [
+          "kr-availability",
+          "kr-broad-fit",
+          "kr-exists"
+        ],
+        "seller_controlled_fact_ids": [
+          "kr-availability",
+          "kr-broad-fit",
+          "kr-exists"
+        ],
+        "status": "pass"
+      },
+      "group_id": "surface-e697282df0c7",
+      "integrity_issues": [],
+      "metrics": {
+        "citation_source_overlap": 1.0,
+        "constraint_satisfaction": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "entities": [
+          {
+            "entity_id": "native",
+            "first_mentioned_runs": 4,
+            "first_mentioned_share": 1.0,
+            "mean_position": 1.0,
+            "recommendation_rate": 1.0,
+            "recommendation_runs": 4
+          },
+          {
+            "entity_id": "schmidts",
+            "first_mentioned_runs": 0,
+            "first_mentioned_share": 0.0,
+            "mean_position": 2.0,
+            "recommendation_rate": 1.0,
+            "recommendation_runs": 4
+          }
+        ],
+        "fidelity": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "incumbent_concentration": {
+          "first_mention_hhi": 1.0,
+          "top_entity_id": "native",
+          "top_entity_recommendation_rate": 1.0,
+          "top_first_mentioned_share": 1.0,
+          "unique_first_entities": 1,
+          "unique_recommended_entities": 2
+        },
+        "independent_source_share": 0.5,
+        "recommendation_availability": {
+          "available_numerator": 8,
+          "available_rate": 1.0,
+          "denominator": 8,
+          "unavailable_numerator": 0,
+          "unavailable_rate": 0.0
+        },
+        "recommendation_constraint_satisfaction": {
+          "denominator": 8,
+          "numerator": 8,
+          "rate": 1.0
+        },
+        "recommendation_coverage": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "recommendation_set_agreement": 1.0,
+        "runs": 4,
+        "search_activation": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "seller_controlled_source_share": 0.5,
+        "source_mix": {
+          "independent_editorial": 4,
+          "seller_controlled": 4
+        },
+        "target_citation": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "target_first_mentioned": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "target_recommendation": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "target_retrieval": {
+          "denominator": 4,
+          "numerator": 0,
+          "rate": 0.0
+        },
+        "volatility": 0.0
+      },
+      "observation_ids": [
+        "run-011",
+        "run-012",
+        "run-013",
+        "run-014"
+      ],
+      "runs": 4,
+      "shelf_state": "locked"
+    },
+    {
+      "classification_confidence": "low",
+      "classification_reasons": [
+        "recommendation coverage=0.75",
+        "top first-mentioned share=0.25",
+        "set agreement=0.17"
+      ],
+      "dimensions": {
+        "account_state": "logged-out",
+        "branded": false,
+        "device": "web-desktop",
+        "language": "en",
+        "market": "US",
+        "mode": "web-search",
+        "model": "gpt-fixture",
+        "platform": "openai",
+        "prompt_family": "sensitive-skin-magnesium",
+        "session_state": "clean",
+        "surface": "chatgpt-search",
+        "target_entity_id": "kindroot"
+      },
+      "eligible_for_unbranded_recommendation_share": true,
+      "fact_support": {
+        "availability": "available",
+        "blocked_fact_ids": [
+          "kr-price-draft"
+        ],
+        "gate_failures": [],
+        "independent_fact_ids": [
+          "kr-independent-review"
+        ],
+        "limitations_present": true,
+        "offer_exists": true,
+        "publishable_fact_ids": [
+          "kr-availability",
+          "kr-exists",
+          "kr-independent-review",
+          "kr-magnesium",
+          "kr-sensitive-fit"
+        ],
+        "seller_controlled_fact_ids": [
+          "kr-availability",
+          "kr-exists",
+          "kr-magnesium",
+          "kr-sensitive-fit"
+        ],
+        "status": "pass"
+      },
+      "group_id": "surface-f2900f34b318",
+      "integrity_issues": [],
+      "metrics": {
+        "citation_source_overlap": 0.2778,
+        "constraint_satisfaction": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "entities": [
+          {
+            "entity_id": "kindroot",
+            "first_mentioned_runs": 1,
+            "first_mentioned_share": 0.25,
+            "mean_position": 1.5,
+            "recommendation_rate": 0.5,
+            "recommendation_runs": 2
+          },
+          {
+            "entity_id": "magskin",
+            "first_mentioned_runs": 1,
+            "first_mentioned_share": 0.25,
+            "mean_position": 1.5,
+            "recommendation_rate": 0.5,
+            "recommendation_runs": 2
+          },
+          {
+            "entity_id": "native",
+            "first_mentioned_runs": 1,
+            "first_mentioned_share": 0.25,
+            "mean_position": 1.5,
+            "recommendation_rate": 0.5,
+            "recommendation_runs": 2
+          }
+        ],
+        "fidelity": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "incumbent_concentration": {
+          "first_mention_hhi": 0.1875,
+          "top_entity_id": "kindroot",
+          "top_entity_recommendation_rate": 0.5,
+          "top_first_mentioned_share": 0.25,
+          "unique_first_entities": 3,
+          "unique_recommended_entities": 3
+        },
+        "independent_source_share": 0.4286,
+        "recommendation_availability": {
+          "available_numerator": 6,
+          "available_rate": 1.0,
+          "denominator": 6,
+          "unavailable_numerator": 0,
+          "unavailable_rate": 0.0
+        },
+        "recommendation_constraint_satisfaction": {
+          "denominator": 6,
+          "numerator": 4,
+          "rate": 0.6667
+        },
+        "recommendation_coverage": {
+          "denominator": 4,
+          "numerator": 3,
+          "rate": 0.75
+        },
+        "recommendation_set_agreement": 0.1667,
+        "runs": 4,
+        "search_activation": {
+          "denominator": 4,
+          "numerator": 4,
+          "rate": 1.0
+        },
+        "seller_controlled_source_share": 0.4286,
+        "source_mix": {
+          "community": 1,
+          "independent_editorial": 3,
+          "seller_controlled": 3
+        },
+        "target_citation": {
+          "denominator": 4,
+          "numerator": 2,
+          "rate": 0.5
+        },
+        "target_first_mentioned": {
+          "denominator": 4,
+          "numerator": 1,
+          "rate": 0.25
+        },
+        "target_recommendation": {
+          "denominator": 4,
+          "numerator": 2,
+          "rate": 0.5
+        },
+        "target_retrieval": {
+          "denominator": 3,
+          "numerator": 2,
+          "rate": 0.6667
+        },
+        "volatility": 0.8333
+      },
+      "observation_ids": [
+        "run-001",
+        "run-002",
+        "run-003",
+        "run-004"
+      ],
+      "runs": 4,
+      "shelf_state": "open"
+    }
+  ],
+  "notes": [
+    "No exact-surface rates are silently pooled.",
+    "Missing fields remain null and are excluded from their metric denominator.",
+    "Shelf classifications are transparent operational rules, not platform ranking scores.",
+    "No classification implies a fixed time to shelf entry."
+  ],
+  "prompt_families": [
+    {
+      "cross_surface_state": "locked",
+      "note": "Rates remain per exact surface group; this summary does not pool recommendation share.",
+      "prompt_family": "best-natural-deodorant",
+      "state_counts": {
+        "locked": 1
+      },
+      "surface_group_ids": [
+        "surface-e697282df0c7"
+      ],
+      "unbranded_surface_group_ids": [
+        "surface-e697282df0c7"
+      ]
+    },
+    {
+      "cross_surface_state": "unsafe",
+      "note": "Rates remain per exact surface group; this summary does not pool recommendation share.",
+      "prompt_family": "eczema-safe-deodorant",
+      "state_counts": {
+        "unsafe": 1
+      },
+      "surface_group_ids": [
+        "surface-7d21bf96ab92"
+      ],
+      "unbranded_surface_group_ids": [
+        "surface-7d21bf96ab92"
+      ]
+    },
+    {
+      "cross_surface_state": "mixed",
+      "note": "Rates remain per exact surface group; this summary does not pool recommendation share.",
+      "prompt_family": "sensitive-skin-magnesium",
+      "state_counts": {
+        "locked": 1,
+        "open": 1
+      },
+      "surface_group_ids": [
+        "surface-3a76d0bb878d",
+        "surface-d1effe1aa90f",
+        "surface-f2900f34b318"
+      ],
+      "unbranded_surface_group_ids": [
+        "surface-3a76d0bb878d",
+        "surface-f2900f34b318"
+      ]
+    },
+    {
+      "cross_surface_state": "fragmented",
+      "note": "Rates remain per exact surface group; this summary does not pool recommendation share.",
+      "prompt_family": "travel-deodorant",
+      "state_counts": {
+        "fragmented": 1
+      },
+      "surface_group_ids": [
+        "surface-6072eb9b66d5"
+      ],
+      "unbranded_surface_group_ids": [
+        "surface-6072eb9b66d5"
+      ]
+    }
+  ],
+  "record_schema": "schemas/observation.schema.json",
+  "schema_version": "organic-discovery/shelf-map/1.0",
+  "shelf_map_schema": "schemas/shelf-map.schema.json",
+  "source": {
+    "facts": "examples/sample-shelf/fact-registry.csv",
+    "observation_count": 22,
+    "observation_sha256": "ce91cac1c868e50774813ea9eff229e9aec6d1124e351d2384e2948541063c20",
+    "observations": "examples/sample-shelf/observations.jsonl"
+  }
+}

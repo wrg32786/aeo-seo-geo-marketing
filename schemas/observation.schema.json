@@ -1,0 +1,258 @@
+{
+  "$id": "https://github.com/wrg32786/aeo-seo-geo-marketing/blob/main/schemas/observation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "account_state": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "answer": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "branded": {
+      "type": "boolean"
+    },
+    "citations": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "domain": {
+            "type": "string"
+          },
+          "entity_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "position": {
+            "minimum": 1,
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "source_type": {
+            "type": "string"
+          },
+          "url": {
+            "format": "uri",
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "domain",
+          "source_type",
+          "entity_id",
+          "position"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "constraint_violations": {
+      "items": {
+        "type": "string"
+      },
+      "type": [
+        "array",
+        "null"
+      ]
+    },
+    "device": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "fidelity_issues": {
+      "items": {
+        "type": "string"
+      },
+      "type": [
+        "array",
+        "null"
+      ]
+    },
+    "intent": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "language": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "line_number": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "market": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "mode": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "model": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "platform": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "prompt": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "prompt_family": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "prompt_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "recommendations": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "available": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "constraint_satisfied": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "entity": {
+            "type": "string"
+          },
+          "entity_id": {
+            "type": "string"
+          },
+          "position": {
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "entity_id",
+          "entity",
+          "position",
+          "constraint_satisfied",
+          "available"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "run_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "search_queries": {
+      "items": {
+        "type": "string"
+      },
+      "type": [
+        "array",
+        "null"
+      ]
+    },
+    "search_triggered": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "session_state": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "surface": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "target_cited": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "target_claims_used": {
+      "items": {
+        "type": "string"
+      },
+      "type": [
+        "array",
+        "null"
+      ]
+    },
+    "target_entity_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "target_retrieved": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "timestamp": {
+      "format": "date-time",
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_id",
+    "timestamp",
+    "platform",
+    "surface",
+    "mode",
+    "model",
+    "market",
+    "language",
+    "device",
+    "account_state",
+    "session_state",
+    "prompt_id",
+    "prompt_family",
+    "prompt",
+    "intent",
+    "branded",
+    "target_entity_id",
+    "search_triggered",
+    "search_queries",
+    "recommendations",
+    "citations",
+    "target_retrieved",
+    "target_cited",
+    "target_claims_used",
+    "fidelity_issues",
+    "constraint_violations",
+    "answer",
+    "notes",
+    "line_number"
+  ],
+  "title": "Organic Discovery exact-surface observation",
+  "type": "object"
+}

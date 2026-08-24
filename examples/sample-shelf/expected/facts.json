@@ -1,0 +1,412 @@
+{
+  "as_of": null,
+  "blocked_fact_ids": [
+    "ghost-exists",
+    "kr-eczema-safe",
+    "kr-price-draft"
+  ],
+  "entities": [
+    {
+      "approved_fact_ids": [],
+      "blocked_fact_ids": [
+        "ghost-exists"
+      ],
+      "entity": "GhostFresh",
+      "entity_id": "ghostfresh",
+      "independent_fact_ids": [],
+      "prompt_families": {},
+      "seller_controlled_fact_ids": []
+    },
+    {
+      "approved_fact_ids": [
+        "kr-availability",
+        "kr-broad-fit",
+        "kr-exists",
+        "kr-independent-review",
+        "kr-magnesium",
+        "kr-sensitive-fit",
+        "kr-travel-fit"
+      ],
+      "blocked_fact_ids": [
+        "kr-eczema-safe",
+        "kr-price-draft"
+      ],
+      "entity": "KindRoot",
+      "entity_id": "kindroot",
+      "independent_fact_ids": [
+        "kr-independent-review"
+      ],
+      "prompt_families": {
+        "best-natural-deodorant": [
+          "kr-broad-fit"
+        ],
+        "sensitive-skin-magnesium": [
+          "kr-independent-review",
+          "kr-magnesium",
+          "kr-sensitive-fit"
+        ],
+        "travel-deodorant": [
+          "kr-travel-fit"
+        ]
+      },
+      "seller_controlled_fact_ids": [
+        "kr-availability",
+        "kr-broad-fit",
+        "kr-exists",
+        "kr-magnesium",
+        "kr-sensitive-fit",
+        "kr-travel-fit"
+      ]
+    }
+  ],
+  "errors": [],
+  "facts": [
+    {
+      "availability": "unavailable",
+      "canonical_wording": "GhostFresh is a placeholder concept and is not an available product.",
+      "claim_id": "ghost-exists",
+      "claim_type": "existence",
+      "entity": "GhostFresh",
+      "entity_id": "ghostfresh",
+      "evidence_grade": "FP",
+      "expires_at": "2030-12-31",
+      "language": "en",
+      "limitations": "Do not publish as an available product.",
+      "market": "US",
+      "offer_exists": false,
+      "owner": "product",
+      "prompt_families": [
+        "ghost-product"
+      ],
+      "publish_status": "research_required",
+      "refresh_trigger": "concept_status_change",
+      "row_number": 11,
+      "source_control": "seller_controlled",
+      "source_type": "internal_record",
+      "source_url": "urn:internal:concept",
+      "unit": "boolean",
+      "value": "false",
+      "verified_at": "2026-08-20"
+    },
+    {
+      "availability": "available",
+      "canonical_wording": "KindRoot is available for direct purchase in the United States.",
+      "claim_id": "kr-availability",
+      "claim_type": "availability",
+      "entity": "KindRoot",
+      "entity_id": "kindroot",
+      "evidence_grade": "FP",
+      "expires_at": "2030-12-31",
+      "language": "en",
+      "limitations": "Availability varies outside the fixture market.",
+      "market": "US",
+      "offer_exists": true,
+      "owner": "commerce",
+      "prompt_families": [],
+      "publish_status": "approved",
+      "refresh_trigger": "inventory_or_market_change",
+      "row_number": 3,
+      "source_control": "seller_controlled",
+      "source_type": "first_party",
+      "source_url": "https://kindroot.example/product",
+      "unit": "market",
+      "value": "US",
+      "verified_at": "2026-08-20"
+    },
+    {
+      "availability": "available",
+      "canonical_wording": "KindRoot competes in the natural deodorant category.",
+      "claim_id": "kr-broad-fit",
+      "claim_type": "offer_fit",
+      "entity": "KindRoot",
+      "entity_id": "kindroot",
+      "evidence_grade": "FP",
+      "expires_at": "2030-12-31",
+      "language": "en",
+      "limitations": "This does not establish that it is the best option.",
+      "market": "US",
+      "offer_exists": true,
+      "owner": "marketing",
+      "prompt_families": [
+        "best-natural-deodorant"
+      ],
+      "publish_status": "approved",
+      "refresh_trigger": "category_change",
+      "row_number": 8,
+      "source_control": "seller_controlled",
+      "source_type": "first_party",
+      "source_url": "https://kindroot.example/product",
+      "unit": "category",
+      "value": "natural deodorant",
+      "verified_at": "2026-08-20"
+    },
+    {
+      "availability": "available",
+      "canonical_wording": "KindRoot is safe for every person with eczema.",
+      "claim_id": "kr-eczema-safe",
+      "claim_type": "safety",
+      "entity": "KindRoot",
+      "entity_id": "kindroot",
+      "evidence_grade": "F",
+      "expires_at": "2030-12-31",
+      "language": "en",
+      "limitations": "Universal safety claim is unsupported and prohibited.",
+      "market": "US",
+      "offer_exists": true,
+      "owner": "legal",
+      "prompt_families": [
+        "eczema-safe-deodorant"
+      ],
+      "publish_status": "prohibited",
+      "refresh_trigger": "never",
+      "row_number": 9,
+      "source_control": "seller_controlled",
+      "source_type": "seller_controlled",
+      "source_url": "https://kindroot.example/draft",
+      "unit": "claim",
+      "value": "universal safety",
+      "verified_at": "2026-08-20"
+    },
+    {
+      "availability": "available",
+      "canonical_wording": "KindRoot is a commercially available natural deodorant.",
+      "claim_id": "kr-exists",
+      "claim_type": "existence",
+      "entity": "KindRoot",
+      "entity_id": "kindroot",
+      "evidence_grade": "FP",
+      "expires_at": "2030-12-31",
+      "language": "en",
+      "limitations": "Fixture brand used only for deterministic testing.",
+      "market": "US",
+      "offer_exists": true,
+      "owner": "product",
+      "prompt_families": [],
+      "publish_status": "approved",
+      "refresh_trigger": "product_retired",
+      "row_number": 2,
+      "source_control": "seller_controlled",
+      "source_type": "first_party",
+      "source_url": "https://kindroot.example/product",
+      "unit": "boolean",
+      "value": "true",
+      "verified_at": "2026-08-20"
+    },
+    {
+      "availability": "available",
+      "canonical_wording": "An independent fixture review confirms the listed magnesium and baking-soda-free formulation.",
+      "claim_id": "kr-independent-review",
+      "claim_type": "offer_fit",
+      "entity": "KindRoot",
+      "entity_id": "kindroot",
+      "evidence_grade": "B",
+      "expires_at": "2030-12-31",
+      "language": "en",
+      "limitations": "The review does not establish clinical efficacy.",
+      "market": "US",
+      "offer_exists": true,
+      "owner": "research",
+      "prompt_families": [
+        "sensitive-skin-magnesium"
+      ],
+      "publish_status": "approved",
+      "refresh_trigger": "review_update",
+      "row_number": 6,
+      "source_control": "independent",
+      "source_type": "independent_editorial",
+      "source_url": "https://reviews.example/kindroot-formula",
+      "unit": "review",
+      "value": "confirmed",
+      "verified_at": "2026-08-21"
+    },
+    {
+      "availability": "available",
+      "canonical_wording": "KindRoot uses magnesium hydroxide rather than baking soda.",
+      "claim_id": "kr-magnesium",
+      "claim_type": "ingredient",
+      "entity": "KindRoot",
+      "entity_id": "kindroot",
+      "evidence_grade": "FP",
+      "expires_at": "2030-12-31",
+      "language": "en",
+      "limitations": "Ingredient fit is not a medical or irritation guarantee.",
+      "market": "US",
+      "offer_exists": true,
+      "owner": "product",
+      "prompt_families": [
+        "sensitive-skin-magnesium"
+      ],
+      "publish_status": "approved",
+      "refresh_trigger": "formula_change",
+      "row_number": 4,
+      "source_control": "seller_controlled",
+      "source_type": "seller_controlled",
+      "source_url": "https://kindroot.example/formula",
+      "unit": "ingredient",
+      "value": "magnesium hydroxide",
+      "verified_at": "2026-08-20"
+    },
+    {
+      "availability": "available",
+      "canonical_wording": "KindRoot may launch at $18.",
+      "claim_id": "kr-price-draft",
+      "claim_type": "price",
+      "entity": "KindRoot",
+      "entity_id": "kindroot",
+      "evidence_grade": "X",
+      "expires_at": "2030-12-31",
+      "language": "en",
+      "limitations": "Draft price is not public.",
+      "market": "US",
+      "offer_exists": true,
+      "owner": "finance",
+      "prompt_families": [
+        "sensitive-skin-magnesium"
+      ],
+      "publish_status": "approval_required",
+      "refresh_trigger": "price_approved",
+      "row_number": 10,
+      "source_control": "seller_controlled",
+      "source_type": "internal_record",
+      "source_url": "urn:internal:pricing-draft",
+      "unit": "USD",
+      "value": "18",
+      "verified_at": "2026-08-20"
+    },
+    {
+      "availability": "available",
+      "canonical_wording": "KindRoot is formulated for buyers seeking a baking-soda-free magnesium option.",
+      "claim_id": "kr-sensitive-fit",
+      "claim_type": "offer_fit",
+      "entity": "KindRoot",
+      "entity_id": "kindroot",
+      "evidence_grade": "FP",
+      "expires_at": "2030-12-31",
+      "language": "en",
+      "limitations": "Individual skin responses vary.",
+      "market": "US",
+      "offer_exists": true,
+      "owner": "product",
+      "prompt_families": [
+        "sensitive-skin-magnesium"
+      ],
+      "publish_status": "approved",
+      "refresh_trigger": "formula_or_positioning_change",
+      "row_number": 5,
+      "source_control": "seller_controlled",
+      "source_type": "seller_controlled",
+      "source_url": "https://kindroot.example/formula",
+      "unit": "fit",
+      "value": "baking-soda-free magnesium",
+      "verified_at": "2026-08-20"
+    },
+    {
+      "availability": "available",
+      "canonical_wording": "The 75 g stick fits the fixture carry-on size constraint.",
+      "claim_id": "kr-travel-fit",
+      "claim_type": "compatibility",
+      "entity": "KindRoot",
+      "entity_id": "kindroot",
+      "evidence_grade": "FP",
+      "expires_at": "2030-12-31",
+      "language": "en",
+      "limitations": "Airline rules and destination restrictions can vary.",
+      "market": "US",
+      "offer_exists": true,
+      "owner": "product",
+      "prompt_families": [
+        "travel-deodorant"
+      ],
+      "publish_status": "approved",
+      "refresh_trigger": "package_change",
+      "row_number": 7,
+      "source_control": "seller_controlled",
+      "source_type": "first_party",
+      "source_url": "https://kindroot.example/specifications",
+      "unit": "g",
+      "value": "75",
+      "verified_at": "2026-08-20"
+    }
+  ],
+  "publication_boundary": "Only approved facts without blocking validation errors are publishable. Seller-controlled evidence must remain labeled as seller-controlled.",
+  "publishable_fact_ids": [
+    "kr-availability",
+    "kr-broad-fit",
+    "kr-exists",
+    "kr-independent-review",
+    "kr-magnesium",
+    "kr-sensitive-fit",
+    "kr-travel-fit"
+  ],
+  "record_schema": "schemas/fact-record.schema.json",
+  "schema_version": "organic-discovery/facts/1.0",
+  "source": "examples/sample-shelf/fact-registry.csv",
+  "summary": {
+    "approved_count": 7,
+    "blocked_count": 3,
+    "error_count": 0,
+    "extra_columns": [],
+    "fact_count": 10,
+    "independent_publishable_count": 1,
+    "publishable_count": 7,
+    "seller_controlled_publishable_count": 6,
+    "warning_count": 9
+  },
+  "valid": true,
+  "warnings": [
+    {
+      "claim_id": "ghost-exists",
+      "code": "claim_not_publishable",
+      "field": "publish_status",
+      "message": "research_required claims may inform research but cannot be used in publication-ready copy"
+    },
+    {
+      "claim_id": "kr-availability",
+      "code": "seller_controlled_evidence",
+      "field": "source_type",
+      "message": "seller-controlled evidence must not be represented as independent consensus"
+    },
+    {
+      "claim_id": "kr-broad-fit",
+      "code": "seller_controlled_evidence",
+      "field": "source_type",
+      "message": "seller-controlled evidence must not be represented as independent consensus"
+    },
+    {
+      "claim_id": "kr-eczema-safe",
+      "code": "claim_blocked",
+      "field": "publish_status",
+      "message": "prohibited claims are blocked from publication"
+    },
+    {
+      "claim_id": "kr-exists",
+      "code": "seller_controlled_evidence",
+      "field": "source_type",
+      "message": "seller-controlled evidence must not be represented as independent consensus"
+    },
+    {
+      "claim_id": "kr-magnesium",
+      "code": "seller_controlled_evidence",
+      "field": "source_type",
+      "message": "seller-controlled evidence must not be represented as independent consensus"
+    },
+    {
+      "claim_id": "kr-price-draft",
+      "code": "claim_not_publishable",
+      "field": "publish_status",
+      "message": "approval_required claims may inform research but cannot be used in publication-ready copy"
+    },
+    {
+      "claim_id": "kr-sensitive-fit",
+      "code": "seller_controlled_evidence",
+      "field": "source_type",
+      "message": "seller-controlled evidence must not be represented as independent consensus"
+    },
+    {
+      "claim_id": "kr-travel-fit",
+      "code": "seller_controlled_evidence",
+      "field": "source_type",
+      "message": "seller-controlled evidence must not be represented as independent consensus"
+    }
+  ]
+}
