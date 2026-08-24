@@ -14,6 +14,10 @@ EVALS = ROOT / "evals" / "trigger-evals.json"
 OPENAI_METADATA = ROOT / "agents" / "openai.yaml"
 CITATION = ROOT / "CITATION.cff"
 WORKFLOW = ROOT / ".github" / "workflows" / "validate.yml"
+PRODUCT_VISION = ROOT / "docs" / "PRODUCT-VISION.md"
+ROADMAP = ROOT / "docs" / "ROADMAP.md"
+DEFINITION_OF_DONE = ROOT / "docs" / "DEFINITION-OF-DONE.md"
+OD_CLI = ROOT / "scripts" / "od.py"
 
 REQUIRED_FILES = {
     ".github/workflows/validate.yml",
@@ -26,8 +30,12 @@ REQUIRED_FILES = {
     "SECURITY.md",
     "SKILL.md",
     "agents/openai.yaml",
+    "docs/DEFINITION-OF-DONE.md",
+    "docs/PRODUCT-VISION.md",
+    "docs/ROADMAP.md",
     "docs/SELF-AUDIT.md",
     "evals/trigger-evals.json",
+    "references/ai-shelf-and-growth-loop.md",
     "references/evidence-and-tactics.md",
     "references/execution-and-evidence.md",
     "references/measurement-protocol.md",
@@ -49,24 +57,67 @@ REQUIRED_SKILL_TERMS = {
     "Absorption",
     "Fidelity",
     "Behavior",
+    "Business Truth",
+    "AI shelf",
+    "open",
     "fact registry",
+    "human approval",
     "Reddit",
     "llms.txt",
     "rollback",
+    "business result",
+    "supervised execute",
+    "Repository capability boundary",
 }
 
 REQUIRED_README_TERMS = {
     "SEO",
     "AEO",
     "GEO",
-    "Agent Skill",
+    "Organic Growth Operator",
     "ChatGPT Search",
     "Google AI Overviews",
     "Claude",
     "Perplexity",
     "Bing/Copilot",
+    "AI shelf",
+    "Current state",
+    "does **not yet ship**",
     "Install",
+    "Roadmap",
     "Self-audit",
+}
+
+REQUIRED_VISION_TERMS = {
+    "Current product",
+    "North Star",
+    "AI shelf",
+    "Authority laundering",
+    "Truth and recommendation-integrity gate",
+    "Public third-party participation",
+    "Current capability must be stated honestly",
+}
+
+REQUIRED_ROADMAP_TERMS = {
+    "Current state — v0.3.1",
+    "does **not yet ship**",
+    "v0.4 — Deterministic audit foundation",
+    "v0.5 — Business Truth and AI Shelf Mapper",
+    "v0.6 — GitHub-backed owned-site operator",
+    "v0.7 — Content portfolio and earned-source queue",
+    "v0.8 — Measurement adapters and experiment ledger",
+    "v0.9 — CMS adapters and bounded autonomy",
+    "v1.0 — Continuous Organic Growth Operator",
+}
+
+REQUIRED_DOD_TERMS = {
+    "Release truth",
+    "Demand and AI shelf",
+    "Owned-site execution",
+    "Earned-source integrity",
+    "Outcome measurement",
+    "Learning and rollback",
+    "v1.0 acceptance scenario",
 }
 
 RELATIVE_REF_RE = re.compile(r"`((?:references|scripts|evals|docs|agents)/[^`]+)`")
@@ -137,8 +188,10 @@ def validate_openai_metadata(errors: list[str]) -> None:
     for term in ("display_name:", "short_description:", "default_prompt:", "allow_implicit_invocation:"):
         if term not in text:
             errors.append(f"agents/openai.yaml is missing {term}")
-    if "Organic Discovery" not in text:
-        errors.append("agents/openai.yaml must use the canonical display name")
+    if "Organic Discovery Operator" not in text:
+        errors.append("agents/openai.yaml must use the operator display name")
+    if "AI shelf" not in text or "rollback" not in text:
+        errors.append("agents/openai.yaml default prompt must include shelf mapping and rollback")
 
 
 def validate_citation(skill_version: str, errors: list[str]) -> None:
@@ -150,6 +203,8 @@ def validate_citation(skill_version: str, errors: list[str]) -> None:
             errors.append(f"CITATION.cff is missing {term}")
     if skill_version and f'version: "{skill_version}"' not in text:
         errors.append("CITATION.cff version does not match SKILL.md")
+    if "organic growth" not in text.lower() or "AI shelf" not in text:
+        errors.append("CITATION.cff does not describe the current operator scope")
 
 
 def validate_workflow(errors: list[str]) -> None:
@@ -160,6 +215,45 @@ def validate_workflow(errors: list[str]) -> None:
         errors.append("validation workflow does not run scripts/validate_skill.py")
     if "pull_request:" not in text:
         errors.append("validation workflow must run on pull requests")
+
+
+def validate_current_vs_planned(errors: list[str]) -> None:
+    if not README.is_file() or not ROADMAP.is_file():
+        return
+    readme = README.read_text(encoding="utf-8")
+    roadmap = ROADMAP.read_text(encoding="utf-8")
+
+    if not OD_CLI.exists():
+        if "does **not yet ship**" not in readme or "`scripts/od.py`" not in readme:
+            errors.append("README must explicitly disclose that scripts/od.py is not shipped")
+        bash_blocks = re.findall(r"```(?:bash|shell)\n(.*?)```", readme, flags=re.DOTALL)
+        if any("scripts/od.py" in block for block in bash_blocks):
+            errors.append("README exposes a runnable scripts/od.py example before the file exists")
+        if "does **not yet ship**" not in roadmap:
+            errors.append("ROADMAP must disclose missing executable capabilities")
+    else:
+        if "v0.4 — Deterministic audit foundation" not in roadmap:
+            errors.append("scripts/od.py exists but the v0.4 roadmap contract is missing")
+
+    forbidden_current_claims = (
+        "currently ships a dashboard",
+        "currently ships an autonomous publisher",
+        "currently ships a scheduler",
+        "v0.4 is live",
+    )
+    lowered = readme.lower()
+    for claim in forbidden_current_claims:
+        if claim in lowered:
+            errors.append(f"README contains unsupported current capability claim: {claim}")
+
+
+def validate_versions(skill_version: str, errors: list[str]) -> None:
+    if not skill_version:
+        return
+    if CHANGELOG.is_file() and f"## {skill_version} " not in CHANGELOG.read_text(encoding="utf-8"):
+        errors.append(f"CHANGELOG has no release entry for version {skill_version}")
+    if README.is_file() and f"version-{skill_version}-" not in README.read_text(encoding="utf-8"):
+        errors.append("README version badge does not match SKILL.md")
 
 
 def main() -> int:
@@ -201,6 +295,9 @@ def main() -> int:
 
     require_terms(SKILL, REQUIRED_SKILL_TERMS, "SKILL.md", errors)
     require_terms(README, REQUIRED_README_TERMS, "README.md", errors)
+    require_terms(PRODUCT_VISION, REQUIRED_VISION_TERMS, "docs/PRODUCT-VISION.md", errors)
+    require_terms(ROADMAP, REQUIRED_ROADMAP_TERMS, "docs/ROADMAP.md", errors)
+    require_terms(DEFINITION_OF_DONE, REQUIRED_DOD_TERMS, "docs/DEFINITION-OF-DONE.md", errors)
 
     for rel in sorted(set(RELATIVE_REF_RE.findall(skill_text))):
         if not (ROOT / rel).is_file():
@@ -226,10 +323,9 @@ def main() -> int:
         for rel in sorted(REQUIRED_FILES):
             if rel.startswith("references/") and rel not in readme_text:
                 errors.append(f"README does not list required module: {rel}")
-
-    if CHANGELOG.is_file() and skill_version:
-        if f"## {skill_version} " not in CHANGELOG.read_text(encoding="utf-8"):
-            errors.append(f"CHANGELOG has no release entry for version {skill_version}")
+        for rel in ("docs/PRODUCT-VISION.md", "docs/ROADMAP.md", "docs/DEFINITION-OF-DONE.md"):
+            if rel not in readme_text:
+                errors.append(f"README does not link product document: {rel}")
 
     if EVALS.is_file():
         try:
@@ -243,9 +339,9 @@ def main() -> int:
             cases = payload.get("cases", [])
             positives = sum(case.get("should_trigger") is True for case in cases)
             negatives = sum(case.get("should_trigger") is False for case in cases)
-            if positives < 8 or negatives < 8:
+            if positives < 12 or negatives < 10:
                 errors.append(
-                    f"trigger evals need at least 8 positive and 8 negative cases; found {positives} and {negatives}"
+                    f"trigger evals need at least 12 positive and 10 negative cases; found {positives} and {negatives}"
                 )
             prompts: set[str] = set()
             for index, case in enumerate(cases):
@@ -266,11 +362,17 @@ def main() -> int:
     validate_openai_metadata(errors)
     validate_citation(skill_version, errors)
     validate_workflow(errors)
+    validate_current_vs_planned(errors)
+    validate_versions(skill_version, errors)
 
     if (ROOT / "AGENTS.md").is_file():
         agents_text = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
         if "python scripts/validate_skill.py" not in agents_text:
             errors.append("AGENTS.md must declare the required validation command")
+        if "Public third-party posting is human-approved by default" not in agents_text:
+            errors.append("AGENTS.md must preserve the third-party approval gate")
+        if "planned capability" not in agents_text:
+            errors.append("AGENTS.md must preserve current-versus-planned release truth")
 
     for warning in warnings:
         print(f"WARNING: {warning}")
