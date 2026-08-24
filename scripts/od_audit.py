@@ -358,7 +358,9 @@ def render_report(audit: dict[str, Any], orders: list[dict[str, Any]]) -> str:
     for stage in STAGES:
         item = audit["stages"][stage]; lines.append(f"| {stage.replace('_', ' ').title()} | {item['status']} | {item['confidence']} | {item['evidence']} |")
     lines += ["", "## Findings", "", "| ID | Priority | Stage | Finding |", "|---|---|---|---|"]
-    for row in audit["findings"]: lines.append(f"| {row['id']} | {row['priority']} | {row['stage']} | **{row['title']}** — {row['detail'].replace('|', '\\|')} |")
+    for row in audit["findings"]:
+        detail = row["detail"].replace("|", "\\|")
+        lines.append(f"| {row['id']} | {row['priority']} | {row['stage']} | **{row['title']}** — {detail} |")
     if not audit["findings"]: lines.append("| — | — | — | No deterministic findings. Delayed outcomes remain unknown. |")
     lines += ["", "## Work orders", ""]
     for order in orders:
