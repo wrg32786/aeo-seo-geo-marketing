@@ -1,0 +1,13 @@
+User-agent: Googlebot
+Allow: /
+
+User-agent: bingbot
+Allow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+User-agent: Claude-SearchBot
+Disallow: /
+
+Sitemap: https://example.test/sitemap.xml
