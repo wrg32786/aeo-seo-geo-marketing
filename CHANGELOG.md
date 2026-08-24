@@ -2,6 +2,15 @@
 
 All notable changes to Organic Discovery are documented here.
 
+## Unreleased
+
+- Applied the Organic Discovery workflow to the repository’s own GitHub surface.
+- Reworked the README around an answer-first SEO/AEO/GEO identity, installation, use cases, differentiation, outputs, and evidence.
+- Added OpenAI host metadata in `agents/openai.yaml`.
+- Added GitHub Actions validation for Python 3.11 and 3.13.
+- Added `AGENTS.md`, contribution guidance, security reporting, citation metadata, and a public self-audit.
+- Expanded package validation to cover discoverability, host metadata, governance, citation metadata, and CI.
+
 ## 0.3.0 — 2026-08-22
 
 - Added canonical fact registry and claim provenance gates.

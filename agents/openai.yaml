@@ -1,0 +1,7 @@
+interface:
+  display_name: "Organic Discovery"
+  short_description: "Audit and improve SEO, AEO, GEO, AI citations, and organic discovery."
+  brand_color: "#111827"
+  default_prompt: "Audit this webpage for conventional search and AI-answer discovery, fix the earliest blocker, and provide exact work orders and measurement."
+policy:
+  allow_implicit_invocation: true
