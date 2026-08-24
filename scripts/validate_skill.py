@@ -19,6 +19,7 @@ PRODUCT_VISION = ROOT / "docs" / "PRODUCT-VISION.md"
 ROADMAP = ROOT / "docs" / "ROADMAP.md"
 DEFINITION_OF_DONE = ROOT / "docs" / "DEFINITION-OF-DONE.md"
 OD_CLI = ROOT / "scripts" / "od.py"
+TEST_MODULE = ROOT / "tests" / "test_od.py"
 EXPECTED_AUDIT = ROOT / "examples" / "sample-site" / "expected" / "audit.json"
 EXPECTED_WORK_ORDERS = ROOT / "examples" / "sample-site" / "expected" / "work-orders.json"
 EXPECTED_REPORT = ROOT / "examples" / "sample-site" / "expected" / "report.md"
@@ -143,6 +144,7 @@ REQUIRED_DOD_TERMS = {
 
 RELATIVE_REF_RE = re.compile(r"`((?:references|scripts|evals|docs|agents|examples|tests)/[^`]+)`")
 LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
+VERSION_RE = re.compile(r'metadata:\s*\n(?:.*\n)*?\s+version:\s*["\']([^"\']+)["\']', re.MULTILINE)
 
 
 def parse_frontmatter(text: str) -> tuple[dict[str, str], list[str]]:
@@ -166,7 +168,7 @@ def parse_frontmatter(text: str) -> tuple[dict[str, str], list[str]]:
         if ":" not in raw:
             errors.append(f"invalid frontmatter line: {raw}")
             continue
-        key, value = raw.split(": 1) if False else raw.split(":", 1)
+        key, value = raw.split(":", 1)
         key = key.strip()
         value = value.strip().strip("\"'")
         data[key] = value
@@ -263,11 +265,19 @@ def validate_auditor(skill_version: str, errors: list[str]) -> None:
         return
     auditor_files = [OD_CLI, ROOT / "scripts" / "od_fetch.py", ROOT / "scripts" / "od_audit.py"]
     text = "\n".join(path.read_text(encoding="utf-8") for path in auditor_files if path.is_file())
-    for term in ("validate_public_url", "resolve_public_host", "DEFAULT_MAX_BYTES", "DEFAULT_MAX_REDIRECTS", "opaque_score", "work-orders.json", "report.md"):
+    for term in (
+        "validate_public_url",
+        "resolve_public_host",
+        "DEFAULT_MAX_BYTES",
+        "DEFAULT_MAX_REDIRECTS",
+        "opaque_score",
+        "work-orders.json",
+        "report.md",
+    ):
         if term not in text:
-            errors.append(f"auditor bundle is missing contract term: {term}")
+            errors.append(f"scripts/od.py is missing auditor contract term: {term}")
     if skill_version and f'VERSION = "{skill_version}"' not in text:
-        errors.append("auditor version does not match SKILL.md")
+        errors.append("scripts/od.py version does not match SKILL.md")
 
     try:
         audit = json.loads(EXPECTED_AUDIT.read_text(encoding="utf-8"))
@@ -408,7 +418,12 @@ def main() -> int:
 
     if (ROOT / "AGENTS.md").is_file():
         agents_text = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
-        for term in ("python scripts/validate_skill.py", "python -m unittest discover -s tests -v", "Public third-party posting is human-approved by default", "planned capability"):
+        for term in (
+            "python scripts/validate_skill.py",
+            "python -m unittest discover -s tests -v",
+            "Public third-party posting is human-approved by default",
+            "planned capability",
+        ):
             if term not in agents_text:
                 errors.append(f"AGENTS.md is missing: {term}")
 
@@ -419,7 +434,10 @@ def main() -> int:
             print(f"ERROR: {error}")
         return 1
 
-    print("OK: organic-discovery validated " f"(version {skill_version}, {len(lines)} SKILL.md lines, {len(REQUIRED_FILES)} required files)")
+    print(
+        "OK: organic-discovery validated "
+        f"(version {skill_version}, {len(lines)} SKILL.md lines, {len(REQUIRED_FILES)} required files)"
+    )
     return 0
 
 
