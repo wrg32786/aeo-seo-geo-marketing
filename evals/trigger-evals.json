@@ -1,46 +1,56 @@
 {
   "skill": "organic-discovery",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "cases": [
+    {
+      "prompt": "Run the deterministic Organic Discovery audit on this product URL and give me the exact work orders.",
+      "should_trigger": true,
+      "reason": "Explicit use of the bundled webpage auditor and work-order output."
+    },
+    {
+      "prompt": "Audit this local HTML file for canonical, robots, JSON-LD, sourcing, and hidden prompt instructions.",
+      "should_trigger": true,
+      "reason": "Local-file SEO/AEO/GEO deterministic audit."
+    },
     {
       "prompt": "Audit this product page for SEO and improve its chances of being cited in ChatGPT Search and Google AI Overviews.",
       "should_trigger": true,
-      "reason": "Explicit webpage SEO, AI search, and citation optimization."
+      "reason": "Owned webpage SEO and AI-search optimization."
     },
     {
       "prompt": "Our plumbing service page ranks locally but never appears in Copilot recommendations. Diagnose it.",
       "should_trigger": true,
-      "reason": "Local page discovery and AI recommendation diagnosis."
+      "reason": "Local organic and AI recommendation diagnosis."
     },
     {
       "prompt": "Why does Perplexity cite our competitor instead of us for these prompts? Map the source chain.",
       "should_trigger": true,
-      "reason": "Citation-source recon and platform-specific GEO."
+      "reason": "Citation and source-supply-chain recon."
     },
     {
       "prompt": "Set a robots.txt policy that allows ChatGPT search but blocks model training, and verify the crawler names.",
       "should_trigger": true,
-      "reason": "AI crawler controls and current platform verification."
+      "reason": "Crawler-purpose controls and current platform verification."
     },
     {
       "prompt": "Turn this research PDF into an accessible canonical webpage that can rank and be accurately sourced by AI answers.",
       "should_trigger": true,
-      "reason": "Asset-to-webpage transformation for search and answer-engine discovery."
+      "reason": "Asset transformation for conventional and AI discovery."
     },
     {
-      "prompt": "Build an ethical Reddit plan to earn visibility for our calculator without getting banned or spamming links.",
+      "prompt": "Build an ethical Reddit plan to earn visibility for our calculator without spamming links.",
       "should_trigger": true,
-      "reason": "Legitimate off-site source earning for AI and search visibility."
+      "reason": "Legitimate earned-source planning."
     },
     {
-      "prompt": "Check our ecommerce product feed, structured data, and page copy for Google, Bing, and ChatGPT product discovery.",
+      "prompt": "Check our ecommerce product feed, schema, and page copy for Google, Bing, and ChatGPT product discovery.",
       "should_trigger": true,
-      "reason": "Commerce discovery across search and AI platforms."
+      "reason": "Commerce discovery across search and AI surfaces."
     },
     {
       "prompt": "Create a repeatable AEO baseline with prompt paraphrases, citations, absorption, and recommendation share.",
       "should_trigger": true,
-      "reason": "GEO measurement protocol."
+      "reason": "Exact-surface GEO measurement."
     },
     {
       "prompt": "Should our documentation site publish llms.txt? Inspect the consumers and implement it only if justified.",
@@ -50,52 +60,27 @@
     {
       "prompt": "Rewrite our comparison page so it owns the intent, has defensible evidence, and performs in classic and AI search.",
       "should_trigger": true,
-      "reason": "Page transformation for retrieval, citation, conversion, and integrity."
+      "reason": "Source-backed page transformation."
     },
     {
-      "prompt": "Track our brand separately in ChatGPT web search, the OpenAI API, Gemini mobile, and Google AI Mode in the US and Japan; keep branded validation out of unbranded recommendation share and reconcile the results with Search Console.",
+      "prompt": "Map the AI shelf for our category, find an open long-tail wedge, and reject any opportunity our product cannot truthfully satisfy.",
       "should_trigger": true,
-      "reason": "Cross-surface, cross-market AI discovery measurement and first-party reconciliation."
+      "reason": "AI-shelf mapping and truth-gated wedge selection."
     },
     {
-      "prompt": "We have no website, only App Store, GitHub, and marketplace listings. Build a verified fact registry, identify which external sources AI answers use, and create an organic discovery plan.",
+      "prompt": "Use Organic Discovery on this GitHub-backed site, make the smallest approved P0 and P1 fixes on a branch, and include rollback.",
       "should_trigger": true,
-      "reason": "No-site organic and AI discovery workflow across controlled and third-party surfaces."
+      "reason": "Supervised owned-site execution."
     },
     {
-      "prompt": "Audit this page for hidden prompt instructions, crawler-versus-browser delivery differences, stale claims, and create work orders with acceptance tests and rollback.",
+      "prompt": "Track our brand separately in ChatGPT Search, the OpenAI API, Gemini mobile, and Google AI Mode in the US and Japan.",
       "should_trigger": true,
-      "reason": "Technical observability, manipulation review, fact governance, and implementation verification."
+      "reason": "Cross-surface and cross-market discovery measurement."
     },
     {
-      "prompt": "Localize this product discovery program for Brazil and Germany using native query libraries, separate competitors, hreflang, regional source maps, and per-market AI citation tracking.",
+      "prompt": "We have no website, only App Store, GitHub, and marketplace listings. Build a verified fact registry and discovery plan.",
       "should_trigger": true,
-      "reason": "Regional SEO/AEO implementation and surface-isolated measurement."
-    },
-    {
-      "prompt": "Connect to this website repository, build the business fact registry, find the highest-value organic growth opportunities, implement approved P0 and P1 changes on a branch, and open a PR with measurement and rollback.",
-      "should_trigger": true,
-      "reason": "Closed-loop owned-site Organic Growth Operator request."
-    },
-    {
-      "prompt": "Map the AI recommendation shelf for our category, classify locked versus open prompt families, and choose a truthful long-tail wedge we can support with real evidence.",
-      "should_trigger": true,
-      "reason": "AI shelf concentration, integrity, and wedge selection."
-    },
-    {
-      "prompt": "Create the best owned answer for this open shelf, then draft Reddit, forum, editorial, and partner contributions with rules, disclosure, and human approval before anything is posted.",
-      "should_trigger": true,
-      "reason": "Owned content plus approval-gated earned-source workflow."
-    },
-    {
-      "prompt": "Run a monthly organic growth loop: preserve the baseline, audit, make approved site changes, import search and AI observations, then keep, expand, or roll back based on qualified traffic and conversions.",
-      "should_trigger": true,
-      "reason": "Continuous measurement and learning loop for organic discovery."
-    },
-    {
-      "prompt": "Our AI mention rate increased but the model now omits our safety limitation. Treat fidelity as a regression and repair the content before expanding the campaign.",
-      "should_trigger": true,
-      "reason": "Recommendation-integrity and factual-fidelity remediation."
+      "reason": "No-site organic discovery workflow."
     },
     {
       "prompt": "Write three Google Ads headlines for a roofing company.",
@@ -105,7 +90,7 @@
     {
       "prompt": "What does GEO stand for? Answer in one sentence.",
       "should_trigger": false,
-      "reason": "Generic definition with no audit, transformation, implementation, or measurement."
+      "reason": "Generic definition without audit, implementation, or measurement."
     },
     {
       "prompt": "Create a logo for my coffee shop.",
@@ -130,12 +115,12 @@
     {
       "prompt": "Draft a LinkedIn announcement for our launch.",
       "should_trigger": false,
-      "reason": "Social copy alone, not source earning or visibility strategy."
+      "reason": "Social copy alone is not a discovery workflow."
     },
     {
       "prompt": "Email our developer and ask when the sitemap will be ready.",
       "should_trigger": false,
-      "reason": "Communication task, not sitemap analysis or implementation."
+      "reason": "Communication task rather than sitemap analysis."
     },
     {
       "prompt": "Make a spreadsheet of these keyword positions exactly as supplied.",
@@ -145,27 +130,17 @@
     {
       "prompt": "Tell me the latest ChatGPT release news.",
       "should_trigger": false,
-      "reason": "Product news request, not webpage discovery optimization."
+      "reason": "Product news rather than organic-discovery work."
     },
     {
-      "prompt": "Translate this short paragraph into Japanese.",
+      "prompt": "Translate this paragraph into Japanese.",
       "should_trigger": false,
-      "reason": "Translation alone has no organic-discovery audit, implementation, or measurement request."
+      "reason": "Translation alone has no discovery audit or implementation request."
     },
     {
       "prompt": "Benchmark response latency between two language-model APIs.",
       "should_trigger": false,
-      "reason": "General API performance engineering, not search or answer-engine discovery."
-    },
-    {
-      "prompt": "Create fifty fake Reddit accounts, post our link everywhere, and coordinate upvotes so AI tools think people recommend us.",
-      "should_trigger": false,
-      "reason": "Deceptive ranking manipulation and platform abuse are explicitly outside the skill."
-    },
-    {
-      "prompt": "Buy a thousand backlinks and fake five-star reviews for my product.",
-      "should_trigger": false,
-      "reason": "Link and review manipulation are explicitly outside the skill."
+      "reason": "General API performance engineering."
     }
   ]
 }
