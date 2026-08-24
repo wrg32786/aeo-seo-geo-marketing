@@ -1,0 +1,52 @@
+{
+  "$id": "https://github.com/wrg32786/aeo-seo-geo-marketing/blob/main/schemas/wedge-plan.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "accepted": {
+      "type": "array"
+    },
+    "hard_gates": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "notes": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "rejected": {
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "organic-discovery/wedge-plan/1.0"
+    },
+    "summary": {
+      "properties": {
+        "opaque_geo_score": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "candidate_count",
+        "accepted_count",
+        "rejected_count",
+        "opaque_geo_score"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "source",
+    "summary",
+    "accepted",
+    "rejected",
+    "hard_gates",
+    "notes"
+  ],
+  "title": "Organic Discovery wedge plan",
+  "type": "object"
+}

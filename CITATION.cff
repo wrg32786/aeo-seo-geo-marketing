@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use Organic Discovery, please cite the project using this metadata."
-title: "Organic Discovery: An Evidence-Grounded SEO, AEO, and GEO Organic Growth Operator"
-version: "0.4.0"
+title: "Organic Discovery: An Evidence-Grounded SEO, AEO, and GEO Growth Operator"
+version: "0.5.0"
 date-released: "2026-08-24"
 type: software
 authors:
@@ -10,17 +10,17 @@ repository-code: "https://github.com/wrg32786/aeo-seo-geo-marketing"
 url: "https://github.com/wrg32786/aeo-seo-geo-marketing"
 license: MIT
 abstract: >-
-  An open-source Agent Skill and dependency-free deterministic webpage auditor for
-  conventional SEO, Answer Engine Optimization, Generative Engine Optimization,
-  AI search visibility, AI shelf analysis, factual fidelity, implementation work
-  orders, legitimate source earning, and qualified organic growth measurement.
+  An open-source Agent Skill and dependency-free Python toolchain for organic growth
+  across conventional SEO, Answer Engine Optimization, Generative Engine Optimization,
+  deterministic webpage auditing, Business Truth validation, exact-surface AI shelf
+  mapping, truthful wedge planning, factual fidelity, and outcome measurement.
 keywords:
   - search engine optimization
   - answer engine optimization
   - generative engine optimization
   - organic growth
-  - deterministic SEO audit
   - AI shelf
+  - business truth
   - AI search optimization
   - AI SEO
   - LLM SEO

@@ -1,0 +1,167 @@
+{
+  "$id": "https://github.com/wrg32786/aeo-seo-geo-marketing/blob/main/schemas/fact-record.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "availability": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "canonical_wording": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "claim_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]{2,95}$",
+      "type": "string"
+    },
+    "claim_type": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "entity": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "entity_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]{2,95}$",
+      "type": "string"
+    },
+    "evidence_grade": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "expires_at": {
+      "format": "date",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "language": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "limitations": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "market": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "offer_exists": {
+      "type": [
+        "boolean",
+        "string",
+        "null"
+      ]
+    },
+    "owner": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "prompt_families": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "publish_status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "refresh_trigger": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "row_number": {
+      "minimum": 2,
+      "type": "integer"
+    },
+    "source_control": {
+      "enum": [
+        "seller_controlled",
+        "independent",
+        "community",
+        "other",
+        "unknown"
+      ]
+    },
+    "source_type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "unit": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "value": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "verified_at": {
+      "format": "date",
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "claim_id",
+    "entity_id",
+    "entity",
+    "claim_type",
+    "canonical_wording",
+    "value",
+    "unit",
+    "source_url",
+    "source_type",
+    "source_control",
+    "verified_at",
+    "evidence_grade",
+    "offer_exists",
+    "availability",
+    "publish_status",
+    "owner",
+    "refresh_trigger",
+    "limitations",
+    "prompt_families",
+    "market",
+    "language",
+    "expires_at",
+    "row_number"
+  ],
+  "title": "Organic Discovery normalized fact record",
+  "type": "object"
+}

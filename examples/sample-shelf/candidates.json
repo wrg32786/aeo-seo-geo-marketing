@@ -1,0 +1,114 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "wedge-kindroot-sensitive-skin",
+      "controlled_asset": "https://kindroot.example/magnesium-vs-baking-soda",
+      "factors": {
+        "conversion_value": 0.8,
+        "execution_probability": 0.9,
+        "implementation_cost": 0.25,
+        "maintenance_cost": 0.25,
+        "qualified_demand": 0.7,
+        "risk": 0.2,
+        "source_attainability": 0.7
+      },
+      "notes": "Target the under-defended constraint, not the broad category.",
+      "prompt_family": "sensitive-skin-magnesium",
+      "required_fact_ids": [
+        "kr-exists",
+        "kr-availability",
+        "kr-magnesium",
+        "kr-sensitive-fit",
+        "kr-independent-review"
+      ],
+      "target_entity_id": "kindroot",
+      "user_constraint": "magnesium-based and baking-soda-free"
+    },
+    {
+      "candidate_id": "wedge-kindroot-broad",
+      "controlled_asset": "https://kindroot.example/",
+      "factors": {
+        "conversion_value": 0.9,
+        "execution_probability": 0.3,
+        "implementation_cost": 0.7,
+        "maintenance_cost": 0.6,
+        "qualified_demand": 1.0,
+        "risk": 0.6,
+        "source_attainability": 0.3
+      },
+      "notes": "Expected to be rejected because the exact shelf is locked.",
+      "prompt_family": "best-natural-deodorant",
+      "required_fact_ids": [
+        "kr-exists",
+        "kr-availability",
+        "kr-broad-fit"
+      ],
+      "target_entity_id": "kindroot",
+      "user_constraint": "best natural deodorant"
+    },
+    {
+      "candidate_id": "wedge-kindroot-travel",
+      "controlled_asset": "https://kindroot.example/travel",
+      "factors": {
+        "conversion_value": 0.55,
+        "execution_probability": 0.85,
+        "implementation_cost": 0.2,
+        "maintenance_cost": 0.2,
+        "qualified_demand": 0.45,
+        "risk": 0.15,
+        "source_attainability": 0.55
+      },
+      "notes": "Fragmented shelf with legitimate product fit.",
+      "prompt_family": "travel-deodorant",
+      "required_fact_ids": [
+        "kr-exists",
+        "kr-availability",
+        "kr-travel-fit"
+      ],
+      "target_entity_id": "kindroot",
+      "user_constraint": "carry-on-friendly format"
+    },
+    {
+      "candidate_id": "wedge-kindroot-eczema",
+      "controlled_asset": "https://kindroot.example/eczema",
+      "factors": {
+        "conversion_value": 0.6,
+        "execution_probability": 0.4,
+        "implementation_cost": 0.4,
+        "maintenance_cost": 0.5,
+        "qualified_demand": 0.65,
+        "risk": 1.0,
+        "source_attainability": 0.25
+      },
+      "notes": "Must be rejected because the shelf is unsafe and the required claim is prohibited.",
+      "prompt_family": "eczema-safe-deodorant",
+      "required_fact_ids": [
+        "kr-exists",
+        "kr-availability",
+        "kr-eczema-safe"
+      ],
+      "target_entity_id": "kindroot",
+      "user_constraint": "guaranteed safe for everyone with eczema"
+    },
+    {
+      "candidate_id": "wedge-ghost-product",
+      "controlled_asset": null,
+      "factors": {
+        "conversion_value": 0.1,
+        "execution_probability": 0.1,
+        "implementation_cost": 0.8,
+        "maintenance_cost": 0.8,
+        "qualified_demand": 0.2,
+        "risk": 1.0,
+        "source_attainability": 0.1
+      },
+      "notes": "Must be rejected because the offer does not exist and no shelf observations exist.",
+      "prompt_family": "ghost-product",
+      "required_fact_ids": [
+        "ghost-exists"
+      ],
+      "target_entity_id": "ghostfresh",
+      "user_constraint": "placeholder product"
+    }
+  ]
+}

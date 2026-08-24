@@ -1,56 +1,70 @@
 # Contributing
 
-Contributions are welcome when they make Organic Discovery more accurate, executable, portable, secure, or easier to verify.
+Contributions are welcome when they make Organic Discovery more accurate, executable, portable, safe, or easier to verify.
 
 ## Good contributions
 
-- Reproducible auditor bugs with a small HTML fixture
-- Safer bounded-fetch behavior and redirect/private-network tests
-- Deterministic checks that map to a real user or platform failure
-- Current official crawler, indexing, preview, feed, or reporting changes
-- Better output contracts, trigger evals, examples, accessibility, or installation documentation
-- Controlled experiments with raw observations, denominators, and fidelity checks
+- Current official crawler, indexing, preview, product-feed, or reporting changes
+- Reproducible bugs in the auditor, fact validator, shelf mapper, wedge planner, skill router, validator, references, or output contracts
+- Better schemas, exact-surface grouping, null handling, hard gates, metrics, or deterministic reports
+- Controlled experiments with raw observations, denominators, fidelity checks, and explicit boundaries
+- New vertical or regional adapters with clear limits
+- Better examples, accessibility, security, tests, or installation documentation
 - Removal or downgrading of unsupported folklore
 
 ## Evidence requirements
 
-Every material tactic or platform claim identifies its source, evidence class, exact platform/surface, date checked, market or mode when relevant, what it establishes, and what it does not establish.
+Every material tactic or platform claim must identify:
 
-A vendor score, Reddit post, repository README, or correlation cannot become a universal requirement.
+- source URL or primary document;
+- evidence class from `references/evidence-and-tactics.md`;
+- platform and exact surface;
+- date checked;
+- market, language, mode, and model when relevant;
+- what the evidence establishes;
+- what it does **not** establish.
+
+A vendor score, Reddit post, repository README, benchmark, or correlation cannot become a universal requirement.
+
+## Deterministic contract rules
+
+- Preserve `null` and `unknown`; do not manufacture denominators.
+- Keep exact-surface dimensions separate.
+- Exclude branded validation from unbranded recommendation share.
+- Keep seller-controlled and independent evidence distinguishable.
+- Do not soften a hard rejection into a lower planning score.
+- Any schema change must update its fixture, tests, docs, and version boundary.
+- Legacy v0.4 audit artifacts remain versioned independently unless their own contract changes.
 
 ## Workflow
 
 1. Create a focused branch.
 2. Make the smallest coherent change.
-3. Add or update one fixture/test for non-trivial auditor logic.
-4. Regenerate expected artifacts through `scripts/od.py`; do not hand-edit them.
-5. Update the relevant reference and `references/source-register.md` when doctrine changes.
-6. Update every versioned artifact for a release.
-7. Run:
+3. Update the relevant reference and `references/source-register.md` when doctrine changes.
+4. Update `CHANGELOG.md` for material user-facing changes.
+5. Run:
 
 ```bash
 python scripts/validate_skill.py
 python -m unittest discover -s tests -v
-python scripts/od.py audit examples/sample-site/site/index.html --output /tmp/od-example
 ```
 
-8. Open a pull request describing root cause, evidence boundary, security impact, validation, delayed outcomes, and rollback.
+6. Open a pull request describing the root cause, contract changes, evidence boundary, validation, and rollback.
 
 ## Pull-request checklist
 
 - [ ] The change solves a documented problem rather than adding speculative scope.
-- [ ] Standard library or existing code was reused before adding a dependency.
-- [ ] Remote fetch safety is preserved when networking changes.
-- [ ] New deterministic logic has one focused check.
-- [ ] Expected artifacts were regenerated and intentionally reviewed.
 - [ ] Official platform behavior was rechecked when relevant.
 - [ ] New claims have provenance and limits.
-- [ ] API, web, app, Search, and assistant observations remain isolated.
-- [ ] No ranking, citation, recommendation, or traffic guarantee was added.
-- [ ] No fabricated statistics, reviews, quotes, dates, or consensus were added.
-- [ ] Local links and referenced files resolve.
-- [ ] Trigger evals still include positive and negative cases.
-- [ ] Validation, tests, and the offline example pass.
+- [ ] Exact surfaces remain isolated.
+- [ ] Branded prompts remain excluded from unbranded share.
+- [ ] Unsupported, unavailable, unsafe, prohibited, or locked opportunities still fail hard gates.
+- [ ] No ranking, citation, recommendation, traffic, revenue, or timing guarantee was added.
+- [ ] No fabricated statistics, reviews, quotes, dates, products, or consensus were added.
+- [ ] Local links, schemas, JSON, and JSONL are valid.
+- [ ] Both offline examples reproduce byte-for-byte.
+- [ ] Trigger evals include positive and negative cases.
+- [ ] Python 3.11 and 3.13 CI pass.
 
 ## Security issues
 

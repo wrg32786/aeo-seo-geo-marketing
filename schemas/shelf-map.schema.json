@@ -1,0 +1,61 @@
+{
+  "$id": "https://github.com/wrg32786/aeo-seo-geo-marketing/blob/main/schemas/shelf-map.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "groups": {
+      "items": {
+        "properties": {
+          "shelf_state": {
+            "enum": [
+              "locked",
+              "contested",
+              "fragmented",
+              "open",
+              "unsafe",
+              "unknown"
+            ]
+          }
+        },
+        "required": [
+          "group_id",
+          "dimensions",
+          "observation_ids",
+          "runs",
+          "shelf_state",
+          "classification_confidence",
+          "classification_reasons",
+          "eligible_for_unbranded_recommendation_share",
+          "metrics",
+          "fact_support",
+          "integrity_issues"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "notes": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "prompt_families": {
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "organic-discovery/shelf-map/1.0"
+    }
+  },
+  "required": [
+    "schema_version",
+    "source",
+    "group_dimensions",
+    "classification_thresholds",
+    "branded_exclusion",
+    "groups",
+    "prompt_families",
+    "notes"
+  ],
+  "title": "Organic Discovery AI shelf map",
+  "type": "object"
+}
