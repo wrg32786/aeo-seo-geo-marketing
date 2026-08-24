@@ -1,0 +1,52 @@
+name: Publish v0.4.0
+
+on:
+  push:
+    branches:
+      - feat/issue-3-v0.4-auditor
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create tag and GitHub release at the merged commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v0.4.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            exit 0
+          fi
+          cat > /tmp/release-notes.md <<'NOTES'
+          ## Organic Discovery v0.4.0
+
+          The first executable Organic Discovery release.
+
+          ### Shipped
+
+          - `python scripts/od.py audit <url-or-html> --output <directory>`
+          - bounded public-network-only HTTP fetching with redirect revalidation
+          - deterministic crawler, index, canonical, initial-HTML, metadata, sitemap, JSON-LD, claim-provenance, and hidden-instruction checks
+          - separate eight-stage diagnosis with unobservable stages preserved as `unknown`
+          - deterministic `audit.json`, `work-orders.json`, and `report.md`
+          - exact work orders with acceptance, delayed observation, and rollback
+          - offline worked example and six focused regression tests
+          - Python 3.11 and 3.13 CI
+
+          ### Evidence boundary
+
+          No opaque GEO score. Technical eligibility is not presented as indexing, retrieval, citation, recommendation, traffic, or conversion success.
+
+          ### Deliberately excluded
+
+          No dashboard, database, scheduled AI-answer tracking, analytics connector, CMS publisher, hosted SaaS, browser farm, or autonomous community posting.
+
+          Closes #3 via PR #4.
+          NOTES
+          gh release create v0.4.0 \
+            --repo "$GITHUB_REPOSITORY" \
+            --target f48edb93eff0027007303eaca0af46ea7ae24f46 \
+            --title "Organic Discovery v0.4.0 — Deterministic Auditor" \
+            --notes-file /tmp/release-notes.md
