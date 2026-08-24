@@ -1,0 +1,85 @@
+name: Finalize v0.4.0 once
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/finalize-v0.4.0-once.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Create tag and release if missing
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_COMMIT: f48edb93eff0027007303eaca0af46ea7ae24f46
+        run: |
+          if ! git ls-remote --exit-code --tags origin refs/tags/v0.4.0 >/dev/null 2>&1; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git tag -a v0.4.0 "$RELEASE_COMMIT" -m "Organic Discovery v0.4.0"
+            git push origin refs/tags/v0.4.0
+          fi
+
+          if ! gh release view v0.4.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            cat > /tmp/v0.4.0-notes.md <<'EOF'
+          First executable Organic Discovery release.
+
+          ## Shipped
+
+          - Standard-library audit CLI for public HTTP(S) URLs and local HTML.
+          - Bounded SSRF-safe fetching with public-IP validation, pinned connections, redirect revalidation, timeouts, and response limits.
+          - Deterministic SEO/AEO/GEO findings without an opaque readiness score.
+          - Eight-stage diagnosis that preserves non-observable stages as unknown.
+          - `audit.json`, `work-orders.json`, and `report.md` outputs.
+          - Work orders with exact change, acceptance, delayed observation, and rollback.
+          - Intentionally broken offline fixture and committed expected artifacts.
+          - Focused regression tests and CI on Python 3.11 and 3.13.
+
+          ## Run
+
+          ```bash
+          python scripts/od.py audit https://example.com --output output/
+          python scripts/od.py audit ./page.html --output output/
+          ```
+
+          ## Explicitly excluded
+
+          No dashboard, database, scheduled AI-answer tracking, analytics connector, CMS publisher, browser farm, hosted SaaS, or autonomous community posting.
+          EOF
+            gh release create v0.4.0 \
+              --repo "$GITHUB_REPOSITORY" \
+              --title "Organic Discovery v0.4.0 — Deterministic Auditor" \
+              --notes-file /tmp/v0.4.0-notes.md
+          fi
+
+      - name: Record release and remove one-shot workflows
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p .release
+          cat > .release/v0.4.0.md <<'EOF'
+          # Organic Discovery v0.4.0
+
+          Released from commit `f48edb93eff0027007303eaca0af46ea7ae24f46` after package validation, six focused tests, and the committed offline example passed on Python 3.11 and 3.13.
+          EOF
+          git rm --ignore-unmatch \
+            .github/workflows/publish-v0.4.0-once.yml \
+            .github/workflows/finalize-v0.4.0-once.yml
+          git add .release/v0.4.0.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Record v0.4.0 release"
+            git push origin HEAD:main
+          fi
