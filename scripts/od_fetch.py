@@ -46,6 +46,8 @@ class TargetDocument:
     sitemap_text: str | None = None
     sitemap_source: str | None = None
     limitations: list[str] = field(default_factory=list)
+    sitemap_status: int | None = None
+    sitemap_content_type: str | None = None
 
 
 def _public_ip(value: str) -> bool:
@@ -203,6 +205,8 @@ def load_target(target: str, *, timeout: float = DEFAULT_TIMEOUT, max_bytes: int
         origin = f"{parsed.scheme}://{parsed.netloc}"
         limitations: list[str] = []
         robots_text = sitemap_text = robots_source = sitemap_source = None
+        sitemap_status = None
+        sitemap_content_type = None
         try:
             robots_source, _s, _h, robots_body, _r = fetch_remote(origin + "/robots.txt", timeout=timeout, max_bytes=max_bytes, max_redirects=max_redirects, user_agent=user_agent)
             robots_text = robots_body.decode("utf-8", errors="replace")
@@ -210,11 +214,12 @@ def load_target(target: str, *, timeout: float = DEFAULT_TIMEOUT, max_bytes: int
             limitations.append(f"robots.txt unavailable: {exc}")
         sitemap_candidates = _robots_sitemaps(robots_text) or [origin + "/sitemap.xml"]
         try:
-            sitemap_source, _s, _h, sitemap_body, _r = fetch_remote(sitemap_candidates[0], timeout=timeout, max_bytes=max_bytes, max_redirects=max_redirects, user_agent=user_agent)
-            sitemap_text = sitemap_body.decode("utf-8", errors="replace")
+            sitemap_source, sitemap_status, sitemap_headers, sitemap_body, _r = fetch_remote(sitemap_candidates[0], timeout=timeout, max_bytes=max_bytes, max_redirects=max_redirects, user_agent=user_agent)
+            sitemap_content_type = sitemap_headers.get("content-type")
+            sitemap_text = _decode(sitemap_body, sitemap_headers)
         except AuditError as exc:
             limitations.append(f"sitemap unavailable: {exc}")
-        return TargetDocument(target, final_url, "remote", final_url, None, status, headers, redirects, _decode(body, headers), hashlib.sha256(body).hexdigest(), robots_text, robots_source, sitemap_text, sitemap_source, limitations)
+        return TargetDocument(target, final_url, "remote", final_url, None, status, headers, redirects, _decode(body, headers), hashlib.sha256(body).hexdigest(), robots_text, robots_source, sitemap_text, sitemap_source, limitations, sitemap_status=sitemap_status, sitemap_content_type=sitemap_content_type)
 
     path = Path(target).expanduser().resolve()
     if not path.is_file():
