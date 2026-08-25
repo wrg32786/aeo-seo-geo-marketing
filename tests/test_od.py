@@ -91,6 +91,29 @@ class OrganicDiscoveryAuditorTests(unittest.TestCase):
         values = od.important_schema_values(documents)
         self.assertIn({"field": "name", "value": "Example"}, values)
 
+    def test_html_sitemap_response_reports_routing_failure(self) -> None:
+        document = od.load_target(
+            "examples/sample-site/site/index.html",
+            timeout=1,
+            max_bytes=od.DEFAULT_MAX_BYTES,
+            max_redirects=od.DEFAULT_MAX_REDIRECTS,
+            user_agent=od.DEFAULT_USER_AGENT,
+        )
+        document.sitemap_text = "<!doctype html><html><body>SPA shell</body></html>"
+        document.sitemap_source = "https://example.com/sitemap.xml"
+        document.sitemap_status = 200
+        document.sitemap_content_type = "text/html; charset=utf-8"
+
+        audit, work_orders, _report = od.audit_document(document)
+        findings = {finding["code"]: finding for finding in audit["findings"]}
+        self.assertIn("sitemap.html_response", findings)
+        self.assertNotIn("sitemap.invalid", findings)
+        finding = findings["sitemap.html_response"]
+        self.assertIn("catch-all", finding["detail"])
+        self.assertIn("route the sitemap URL", " ".join(finding["change"]))
+        order = next(order for order in work_orders if finding["id"] in order["source_finding_ids"])
+        self.assertIn("catch-all", " ".join(order["change"]))
+
     def test_expected_json_contract_is_valid(self) -> None:
         audit = json.loads((ROOT / "examples/sample-site/expected/audit.json").read_text(encoding="utf-8"))
         orders = json.loads((ROOT / "examples/sample-site/expected/work-orders.json").read_text(encoding="utf-8"))

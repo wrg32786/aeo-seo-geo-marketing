@@ -26,6 +26,7 @@ CLAIM_RE = re.compile(r"(?i)(\b(best|leading|#\s*1|number\s+one|guaranteed|clini
 SOURCE_RE = re.compile(r"(?i)\b(source|sources|methodology|study|studies|evidence|according\s+to|verified|reference|references)\b")
 MONEY_RE = re.compile(r"(?i)([$€£]\s?\d|\b(?:usd|eur|gbp)\s?\d|\bprice\b.{0,30}\d)")
 SPACE_RE = re.compile(r"\s+")
+HTML_DOCUMENT_RE = re.compile(r"(?is)^\s*(?:<!doctype\s+html\b|<html\b)")
 
 
 def norm(value: str) -> str:
@@ -167,8 +168,20 @@ def important_schema_values(docs: Iterable[Any]) -> list[dict[str, str]]:
     return out
 
 
-def parse_sitemap(text: str | None) -> dict[str, Any]:
+def parse_sitemap(text: str | None, *, status: int | None = None, content_type: str | None = None) -> dict[str, Any]:
     if not text: return {"present": False, "valid": None, "urls": [], "error": None}
+    media_type = (content_type or "").partition(";")[0].strip().casefold()
+    prefix = text.lstrip("\ufeff")[:512]
+    if media_type == "text/html" or HTML_DOCUMENT_RE.search(prefix):
+        return {
+            "present": True,
+            "valid": False,
+            "urls": [],
+            "error": "Sitemap URL returned HTML instead of XML; an SPA catch-all or error-page route likely handled the request.",
+            "kind": "html_response",
+            "status": status,
+            "content_type": content_type,
+        }
     try:
         root = ET.fromstring(text)
         urls = [norm(node.text or "") for node in root.iter() if node.tag.rsplit("}", 1)[-1] == "loc" and norm(node.text or "")]
@@ -213,7 +226,7 @@ def audit_document(document: TargetDocument, queries: list[str] | None = None) -
     parser = PageParser(); parser.feed(document.html_text); parser.close()
     visible = norm(" ".join(parser.visible)); hidden = norm(" ".join(parser.hidden)); title = norm(" ".join(parser.title))
     visible_lower = visible.casefold(); findings: list[dict[str, Any]] = []
-    robots = robots_controls(document); sitemap = parse_sitemap(document.sitemap_text)
+    robots = robots_controls(document); sitemap = parse_sitemap(document.sitemap_text, status=document.sitemap_status, content_type=document.sitemap_content_type)
     docs, json_errors = parse_json_ld(parser.jsonld); schema_types = json_ld_types(docs); schema_values = important_schema_values(docs)
 
     if document.status >= 400:
@@ -274,7 +287,23 @@ def audit_document(document: TargetDocument, queries: list[str] | None = None) -
     if missing_alt:
         _add(findings, "images.alt_missing", "P2", "medium", "eligibility", "Images are missing alternative text", f"Found {len(missing_alt)} images without alt text.", {"examples": missing_alt[:5]}, "content", "low", ["add useful alt text or an explicit empty alt for decorative images"], ["each image has an intentional alt value"], ["restore prior markup if assistive-technology testing regresses"])
 
-    if sitemap["present"] and sitemap["valid"] is False:
+    if sitemap.get("kind") == "html_response":
+        _add(
+            findings,
+            "sitemap.html_response",
+            "P1",
+            "high",
+            "eligibility",
+            "Sitemap URL returns HTML instead of XML",
+            sitemap["error"],
+            {"sitemap_source": document.sitemap_source, "http_status": document.sitemap_status, "content_type": document.sitemap_content_type},
+            "engineering",
+            "low",
+            ["route the sitemap URL to a real XML sitemap", "exclude the sitemap path from SPA catch-all and error-page routing"],
+            ["the sitemap URL returns HTTP 200 with XML rather than HTML", "the sitemap parses and lists canonical public URLs"],
+            ["restore the prior route if the sitemap endpoint conflicts with application routing"],
+        )
+    elif sitemap["present"] and sitemap["valid"] is False:
         _add(findings, "sitemap.invalid", "P1", "high", "eligibility", "Sitemap XML is invalid", sitemap["error"] or "XML parsing failed.", {"sitemap_source": document.sitemap_source}, "engineering", "low", ["repair the sitemap XML"], ["the sitemap parses and lists canonical public URLs"], ["restore the last valid sitemap"])
     elif sitemap["valid"] and document.source_type == "local" and not any(url.rstrip("/").endswith(("/", "/index.html")) for url in sitemap["urls"]):
         _add(findings, "sitemap.target_missing", "P2", "medium", "eligibility", "Audited page is absent from the sitemap fixture", "The sibling sitemap does not contain the represented index URL.", {"sitemap_urls": sitemap["urls"]}, "engineering", "low", ["add the canonical deployed URL to the sitemap"], ["the canonical target appears exactly once"], ["remove the entry if the page should not be indexed"])
