@@ -1,0 +1,29 @@
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "@id": "https://example.com/{project}/#software",
+  "name": "{Project Name}",
+  "alternateName": "{repository name, if different}",
+  "description": "{Canonical description, identical to the GitHub About line}",
+  "url": "https://example.com/{project}/",
+  "sameAs": [
+    "https://github.com/{owner}/{repo}"
+  ],
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "{Linux, macOS, Windows}",
+  "softwareVersion": "{x.y.z}",
+  "datePublished": "{YYYY-MM-DD of first public release}",
+  "license": "https://opensource.org/licenses/{MIT}",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "softwareRequirements": "{for example Python 3.11+}",
+  "author": {
+    "@type": "Person",
+    "name": "{author name, identical to the profile}",
+    "url": "https://github.com/{owner}"
+  }
+}

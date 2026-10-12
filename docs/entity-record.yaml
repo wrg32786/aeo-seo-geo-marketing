@@ -1,0 +1,76 @@
+# Canonical entity record for this repository, filled from templates/entity-record.yaml.
+# Edit this file first, then copy the text to every surface listed below.
+name: "Organic Discovery"
+alternate_names:
+  - "aeo-seo-geo-marketing"
+entity_type: "SoftwareApplication"
+canonical_description: "Organic Discovery is an MIT-licensed Agent Skill and Python CLI that helps you or your AI agent get a website or GitHub repo found and cited by Google, ChatGPT search and Perplexity, using checks you can verify. SEO, AEO and GEO for Claude Code and Codex."
+short_description: "SEO, AEO and GEO Agent Skill and Python CLI: audit pages, fix READMEs, and check whether AI answers cite you."
+category_terms:
+  - "SEO"
+  - "AEO"
+  - "GEO"
+  - "generative engine optimization"
+  - "Agent Skill"
+  - "Claude Code skill"
+canonical_url: "https://github.com/wrg32786/aeo-seo-geo-marketing"
+repository_url: "https://github.com/wrg32786/aeo-seo-geo-marketing"
+license: "MIT"
+author: "Will G"
+author_profile_url: "https://github.com/wrg32786"
+current_version: "0.5.0"
+claims_allowed:
+  - "MIT-licensed"
+  - "Python 3.11 or newer, no third-party Python packages"
+  - "Deterministic CLI tested in CI on Python 3.11 and 3.13"
+claims_prohibited:
+  - "Any guarantee of ranking, citation, recommendation, traffic or revenue"
+  - "Any claim that this skill has been shown to get a site cited (not measured yet)"
+surfaces:
+  - surface: "GitHub About"
+    location: "https://github.com/wrg32786/aeo-seo-geo-marketing"
+    current_text: "Evidence-grounded SEO, AEO & GEO Agent Skill for auditing, implementing, and measuring organic discovery across Google, ChatGPT, Claude, Perplexity, Bing/Copilot, and other AI search systems."
+    status: "drift"
+    owner_action_required: true
+  - surface: "GitHub website field"
+    location: "https://github.com/wrg32786/aeo-seo-geo-marketing"
+    current_text: "https://github.com/wrg32786/aeo-seo-geo-marketing (points to itself)"
+    status: "drift"
+    owner_action_required: true
+  - surface: "README first paragraph"
+    location: "README.md"
+    current_text: "Matches canonical_description, first sentence."
+    status: "match"
+    owner_action_required: false
+  - surface: "CITATION.cff abstract"
+    location: "CITATION.cff"
+    current_text: "Opens with canonical_description, first sentence."
+    status: "match"
+    owner_action_required: false
+  - surface: "Host metadata short description"
+    location: "agents/openai.yaml"
+    current_text: "Matches short_description."
+    status: "match"
+    owner_action_required: false
+  - surface: "CITATION.cff and SKILL.md author"
+    location: "CITATION.cff, SKILL.md"
+    current_text: "The AIgent"
+    status: "drift"
+    owner_action_required: true
+  - surface: "Author profile bio"
+    location: "https://github.com/wrg32786"
+    current_text: "(empty bio; name Will G; blog https://theaigent.xyz/)"
+    status: "missing"
+    owner_action_required: true
+  - surface: "Project site page"
+    location: "https://theaigent.xyz"
+    current_text: "(no page for this project found)"
+    status: "missing"
+    owner_action_required: true
+  - surface: "Related repo mention"
+    location: "https://github.com/wrg32786/aigent-os, https://github.com/wrg32786/awesome-claude-skills, https://github.com/wrg32786/Ultra-web-design"
+    current_text: "(no mention of this repo found on 2026-10-11)"
+    status: "missing"
+    owner_action_required: true
+owner: "Will G"
+verified_at: "2026-10-11"

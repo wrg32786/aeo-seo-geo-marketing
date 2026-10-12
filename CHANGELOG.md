@@ -2,6 +2,15 @@
 
 All notable changes to Organic Discovery are documented here.
 
+## Unreleased
+
+- Added the question-first playbook as reference modules routed from `SKILL.md`: `references/playbook.md` (end-to-end run order with dated evidence notes), `references/audit-checklist.md`, `references/question-mapping.md`, `references/page-templates.md`, `references/entity-consistency-kit.md`, `references/distribution-playbook.md` and `references/citation-checks.md`.
+- Added fill-in templates in `templates/`: a README template, an HTML page template, `FAQPage` and `SoftwareApplication` JSON-LD, a canonical entity record, and CSV logs for question maps, citation checks and distribution.
+- Added `scripts/check_front_page.py`, a standard-library check for a direct-answer opener, FAQ, evidence and limits, install, machine-changes and alternatives sections, em and en dashes, and superlatives. `validate_skill.py` runs it on the README, so CI enforces it. Five new tests bring the suite to 20.
+- Rewrote the README front page: direct-answer opener, one-line install, playbook table, evidence and limits, what this changes on your machine, FAQ and neutral alternatives. The existing CLI documentation is kept under a CLI reference section.
+- Removed em and en dashes from `SKILL.md` and the README; added playbook trigger evals.
+- Recorded that Google stopped showing FAQ rich results on May 7, 2026 and that Google Search does not use `llms.txt`.
+
 ## 0.5.0 — 2026-08-24
 
 - Added `od.py facts validate` with a canonical CSV contract, stable IDs, validation errors, publication gates, normalized output, existence and availability checks, source ownership, verification dates, evidence grades, owners, refresh triggers, limitations, markets, languages, prompt families, and expiry.

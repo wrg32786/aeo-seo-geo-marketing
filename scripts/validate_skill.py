@@ -90,6 +90,23 @@ REQUIRED_FILES = {
     "scripts/validate_skill.py",
     "tests/test_od.py",
     "tests/test_shelf.py",
+    "references/playbook.md",
+    "references/audit-checklist.md",
+    "references/question-mapping.md",
+    "references/page-templates.md",
+    "references/entity-consistency-kit.md",
+    "references/distribution-playbook.md",
+    "references/citation-checks.md",
+    "scripts/check_front_page.py",
+    "templates/README-template.md",
+    "templates/page-template.html",
+    "templates/jsonld/faqpage.json",
+    "templates/jsonld/softwareapplication.json",
+    "templates/entity-record.yaml",
+    "templates/question-map.csv",
+    "templates/citation-log.csv",
+    "templates/distribution-log.csv",
+    "tests/test_front_page.py",
 }
 
 REQUIRED_SKILL_TERMS = {
@@ -680,6 +697,15 @@ def run_smoke_checks(errors: list[str]) -> None:
     shutil.rmtree(output, ignore_errors=True)
 
 
+def validate_front_page(errors: list[str]) -> None:
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import check_front_page
+
+    result = check_front_page.check(README.read_text(encoding="utf-8"))
+    for check_id in result["failed"]:
+        errors.append(f"README front-page check failed: {check_id}")
+
+
 def main() -> int:
     errors: list[str] = []
     warnings: list[str] = []
@@ -736,6 +762,7 @@ def main() -> int:
     validate_audit_fixture(errors)
     validate_fact_fixture(errors)
     validate_shelf_fixture(errors)
+    validate_front_page(errors)
     run_smoke_checks(errors)
 
     for warning in warnings:
