@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{Project Name}: {category in plain words}</title>
+  <meta name="description" content="{canonical short description, identical to the GitHub About line}">
+  <link rel="canonical" href="https://example.com/{project}/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Paste the filled JSON from templates/jsonld/softwareapplication.json here. -->
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "{Project Name}"}
+  </script>
+  <!-- Paste the filled JSON from templates/jsonld/faqpage.json here. Every question must also appear in the visible FAQ below. -->
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": []}
+  </script>
+</head>
+<body>
+  <main>
+    <h1>{Project Name}: {category in plain words}</h1>
+    <p>{Project Name} is a {category} for {audience} that {does the main job}, {key constraint or differentiator}.</p>
+    <pre><code>{one-line install command}</code></pre>
+
+    <h2 id="evidence-and-limits">Evidence and limits</h2>
+    <ul>
+      <li><strong>What has been shown:</strong> {test, environment, sample size, date}.</li>
+      <li><strong>What it is not:</strong> {claims you have not shown}.</li>
+      <li><strong>Known limitations:</strong> {gaps}.</li>
+      <li><strong>Release status:</strong> {version}.</li>
+    </ul>
+
+    <h2 id="faq">FAQ</h2>
+    <h3>{Question as people type it}?</h3>
+    <p>{Direct one-sentence answer.} {Detail.}</p>
+    <h3>{Question as people type it}?</h3>
+    <p>{Direct one-sentence answer.} {Detail.}</p>
+
+    <h2 id="alternatives">Alternatives</h2>
+    <ul>
+      <li><a href="https://example.com/a">{Alternative A}</a>: {one neutral sentence}.</li>
+    </ul>
+
+    <p>Last reviewed: {YYYY-MM-DD, change only when the content changes}.</p>
+  </main>
+</body>
+</html>

@@ -141,6 +141,56 @@
       "prompt": "Benchmark response latency between two language-model APIs.",
       "should_trigger": false,
       "reason": "General API performance engineering."
+    },
+    {
+      "prompt": "Rewrite my GitHub README so it opens with a direct answer, has a FAQ people would actually ask ChatGPT, and an honest evidence and limits section.",
+      "should_trigger": true,
+      "reason": "Owner-page rewrite with direct-answer opener, FAQ and limits from the playbook."
+    },
+    {
+      "prompt": "Give me FAQPage and SoftwareApplication JSON-LD for my open-source tool's landing page.",
+      "should_trigger": true,
+      "reason": "Structured data for a tool page, matched to visible content."
+    },
+    {
+      "prompt": "Which awesome-lists, subreddits and Hacker News format should I use to get my repo mentioned, and what are their rules?",
+      "should_trigger": true,
+      "reason": "Distribution playbook for earned mentions under each venue's rules."
+    },
+    {
+      "prompt": "Write one canonical description for my project and tell me where to paste it so the repo, site and profile all match.",
+      "should_trigger": true,
+      "reason": "Entity-consistency kit."
+    },
+    {
+      "prompt": "How do I check whether Perplexity and ChatGPT cite my repo for the questions I care about, and log it over time?",
+      "should_trigger": true,
+      "reason": "Manual AI citation checks with a dated log."
+    },
+    {
+      "prompt": "Find the real questions people ask about tools like mine so I can target narrow queries first.",
+      "should_trigger": true,
+      "reason": "Question mapping before writing content."
+    },
+    {
+      "prompt": "Suggest GitHub topics for my repository that match what people actually search for.",
+      "should_trigger": true,
+      "reason": "GitHub topics as part of entity consistency and distribution."
+    },
+    {
+      "prompt": "Translate this README into Spanish without changing anything else.",
+      "should_trigger": false,
+      "reason": "Pure translation; no discovery or audit intent."
+    },
+    {
+      "prompt": "Fix the failing unit test in my parser module.",
+      "should_trigger": false,
+      "reason": "Generic coding task unrelated to discovery."
+    },
+    {
+      "prompt": "Post this announcement to ten subreddits for me right now.",
+      "should_trigger": false,
+      "reason": "Mass third-party posting is out of scope; the skill only drafts for human review and refuses blasting."
     }
   ]
 }

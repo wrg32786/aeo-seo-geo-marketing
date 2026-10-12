@@ -10,10 +10,13 @@ repository-code: "https://github.com/wrg32786/aeo-seo-geo-marketing"
 url: "https://github.com/wrg32786/aeo-seo-geo-marketing"
 license: MIT
 abstract: >-
-  An open-source Agent Skill and dependency-free Python toolchain for organic growth
-  across conventional SEO, Answer Engine Optimization, Generative Engine Optimization,
-  deterministic webpage auditing, Business Truth validation, exact-surface AI shelf
-  mapping, truthful wedge planning, factual fidelity, and outcome measurement.
+  Organic Discovery is an MIT-licensed Agent Skill and Python CLI that helps you
+  or your AI agent get a website or GitHub repo found and cited by Google, ChatGPT
+  search and Perplexity, using checks you can verify. It covers conventional SEO,
+  Answer Engine Optimization, Generative Engine Optimization, deterministic webpage
+  auditing, Business Truth validation, exact-surface AI shelf mapping, truthful
+  wedge planning, a question-first playbook, factual fidelity, and outcome
+  measurement.
 keywords:
   - search engine optimization
   - answer engine optimization

@@ -190,3 +190,36 @@ Capture a baseline and repeat after 7, 28, and 90 days:
 - No mass Reddit, Quora, Hacker News, or awesome-list submission.
 - No duplicate keyword pages.
 - No claim that README changes guarantee indexing, citation, stars, or installs.
+
+## Re-audit: 2026-10-11 (question-first playbook)
+
+This addendum applies the new playbook modules to the repository. The August audit above is kept as the baseline record.
+
+### Findings
+
+- **Front page did not practice its own advice.** The README opened with a tagline and a feature list rather than a one-sentence answer, had no FAQ, no "what this changes on your machine" section and no alternatives, and leaned on internal vocabulary ("AI shelf", "wedge") before saying what the project does in plain words. It also used em dashes throughout.
+- **Entity drift.** The project is called "Organic Discovery Growth Engine" in the README H1, "Organic Growth Operator" in `CITATION.cff`, "Organic Discovery Operator" in `agents/openai.yaml`, and the About line uses a fourth wording. The author is "The AIgent" in metadata and "Will G" on the GitHub profile. The website field points back to the repo. The "Post-implementation verification" section above quotes an H1 that the README no longer uses.
+- **No related-repo links.** None of the author's related public repos (aigent-os, awesome-claude-skills, Ultra-web-design) mention this one.
+- **Topics include generic or off-target terms** (agent, agents, agent-framework, agent-orchestration, agentic-ai, open-source, seo-optimized) while missing searched category terms (generative-engine-optimization, answer-engine-optimization, ai-search, claude-code, claude-code-skills, structured-data, json-ld).
+- **No off-site presence found.** No Reddit, Hacker News, dev.to, Medium or awesome-list mention was found in a quick check. Several relevant awesome-lists set entry bars (minimum stars, age or community usage) that the repo does not meet yet; see `references/distribution-playbook.md`.
+- **Public metrics at re-audit:** 1 star, 0 forks, 0 open issues, 20 topics, last push 2026-08-24 PT, CI green on the default branch.
+
+### Changes in this revision
+
+- Added the playbook modules and templates (see `CHANGELOG.md`, Unreleased).
+- Rewrote the README front page with a direct-answer opener, one-line install, evidence and limits, machine changes, FAQ and alternatives. The CLI documentation is kept under "CLI reference".
+- Added `docs/entity-record.yaml` with one canonical description and the current status of each surface.
+- Aligned `CITATION.cff` and `agents/openai.yaml` descriptions with the entity record.
+- Added `scripts/check_front_page.py`; `validate_skill.py` runs it on the README, so CI enforces it.
+
+### Owner actions proposed, not applied
+
+- Replace the About line with `canonical_description` from `docs/entity-record.yaml`.
+- Replace the topic set (proposal in the pull request description).
+- Set the website field to a real project page, or clear it.
+- Decide on one author name for `CITATION.cff` and `SKILL.md`.
+- Add a short "Related projects" mention in related repos.
+
+### Measurement
+
+The baseline citation log for this repo has not been run yet. Target questions to start with are listed in the pull request description. Results from technical acceptance are not evidence of discovery.

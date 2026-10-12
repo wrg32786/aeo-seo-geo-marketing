@@ -1,0 +1,25 @@
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://example.com/{project}/#faq",
+  "url": "https://example.com/{project}/",
+  "inLanguage": "en",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "{Question exactly as shown on the page}?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{Answer exactly as shown on the page. Plain text or simple HTML. Start with the direct one-sentence answer.}"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "{Second question exactly as shown on the page}?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{Second answer exactly as shown on the page.}"
+      }
+    }
+  ]
+}
