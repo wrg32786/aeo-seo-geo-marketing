@@ -1,6 +1,6 @@
 interface:
   display_name: "Organic Discovery Operator"
-  short_description: "Audit and improve SEO, AEO, GEO, AI citations, and qualified organic growth."
+  short_description: "SEO, AEO and GEO Agent Skill and Python CLI: audit pages, fix READMEs, and check whether AI answers cite you."
   brand_color: "#111827"
   default_prompt: "Run the deterministic audit when a page is available, establish Business Truth, map demand and the AI shelf, fix the earliest blocker, prepare approved owned and earned work, measure the business result, and preserve rollback."
 policy:

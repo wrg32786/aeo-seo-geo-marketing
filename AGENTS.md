@@ -12,6 +12,7 @@ This repository contains **Organic Discovery**, an evidence-grounded Agent Skill
 4. Read `references/source-register.md` before changing platform doctrine or effectiveness claims.
 5. Read `docs/ROADMAP.md` and `docs/DEFINITION-OF-DONE.md` before calling a planned capability shipped.
 6. Read the relevant offline example before changing deterministic behavior.
+7. Read `references/playbook.md` before changing the playbook modules or `templates/`.
 
 ## Current executable boundary
 
@@ -21,7 +22,8 @@ Version `0.5.0` ships:
 - `python scripts/od.py facts validate`;
 - `python scripts/od.py shelf map`;
 - `python scripts/od.py wedge plan`;
-- versioned schemas and two deterministic examples.
+- `python scripts/check_front_page.py`;
+- versioned schemas, two deterministic examples, and the playbook templates in `templates/`.
 
 A live prompt scheduler, analytics connector, CMS publisher, dashboard, database, hosted service, and autonomous public posting remain planned capability.
 
@@ -41,6 +43,8 @@ A live prompt scheduler, analytics connector, CMS publisher, dashboard, database
 - Update the changelog and versioned artifacts together for material releases.
 - Do not add a dependency for a check the Python standard library can perform correctly.
 - Public third-party posting is human-approved by default.
+- Write new documentation in a plain human voice with no em dashes, en dashes or superlatives. The README must pass `python scripts/check_front_page.py README.md`.
+- Files in `templates/` must stay valid (JSON parses; Markdown links point to anchors or full URLs, not repo-relative paths).
 
 ## Required checks
 
@@ -49,6 +53,7 @@ Run before every pull request:
 ```bash
 python scripts/validate_skill.py
 python -m unittest discover -s tests -v
+python scripts/check_front_page.py README.md
 ```
 
 The validator also regenerates the offline audit, Business Truth, shelf, and wedge outputs and compares them with committed expected artifacts.

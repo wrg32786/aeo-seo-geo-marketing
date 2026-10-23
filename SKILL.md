@@ -1,6 +1,6 @@
 ---
 name: organic-discovery
-description: Use this skill as an LLM-operated Organic Growth Operator to research, audit, validate business truth, map exact AI recommendation shelves, select truthful wedges, implement owned-site improvements, prepare legitimate earned-source drafts, and measure qualified organic discovery across conventional SEO, AEO, GEO, citations, recommendations, local and commerce surfaces. Trigger for webpage or repository audits, fact or claim governance, AI shelf mapping, competitor/source recon, content creation or refreshes, GitHub or CMS edits, internal links, schema, ethical Reddit/forum/editorial work, experiments, and rollback. Do not use for paid ads alone, generic definitions, or deceptive ranking manipulation.
+description: Use this skill as an LLM-operated Organic Growth Operator to audit, validate business truth, map the questions people ask and exact AI recommendation shelves, select truthful wedges, improve owned pages and READMEs, prepare legitimate distribution drafts, and measure AI citations and qualified organic discovery across SEO, AEO and GEO. Trigger for webpage, README or repository audits, question mapping, direct-answer and FAQ rewrites, FAQPage or SoftwareApplication JSON-LD, entity consistency and GitHub About lines or topics, Reddit, awesome-list, Hacker News, dev.to or Medium drafts, AI citation checks, fact or claim governance, AI shelf mapping, competitor and source recon, schema, internal links, experiments, and rollback. Do not use for paid ads alone, generic definitions, or deceptive ranking manipulation.
 license: MIT
 compatibility: Python 3.11+ for bundled deterministic tools. Web access is required for current platform guidance and live-result testing. Source-code, CMS, analytics, or tracker access is required only for direct execution on those surfaces.
 metadata:
@@ -31,6 +31,8 @@ This repository currently ships:
 - `python scripts/od.py facts validate` for canonical fact registries;
 - `python scripts/od.py shelf map` for exact-surface AI observation normalization and shelf classification;
 - `python scripts/od.py wedge plan` for hard-gated opportunity selection;
+- `python scripts/check_front_page.py` for Markdown front pages (direct-answer opener, FAQ, evidence and limits, dashes, superlatives);
+- the question-first playbook modules and fill-in templates in `templates/`;
 - schemas, offline examples, focused tests, and package validation;
 - the Agent Skill operating doctrine and reference modules.
 
@@ -53,13 +55,13 @@ It does not yet bundle live multi-model scheduling, Search Console or analytics 
 
 Tag material recommendations:
 
-- **[O] Official** — current platform documentation, policy, or control.
-- **[A] Strong field evidence** — controlled live-engine test or credible natural experiment.
-- **[B] Repeated observation** — live-engine study without causal isolation.
-- **[C] Controlled context** — fixed-context, post-retrieval, benchmark, or RAG experiment.
-- **[D] Correlation** — useful for prioritization, not causation.
-- **[F] Field report** — practitioner, Reddit, vendor, or anecdotal evidence.
-- **[X] Experimental** — emerging tactic without confirmed visibility effect.
+- **[O] Official**: current platform documentation, policy, or control.
+- **[A] Strong field evidence**: controlled live-engine test or credible natural experiment.
+- **[B] Repeated observation**: live-engine study without causal isolation.
+- **[C] Controlled context**: fixed-context, post-retrieval, benchmark, or RAG experiment.
+- **[D] Correlation**: useful for prioritization, not causation.
+- **[F] Field report**: practitioner, Reddit, vendor, or anecdotal evidence.
+- **[X] Experimental**: emerging tactic without confirmed visibility effect.
 
 Official controls outrank lower evidence. State the exact surface, date, and limitation.
 
@@ -67,6 +69,13 @@ Official controls outrank lower evidence. State the exact surface, date, and lim
 
 Load only what the task needs:
 
+- Read `references/playbook.md` first for any "get this site, page, repo or tool found and cited" request. It is the end-to-end run order.
+- Read `references/audit-checklist.md` at the start and end of a playbook run.
+- Read `references/question-mapping.md` before choosing target questions or writing a FAQ.
+- Read `references/page-templates.md` and use `templates/` before writing a README, product page, docs landing page or JSON-LD.
+- Read `references/entity-consistency-kit.md` before writing a project description, About line, profile text or topics.
+- Read `references/distribution-playbook.md` before drafting Reddit, awesome-list, Hacker News, dev.to or Medium submissions.
+- Read `references/citation-checks.md` before checking or reporting whether AI answers cite a project.
 - Read `references/evidence-and-tactics.md` before content rewrites, schema, freshness, `llms.txt`, links, or mention tactics.
 - Read `references/platform-adapters.md` before changing robots, WAF, preview controls, feeds, profiles, or platform settings.
 - Read `references/vertical-adapters.md` after classifying the business and page type.
@@ -78,6 +87,22 @@ Load only what the task needs:
 - Read `references/regional-and-surface-adapters.md` before comparing regions, languages, APIs, apps, Search, assistants, accounts, or branded/unbranded results.
 - Read `references/output-contracts.md` before producing audits, facts, shelf maps, wedge plans, publication gates, work orders, experiments, or learning records.
 - Read `references/source-register.md` when citing doctrine or updating platform guidance.
+
+## Question-first playbook
+
+For "get this found and cited" work, run the playbook in `references/playbook.md`:
+
+1. **Audit** with `python scripts/od.py audit` and `references/audit-checklist.md`; record a baseline citation log.
+2. **Map questions** people actually ask (`references/question-mapping.md`). Win narrow, question-shaped queries before broad head terms. Keep branded questions separate.
+3. **Fix the owner page** (`references/page-templates.md`): each answer opens with one direct sentence; add a FAQ phrased the way people ask ChatGPT, Perplexity and Google; add an evidence and limits section; for tools add a one-line install, a "what this changes on your machine" section and a neutral alternatives section. Check Markdown front pages with `python scripts/check_front_page.py <file>`.
+4. **Structured data**: `FAQPage` and `SoftwareApplication` JSON-LD from `templates/jsonld/`, only where it matches visible text. No Google FAQ rich result is expected.
+5. **Entity consistency** (`references/entity-consistency-kit.md`): one canonical description, repeated word for word on GitHub About, the site, the profile and related repos.
+6. **Distribution** (`references/distribution-playbook.md`): Reddit by subreddit rules, awesome-lists through their own submission process, Show HN only for something people can run, dev.to and Medium with canonical URLs, GitHub topics matched to searched terms. Draft only; a human publishes.
+7. **Measure** (`references/citation-checks.md`): ask each target question on each engine several times, log every run, and pair with traffic and referrers.
+
+Voice: plain and human. No em dashes or en dashes, no superlatives, no hype. Several communities filter text that reads as machine-written. Treat `llms.txt` as optional housekeeping, not a citation driver.
+
+Repository settings, profiles and third-party posts are outside the repo. Propose them; the owner applies them.
 
 ## Bundled deterministic tools
 
@@ -130,12 +155,12 @@ The mapper emits normalized observations, `shelf-map.json`, and `shelf-report.md
 
 Shelf states:
 
-- `locked` — one entity dominates repeatedly;
-- `contested` — a recurring set competes without a locked leader;
-- `fragmented` — recommendation sets rotate with low agreement;
-- `open` — recommendations are absent or unstable enough to justify a narrow test;
-- `unsafe` — fidelity, constraint satisfaction, or availability fails the declared guardrail;
-- `unknown` — evidence is insufficient or the group is branded validation.
+- `locked`: one entity dominates repeatedly;
+- `contested`: a recurring set competes without a locked leader;
+- `fragmented`: recommendation sets rotate with low agreement;
+- `open`: recommendations are absent or unstable enough to justify a narrow test;
+- `unsafe`: fidelity, constraint satisfaction, or availability fails the declared guardrail;
+- `unknown`: evidence is insufficient or the group is branded validation.
 
 These are transparent planning classes, not engine rankings.
 
@@ -161,14 +186,14 @@ Rejected candidates stay rejected. Never hide hard failures inside a weighted sc
 
 Evaluate:
 
-1. **Activation** — did the product invoke retrieval?
-2. **Eligibility** — can it crawl, render, index, and show the asset?
-3. **Retrieval** — did the asset enter the candidate set?
-4. **Context allocation** — did it survive reranking with useful context?
-5. **Source selection** — was it cited, attributed, or recommended?
-6. **Absorption** — did the answer use the source’s claims or evidence?
-7. **Fidelity** — was the source represented accurately with limitations?
-8. **Behavior** — did visibility produce qualified visits, actions, leads, or sales?
+1. **Activation**: did the product invoke retrieval?
+2. **Eligibility**: can it crawl, render, index, and show the asset?
+3. **Retrieval**: did the asset enter the candidate set?
+4. **Context allocation**: did it survive reranking with useful context?
+5. **Source selection**: was it cited, attributed, or recommended?
+6. **Absorption**: did the answer use the source’s claims or evidence?
+7. **Fidelity**: was the source represented accurately with limitations?
+8. **Behavior**: did visibility produce qualified visits, actions, leads, or sales?
 
 Report each as `blocked`, `weak`, `unknown`, `healthy`, or `not_applicable` with evidence and confidence.
 
@@ -211,7 +236,7 @@ Keep branded validation separate. Do not create one page per paraphrase.
 
 Collect or import preserved raw observations. Run the shelf mapper. Inspect recurring citations, recommendation order, concentration, agreement, volatility, source ownership, fidelity, constraint satisfaction, and availability.
 
-Treat the Morrowen result as bounded field evidence that narrow shelves can move—not a recipe, timeline, or permission to fabricate claims.
+Treat the Morrowen result as bounded field evidence that narrow shelves can move, not a recipe, timeline, or permission to fabricate claims.
 
 ### 6. Diagnose the earliest failure
 
@@ -323,7 +348,7 @@ Unless another format is requested, return:
 3. Eight-stage diagnosis.
 4. Demand, exact shelf, and source map.
 5. Accepted or rejected wedge records with hard-gate reasons.
-6. P0–P3 work orders with acceptance, observation, and rollback.
+6. P0 to P3 work orders with acceptance, observation, and rollback.
 7. Implementation manifest for actual owned changes.
 8. Earned-source queue with rules, disclosure, and approval state.
 9. Experiment and measurement plan with denominators and stop rules.

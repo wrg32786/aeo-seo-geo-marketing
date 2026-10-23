@@ -1,0 +1,48 @@
+# Canonical entity record. Edit this file first, then copy the text to every surface.
+# Every field is a public claim. Check it against the fact registry before publishing.
+name: "{Project Name}"
+alternate_names:
+  - "{repository slug, if different}"
+entity_type: "SoftwareApplication"
+canonical_description: "{One sentence, under 350 characters. Identical on every surface.}"
+short_description: "{Under 120 characters. For bios, social cards and registries.}"
+category_terms:
+  - "{term people search}"
+canonical_url: "https://example.com/{project}/"
+repository_url: "https://github.com/{owner}/{repo}"
+license: "{MIT}"
+author: "{Name exactly as on the profile}"
+author_profile_url: "https://github.com/{owner}"
+current_version: "{x.y.z}"
+claims_allowed:
+  - "{claim with a source in the fact registry}"
+claims_prohibited:
+  - "{claim you must not make, for example a ranking or citation guarantee}"
+surfaces:
+  - surface: "GitHub About"
+    location: "https://github.com/{owner}/{repo}"
+    current_text: ""
+    status: "match|drift|missing"
+    owner_action_required: true
+  - surface: "README first paragraph"
+    location: "README.md"
+    current_text: ""
+    status: "match|drift|missing"
+    owner_action_required: false
+  - surface: "Project site meta description"
+    location: "https://example.com/{project}/"
+    current_text: ""
+    status: "match|drift|missing"
+    owner_action_required: true
+  - surface: "Author profile bio"
+    location: "https://github.com/{owner}"
+    current_text: ""
+    status: "match|drift|missing"
+    owner_action_required: true
+  - surface: "Related repo mention"
+    location: "https://github.com/{owner}/{related-repo}"
+    current_text: ""
+    status: "match|drift|missing"
+    owner_action_required: false
+owner: "{person responsible}"
+verified_at: "YYYY-MM-DD"
